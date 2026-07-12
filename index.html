@@ -262,6 +262,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
   <div class="grow"></div>
   <button class="tbtn" id="exportBtn">⇩ EXPORT JSON</button>
   <button class="tbtn" id="resetBtn">↺ RESET LAB</button>
+  <button class="tbtn" id="logoutBtn">⏻ LOGOUT</button>
 </header>
 
 <nav id="toolbar">
@@ -913,6 +914,9 @@ document.getElementById('resetBtn').addEventListener('click',()=>{
   renderAll();
   fitView();
   save();
+});
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  fetch('/api/logout',{method:'POST'}).finally(()=>{location.href='/login.html';});
 });
 PALETTE.forEach(c=>{
   const b=document.createElement('button');

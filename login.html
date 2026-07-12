@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — COPO Lab</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0b1120;
+  --panel:#101a2c;
+  --panel2:#0d1626;
+  --line:#27354f;
+  --ink:#e8eef7;
+  --mut:#8ea3c0;
+  --green:#00e5a0;
+  --cyan:#5bd7ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(1200px 800px at 50% 30%, rgba(20,32,54,.95), var(--bg) 70%);
+}
+#loginForm{
+  width:300px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:28px 26px 24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  text-align:center;
+}
+#loginForm .lg-icon{font-size:32px;margin-bottom:6px}
+#loginForm h2{font-size:18px;letter-spacing:.08em;margin-bottom:4px}
+#loginForm h2 em{font-style:normal;color:var(--green)}
+#loginForm .lg-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);margin-bottom:18px}
+#loginForm label{display:block;text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);letter-spacing:.05em;margin-bottom:12px}
+#loginForm input{
+  width:100%;margin-top:6px;padding:9px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--ink);
+  font-family:'Space Grotesk',sans-serif;font-size:13.5px;
+}
+#loginForm input:focus{outline:none;border-color:var(--cyan)}
+#loginForm button{
+  width:100%;margin-top:6px;padding:10px;border:none;border-radius:9px;
+  background:var(--green);color:#04231a;font-weight:700;letter-spacing:.04em;
+  cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:13.5px;
+}
+#loginForm button:hover{filter:brightness(1.08)}
+#loginForm button:disabled{opacity:.6;cursor:default}
+#loginForm .lg-error{min-height:16px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#ff9ec4}
+</style>
+</head>
+<body>
+
+<form id="loginForm" autocomplete="off">
+  <div class="lg-icon">🧪</div>
+  <h2>COPO <em>LAB</em></h2>
+  <p class="lg-sub">restricted access — sign in to continue</p>
+  <label>Username
+    <input type="text" id="lgUser" name="username" autocomplete="username" autofocus required />
+  </label>
+  <label>Password
+    <input type="password" id="lgPass" name="password" autocomplete="current-password" required />
+  </label>
+  <button type="submit" id="lgSubmit">Enter Lab</button>
+  <div id="lgError" class="lg-error"></div>
+</form>
+
+<script>
+const form = document.getElementById('loginForm');
+const errEl = document.getElementById('lgError');
+const submitBtn = document.getElementById('lgSubmit');
+const passEl = document.getElementById('lgPass');
+
+const params = new URLSearchParams(location.search);
+const rawNext = params.get('next') || '/';
+// Only allow same-site relative paths — reject absolute/protocol-relative URLs to avoid open redirects.
+const next = /^\/(?!\/)/.test(rawNext) ? rawNext : '/';
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errEl.textContent = '';
+  submitBtn.disabled = true;
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: document.getElementById('lgUser').value,
+        password: passEl.value,
+      }),
+    });
+    if (res.ok) {
+      location.href = next;
+      return;
+    }
+    const data = await res.json().catch(() => ({}));
+    errEl.textContent = data.error || 'Invalid username or password.';
+    passEl.value = '';
+    passEl.focus();
+  } catch {
+    errEl.textContent = 'Network error — try again.';
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

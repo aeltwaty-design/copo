@@ -1,0 +1,12 @@
+# Nested clone of github.com/aeltwaty-design/copo — has its own git history
+copo/
+
+# Secrets — real values live in Vercel env vars, never in git
+.env
+.env.local
+.vercel
+node_modules/
+
+# Local machine noise
+.DS_Store
+.claude/settings.local.json
