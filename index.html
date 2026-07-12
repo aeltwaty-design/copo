@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>COPO Lab — Product Experiment Canvas</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0b1120;
+  --panel:#101a2c;
+  --panel2:#0d1626;
+  --line:#27354f;
+  --ink:#e8eef7;
+  --mut:#8ea3c0;
+  --green:#00e5a0;
+  --cyan:#5bd7ff;
+  --violet:#b7a4ff;
+  --amberT:#ffd166;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+/* ---------- viewport / world ---------- */
+#vp{
+  position:fixed;inset:0;
+  touch-action:none;
+  cursor:default;
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(96,131,175,.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96,131,175,.10) 1px, transparent 1px),
+    linear-gradient(rgba(96,131,175,.20) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96,131,175,.20) 1px, transparent 1px);
+}
+#vp.grabbing{cursor:grabbing}
+body.placing #vp{cursor:crosshair}
+#vp::after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(1400px 900px at 50% 38%, transparent 55%, rgba(3,7,16,.5));
+}
+#world{position:absolute;left:0;top:0;transform-origin:0 0}
+#wires{position:absolute;left:0;top:0;width:10px;height:10px;overflow:visible;z-index:5;pointer-events:none}
+
+/* ---------- items ---------- */
+.item{position:absolute;box-sizing:border-box}
+.item.sel{outline:2px solid var(--cyan);outline-offset:4px;border-radius:6px}
+.item.wire-src{outline:2px dashed var(--violet);outline-offset:4px}
+body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offset:3px;cursor:pointer}
+
+.sticky{
+  padding:16px 16px 22px;
+  min-height:150px;
+  border-radius:4px;
+  color:#1a2330;
+  font-size:14.5px;line-height:1.45;font-weight:500;
+  box-shadow:0 12px 26px rgba(0,0,0,.45);
+  cursor:grab;z-index:10;
+}
+.sticky::after{
+  content:"";position:absolute;right:0;bottom:0;width:20px;height:20px;
+  background:linear-gradient(135deg, transparent 50%, rgba(0,0,0,.16) 50%);
+  border-bottom-right-radius:4px;
+}
+.sticky .sb{white-space:pre-wrap;word-wrap:break-word}
+
+.card{
+  background:linear-gradient(180deg,#131e33,#0f1828);
+  border:1px solid #2b3d5e;border-radius:12px;
+  padding:14px 16px 16px;
+  box-shadow:0 14px 30px rgba(0,0,0,.5);
+  cursor:grab;z-index:10;
+}
+.card .ct{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;
+  white-space:pre-wrap;
+}
+.card .cb{font-size:13.5px;line-height:1.55;color:#c9d6ea;white-space:pre-wrap;word-wrap:break-word}
+.card.accent-violet{
+  border-color:#7d68d8;
+  box-shadow:0 0 0 1px rgba(183,164,255,.25),0 14px 34px rgba(0,0,0,.5),0 0 28px rgba(140,110,255,.16);
+}
+.card.accent-violet .ct{color:var(--violet)}
+.card.small .cb{font-size:11.5px;color:var(--mut);font-family:'IBM Plex Mono',monospace;line-height:1.7}
+.card .lg{display:inline-flex;align-items:center;gap:7px;margin:3px 14px 3px 0;font-size:12px;color:#c9d6ea;font-family:'IBM Plex Mono',monospace}
+.card .lg i{width:12px;height:12px;border-radius:3px;display:inline-block;flex:none}
+
+.frame{
+  border:1.5px dashed rgba(0,229,160,.45);border-radius:18px;
+  background:rgba(0,229,160,.035);
+  z-index:1;pointer-events:none;
+}
+.frame .tab{
+  position:absolute;top:-38px;left:-2px;
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;letter-spacing:.08em;
+  color:var(--green);background:var(--panel2);
+  border:1px solid rgba(0,229,160,.45);
+  padding:7px 13px;border-radius:9px;white-space:nowrap;
+  pointer-events:auto;cursor:grab;
+  box-shadow:0 6px 18px rgba(0,0,0,.4);
+}
+.frame.dim{border-color:rgba(120,145,180,.35);background:rgba(120,145,180,.04)}
+.frame.dim .tab{color:var(--mut);border-color:rgba(120,145,180,.4)}
+
+.label{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(0,229,160,.9);text-shadow:0 0 14px rgba(0,229,160,.3);
+  white-space:nowrap;cursor:grab;z-index:3;
+}
+.label.dim{color:var(--mut);text-shadow:none}
+
+[contenteditable="plaintext-only"],[contenteditable="true"]{
+  user-select:text;-webkit-user-select:text;cursor:text;
+  outline:1.5px dashed rgba(91,215,255,.7) !important;outline-offset:3px;
+}
+
+/* ---------- wires ---------- */
+.wire{fill:none;stroke:var(--cyan);stroke-width:2;opacity:.55;pointer-events:stroke;cursor:pointer}
+.wire.sel{opacity:1;stroke:#a5ecff;filter:drop-shadow(0 0 6px rgba(91,215,255,.9))}
+.wire-hit{fill:none;stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:pointer}
+.wlab{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  fill:#9fdcff;paint-order:stroke;stroke:var(--bg);stroke-width:5px;
+}
+
+/* ---------- top bar ---------- */
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:56px;z-index:50;
+  display:flex;align-items:center;gap:14px;padding:0 16px;
+  background:linear-gradient(180deg,rgba(11,17,32,.94),rgba(11,17,32,.78));
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+#topbar .brand{display:flex;align-items:center;gap:10px}
+#topbar h1{font-size:16px;font-weight:700;letter-spacing:.1em}
+#topbar h1 em{font-style:normal;color:var(--green)}
+#topbar .sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--mut);letter-spacing:.08em;margin-top:1px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  padding:5px 10px;border-radius:999px;white-space:nowrap;
+  border:1px solid rgba(0,229,160,.45);color:var(--green);
+}
+#saved{border-color:var(--line);color:var(--mut);transition:all .25s}
+#saved.on{border-color:rgba(0,229,160,.6);color:var(--green)}
+#topbar .grow{flex:1}
+.tbtn{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.05em;
+  background:transparent;color:var(--mut);
+  border:1px solid var(--line);border-radius:9px;padding:7px 13px;cursor:pointer;
+}
+.tbtn:hover{color:var(--ink);border-color:#3d5378;background:rgba(91,215,255,.06)}
+
+/* ---------- toolbar ---------- */
+#toolbar{
+  position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:50;
+  display:flex;flex-direction:column;gap:5px;padding:8px;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+}
+#toolbar button{
+  width:42px;height:42px;border-radius:10px;border:none;cursor:pointer;
+  background:transparent;color:var(--mut);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+#toolbar button:hover{background:rgba(91,215,255,.08);color:var(--ink)}
+#toolbar button.active{background:rgba(0,229,160,.14);color:var(--green)}
+#toolbar button kbd{
+  position:absolute;right:4px;bottom:3px;font-family:'IBM Plex Mono',monospace;
+  font-size:8px;color:currentColor;opacity:.55;
+}
+#toolbar .sep{height:1px;background:var(--line);margin:3px 4px}
+#toolbar svg{width:20px;height:20px}
+
+/* ---------- floating selection bar ---------- */
+#floatbar{
+  position:fixed;z-index:60;display:none;align-items:center;gap:7px;
+  transform:translate(-50%,-100%);
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:7px 9px;box-shadow:0 14px 34px rgba(0,0,0,.55);
+}
+#swatches{display:flex;gap:6px;align-items:center}
+#swatches button{width:19px;height:19px;border-radius:50%;border:2px solid rgba(255,255,255,.25);cursor:pointer}
+#swatches button:hover{transform:scale(1.18);border-color:#fff}
+#floatbar .fb{
+  border:none;background:transparent;color:var(--mut);cursor:pointer;
+  font-size:14px;width:26px;height:26px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+}
+#floatbar .fb:hover{background:rgba(91,215,255,.1);color:var(--ink)}
+#floatbar .fsep{width:1px;height:18px;background:var(--line)}
+
+/* ---------- zoom / minimap / hint ---------- */
+#zoombar{
+  position:fixed;right:18px;bottom:178px;z-index:50;
+  display:flex;align-items:center;gap:2px;padding:5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+#zoombar button{
+  border:none;background:transparent;color:var(--mut);cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  min-width:30px;height:30px;border-radius:8px;padding:0 8px;
+}
+#zoombar button:hover{background:rgba(91,215,255,.08);color:var(--ink)}
+#zoomLbl{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mut);min-width:46px;text-align:center}
+#minimap{
+  position:fixed;right:18px;bottom:18px;z-index:50;
+  background:rgba(13,22,38,.9);border:1px solid var(--line);border-radius:12px;
+  padding:7px;box-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+#mmc{display:block;width:212px;height:132px;cursor:crosshair;border-radius:6px}
+#hint{
+  position:fixed;left:14px;bottom:16px;z-index:50;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--mut);
+  background:rgba(13,22,38,.85);border:1px solid var(--line);border-radius:9px;padding:8px 12px;
+  max-width:560px;line-height:1.7;
+}
+#hint b{color:#b9cbe6;font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="vp"><div id="world">
+  <svg id="wires" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#5bd7ff" opacity=".8"/>
+      </marker>
+    </defs>
+    <g id="wireG"></g>
+  </svg>
+</div></div>
+
+<header id="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" width="27" height="27" fill="none" aria-hidden="true">
+      <path d="M9 2.5h6" stroke="#5bd7ff" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M10 2.5v5.2L4.8 18.4A3 3 0 0 0 7.5 22h9a3 3 0 0 0 2.7-3.6L14 7.7V2.5" stroke="#5bd7ff" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M7.7 14.5h8.7l1.5 3.7a1.7 1.7 0 0 1-1.6 2.3h-8.6a1.7 1.7 0 0 1-1.6-2.3z" fill="#00e5a0" opacity=".85"/>
+      <circle cx="11" cy="12.4" r=".9" fill="#00e5a0"/>
+      <circle cx="13.5" cy="10.4" r=".6" fill="#00e5a0"/>
+    </svg>
+    <div>
+      <h1>COPO <em>LAB</em></h1>
+      <div class="sub">product experiment canvas</div>
+    </div>
+  </div>
+  <span class="chip">EXP-01 · MARKET RESEARCH</span>
+  <span class="chip" id="saved">● saved in this browser</span>
+  <div class="grow"></div>
+  <button class="tbtn" id="exportBtn">⇩ EXPORT JSON</button>
+  <button class="tbtn" id="resetBtn">↺ RESET LAB</button>
+</header>
+
+<nav id="toolbar">
+  <button data-tool="select" class="active" title="Select & move (V)">
+    <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 2.5l10.5 8.2-4.7 1L13.6 17l-2.1 1-2.7-5.3L5 16.4z"/></svg><kbd>V</kbd>
+  </button>
+  <button data-tool="sticky" title="Sticky note (S)">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M12 17v-4.5H17"/></svg><kbd>S</kbd>
+  </button>
+  <button data-tool="card" title="Specimen card (C)">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="4" width="15" height="12" rx="2.5"/><path d="M5.5 8.2h9M5.5 11.4h5.5"/></svg><kbd>C</kbd>
+  </button>
+  <button data-tool="frame" title="Experiment frame (F)">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.2 1.5v17M13.8 1.5v17M1.5 6.2h17M1.5 13.8h17"/></svg><kbd>F</kbd>
+  </button>
+  <button data-tool="connect" title="Connector tube — click two items (L)">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 16c7 0 5-11 11.5-11.5"/><circle cx="4" cy="16" r="1.8" fill="currentColor" stroke="none"/><path d="M13 3.5h3.5V7" stroke-linecap="round"/></svg><kbd>L</kbd>
+  </button>
+  <div class="sep"></div>
+  <button id="fitBtn" title="Fit board to screen (1)">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2.5H2.5V7M13 2.5h4.5V7M7 17.5H2.5V13M13 17.5h4.5V13"/></svg>
+  </button>
+</nav>
+
+<div id="floatbar">
+  <div id="swatches"></div>
+  <div class="fsep" id="fbsep"></div>
+  <button class="fb" id="dupBtn" title="Duplicate (⌘D)">⧉</button>
+  <button class="fb" id="delBtn" title="Delete (⌫)">✕</button>
+</div>
+
+<div id="zoombar">
+  <button id="zoomOut" title="Zoom out">−</button>
+  <span id="zoomLbl">100%</span>
+  <button id="zoomIn" title="Zoom in">+</button>
+  <button id="fitBtn2" title="Fit board (1)">FIT</button>
+</div>
+
+<div id="minimap"><canvas id="mmc" width="424" height="264"></canvas></div>
+
+<div id="hint">
+  <b>drag canvas</b> pan · <b>⌘/ctrl+scroll</b> zoom · <b>scroll</b> pan · <b>dbl-click canvas</b> new note ·
+  <b>dbl-click text</b> edit · <b>⌫</b> delete · <b>V S C F L</b> tools · <b>1</b> fit
+</div>
+
+<script>
+(() => {
+'use strict';
+const LS_KEY = 'copoLab.board.v1';
+const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
+const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
+
+const vp=document.getElementById('vp'), world=document.getElementById('world');
+const wireG=document.getElementById('wireG'), floatbar=document.getElementById('floatbar');
+const swatches=document.getElementById('swatches'), fbsep=document.getElementById('fbsep');
+const zoomLbl=document.getElementById('zoomLbl'), savedChip=document.getElementById('saved');
+const mmc=document.getElementById('mmc'), mmctx=mmc.getContext('2d');
+
+let idc=1; const nid=()=>'n'+(idc++);
+let state={items:[],wires:[]};
+let view={x:0,y:0,s:1};
+let tool='select', selId=null, selWireId=null, wireSrc=null;
+let zc=20, spaceDown=false, palIdx=0;
+const elById={};
+const byId=id=>state.items.find(i=>i.id===id);
+
+/* ============ seed board: EXP-01 market research ============ */
+function seed(){
+  idc=1; const items=[],wires=[];
+  const S=(x,y,color,text,w=230)=>{const it={id:nid(),type:'sticky',x,y,w,color,rot:((idc*53)%5)-2,text};items.push(it);return it;};
+  const C=(x,y,w,title,text,opt={})=>{const it=Object.assign({id:nid(),type:'card',x,y,w,title,text},opt);items.push(it);return it;};
+  const L=(x,y,text,opt={})=>{const it=Object.assign({id:nid(),type:'label',x,y,text},opt);items.push(it);return it;};
+  const F=(x,y,w,h,title,opt={})=>{const it=Object.assign({id:nid(),type:'frame',x,y,w,h,title},opt);items.push(it);return it;};
+  const W=(a,b,label)=>wires.push({id:nid(),a:a.id,b:b.id,label});
+
+  F(120,160,3140,1790,'🧪 EXPERIMENT 01 — MARKET RESEARCH · KSA COUPONS × CASHBACK');
+
+  C(120,-140,600,'🧪 Reagent key',
+    '<div class="lg"><i style="background:'+GREEN+'"></i>strength · opportunity</div>'+
+    '<div class="lg"><i style="background:'+AMBER+'"></i>weakness · caution</div>'+
+    '<div class="lg"><i style="background:'+PINK+'"></i>hard risk</div>'+
+    '<div class="lg"><i style="background:'+CYAN+'"></i>people · users</div>'+
+    '<div class="lg"><i style="background:'+VIOLET+'"></i>hypothesis</div>',
+    {html:true,locked:true});
+
+  /* A — market vitals */
+  L(220,248,'A · Market vitals');
+  C(220,300,430,'📈 E-commerce engine',
+    'KSA e-commerce ≈ $28B in 2025, heading to ~$55B by 2031 (~12% CAGR). Buying digital-first is default behavior now — not early-adopter behavior.');
+  C(680,300,430,'💳 Payment rails are ready',
+    'E-payments = 85% of ALL retail payments in 2025 (SAMA), up from 79% in 2024. mada online spend hit SR 30.7B in Oct 2025, +68% YoY. In-app checkout + instant cashback wallet = zero friction.');
+  C(220,580,430,'🎁 Loyalty is booming — but points-heavy',
+    'KSA loyalty market: $712M (2025) → $1.27B by 2030 (~12%/yr). Dominated by telco & bank points — Qitaf, Mokafaa, AlFursan, stc pay. Real-money cashback is the open lane.');
+  C(680,580,430,'📱 Young, mobile, deal-savvy',
+    '~63% of Saudis are under 30. 99% internet penetration, 78% 5G coverage. Dining & entertainment spend keeps climbing with the Vision 2030 lifestyle push.');
+  C(220,880,890,'🔬 Lab references',
+    'SAMA e-payments 2025 · Mordor Intelligence — KSA e-commerce · KSA Loyalty Business Report 2026 (GlobeNewswire) · Foodics × Waffarha integration docs · Waffarha app listings (KSA · EG · OM)',
+    {small:true});
+
+  /* B — Waffarha */
+  L(1270,248,'B · Specimen: Waffarha — main rival');
+  C(1270,300,430,'🔎 Specimen: Waffarha',
+    'Groupon-style discounted coupons. Active in KSA, Egypt & Oman. Categories: restaurants, cafés, beauty, health, entertainment, hotels, travel. Integrated with Foodics POS to scale its KSA merchant network. Headline discounts up to ~50%.');
+  S(1740,300,GREEN,'💪 Strong brand recall + wide food & leisure merchant network');
+  S(1995,300,GREEN,'💪 Deep discounts (up to 50%) are a proven acquisition hook');
+  const wkLoop=S(1740,545,AMBER,'🧯 No cashback loop — the relationship dies at redemption');
+  S(1995,545,AMBER,'🧯 List-heavy discovery, thin personalization, dated UX');
+  const wkAccum=S(1270,620,PINK,'🧯 Nothing accumulates: no wallet, no streaks, no reason to return tomorrow');
+
+  /* C — other players */
+  L(2330,248,'C · Other organisms in the dish');
+  C(2330,300,400,'Cobone','Regional daily-deals veteran (Dubai-based). Aging Groupon model, fading KSA focus.');
+  C(2330,470,400,'The Entertainer','Buy-1-get-1 vouchers behind an annual subscription. Strong dining brand; the paywall caps mass-market reach.');
+  const waffarx=C(2330,640,400,'WaffarX','Pure online cashback (affiliate) live in KSA. Proves cashback demand — but no offline coupons, no owned merchant network.');
+  C(2330,815,400,'Qitaf · Mokafaa · stc pay','Telco/bank loyalty giants. Massive reach, but points feel like pocket lint and offers are generic, not local.');
+
+  /* D — personas */
+  L(220,1080,'D · Who we’re pipetting for');
+  S(220,1130,CYAN,'🧍 The Deal Hunter — 18–28, checks 3 apps before paying full price for anything');
+  S(475,1130,CYAN,'👨‍👩‍👧 The Family Optimizer — 30–45, plans weekends around dining + entertainment offers for 4+');
+  S(220,1360,CYAN,'🧮 The Cashback Maximizer — won’t swipe without a % back; stacks bank points with app rewards');
+  S(475,1360,CYAN,'🏪 The SME Merchant — wants weekday foot traffic without deep-discount margin burn');
+
+  /* E — opportunities */
+  L(1270,1080,'E · Reaction: where we win');
+  S(1270,1130,GREEN,'⚗️ Coupons = acquisition. Cashback = retention. Rivals only hold half the molecule.');
+  S(1525,1130,GREEN,'⚗️ Cashback wallet spendable across the whole network → cross-merchant lock-in');
+  S(1270,1360,GREEN,'⚗️ Arabic-first, personalized discovery vs Waffarha’s static deal lists');
+  S(1525,1360,GREEN,'⚗️ Seasonal super-cycles: Ramadan, National Day, Riyadh Season');
+  const pos=C(1810,1180,430,'🧬 Positioning hypothesis',
+    '“Buy the deal, keep the change.”\n\nThe only KSA app where every coupon purchase pays you back — coupons pull users in, a universal cashback wallet keeps them in.',
+    {accent:'violet'});
+
+  /* F — risks */
+  L(2330,1080,'F · Hazards');
+  S(2330,1130,AMBER,'⚠️ Coupon fatigue: merchants treating voucher users as 2nd-class kills trust fast');
+  S(2585,1130,AMBER,'⚠️ CAC war vs an entrenched brand — “more discounts” is not a hook');
+  const riskBurn=S(2330,1360,PINK,'⚠️ Cashback burn must stay below take rate — model unit economics before scaling');
+  S(2585,1360,AMBER,'⚠️ Regulatory: voucher refund rules, consumer protection & VAT treatment');
+
+  /* G — hypotheses */
+  L(220,1620,'G · Hypotheses to test next — turn insights into experiments');
+  const h1=S(220,1672,VIOLET,'H1 · Coupons + cashback lifts 90-day repeat purchase ≥ 2× vs coupons alone');
+  const h2=S(475,1672,VIOLET,'H2 · Users prefer instant SAR wallet cashback over points (Qitaf/Mokafaa fatigue)');
+  const h3=S(730,1672,VIOLET,'H3 · SME merchants accept an 8–12% take rate if we cap discount depth');
+  S(985,1672,VIOLET,'H4 · Dining + entertainment in Riyadh & Jeddah beat retail as launch verticals');
+
+  /* EXP-02 placeholder */
+  F(3420,160,980,780,'🧫 EXPERIMENT 02 — AWAITING SAMPLE',{dim:true});
+  L(3480,250,'⌁ sterile zone — drop next findings here',{dim:true});
+  S(3480,330,WHITE,'🧫 Next samples → value-prop map · persona interviews · merchant pitch deck · pricing & take-rate model',280);
+  S(3800,430,CYAN,'Tip: S note · C card · F frame · L connector. Double-click anywhere to drop a note.');
+
+  W(wkLoop,pos,'the gap');
+  W(wkAccum,pos,'the gap');
+  W(waffarx,h2,'proves demand');
+  W(pos,h1,'test first');
+  W(riskBurn,h3,'constrains');
+
+  return {items,wires};
+}
+
+/* ============ rendering ============ */
+function positionEl(it){
+  const el=elById[it.id]; if(!el) return;
+  el.style.left=it.x+'px'; el.style.top=it.y+'px';
+}
+function renderItem(it){
+  const el=document.createElement('div');
+  el.className='item '+it.type;
+  el.dataset.id=it.id;
+  if(it.w) el.style.width=it.w+'px';
+  if(it.type==='frame'){
+    el.style.height=it.h+'px';
+    if(it.dim) el.classList.add('dim');
+    const tab=document.createElement('div'); tab.className='tab'; tab.textContent=it.title;
+    el.appendChild(tab);
+  }else if(it.type==='label'){
+    el.textContent=it.text;
+    if(it.dim) el.classList.add('dim');
+  }else if(it.type==='card'){
+    if(it.accent) el.classList.add('accent-'+it.accent);
+    if(it.small) el.classList.add('small');
+    const t=document.createElement('div'); t.className='ct'; t.textContent=it.title;
+    const b=document.createElement('div'); b.className='cb';
+    if(it.html) b.innerHTML=it.text; else b.textContent=it.text;
+    el.append(t,b);
+    el.style.zIndex=10+(++zc);
+  }else{ /* sticky */
+    el.style.background=it.color;
+    if(it.rot) el.style.transform='rotate('+it.rot+'deg)';
+    const b=document.createElement('div'); b.className='sb'; b.textContent=it.text;
+    el.appendChild(b);
+    el.style.zIndex=10+(++zc);
+  }
+  world.appendChild(el);
+  elById[it.id]=el;
+  positionEl(it);
+}
+function renderAll(){
+  Object.keys(elById).forEach(k=>delete elById[k]);
+  world.querySelectorAll('.item').forEach(e=>e.remove());
+  const order={frame:0,label:1,card:2,sticky:2};
+  [...state.items].sort((a,b)=>order[a.type]-order[b.type]).forEach(renderItem);
+  drawWires(); mmDirty();
+}
+
+/* ============ wires ============ */
+function svgEl(tag,attrs){
+  const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs) el.setAttribute(k,attrs[k]);
+  return el;
+}
+function centerOf(id){
+  const it=byId(id), el=elById[id];
+  const w=el.offsetWidth||it.w||100, h=el.offsetHeight||it.h||100;
+  return {x:it.x+w/2, y:it.y+h/2, w, h};
+}
+function edgePoint(c,to){
+  const dx=to.x-c.x, dy=to.y-c.y;
+  let t=Infinity;
+  if(Math.abs(dx)>.01) t=Math.min(t,(c.w/2)/Math.abs(dx));
+  if(Math.abs(dy)>.01) t=Math.min(t,(c.h/2)/Math.abs(dy));
+  if(!isFinite(t)) t=0;
+  const len=Math.hypot(dx,dy)||1;
+  t=Math.min(t+10/len,.5);
+  return {x:c.x+dx*t, y:c.y+dy*t};
+}
+function drawWires(){
+  wireG.innerHTML='';
+  state.wires.forEach(wr=>{
+    const A=byId(wr.a), B=byId(wr.b);
+    if(!A||!B||!elById[wr.a]||!elById[wr.b]) return;
+    const ca=centerOf(wr.a), cb=centerOf(wr.b);
+    const p1=edgePoint(ca,cb), p2=edgePoint(cb,ca);
+    const dx=p2.x-p1.x, dy=p2.y-p1.y;
+    let c1,c2;
+    if(Math.abs(dx)>Math.abs(dy)){c1=[p1.x+dx*.38,p1.y];c2=[p2.x-dx*.38,p2.y];}
+    else{c1=[p1.x,p1.y+dy*.38];c2=[p2.x,p2.y-dy*.38];}
+    const d='M'+p1.x+' '+p1.y+' C'+c1[0]+' '+c1[1]+' '+c2[0]+' '+c2[1]+' '+p2.x+' '+p2.y;
+    wireG.appendChild(svgEl('path',{d,'class':'wire-hit','data-id':wr.id}));
+    wireG.appendChild(svgEl('path',{d,'class':'wire'+(wr.id===selWireId?' sel':''),'data-id':wr.id,'marker-end':'url(#arw)'}));
+    if(wr.label){
+      const mx=(p1.x+3*c1[0]+3*c2[0]+p2.x)/8, my=(p1.y+3*c1[1]+3*c2[1]+p2.y)/8;
+      const t=svgEl('text',{x:mx,y:my-7,'class':'wlab','text-anchor':'middle'});
+      t.textContent=wr.label;
+      wireG.appendChild(t);
+    }
+  });
+}
+
+/* ============ view / transform ============ */
+function applyView(){
+  world.style.transform='translate('+view.x+'px,'+view.y+'px) scale('+view.s+')';
+  const m=28*view.s, M=140*view.s;
+  vp.style.backgroundSize=m+'px '+m+'px,'+m+'px '+m+'px,'+M+'px '+M+'px,'+M+'px '+M+'px';
+  vp.style.backgroundPosition=view.x+'px '+view.y+'px';
+  zoomLbl.textContent=Math.round(view.s*100)+'%';
+  syncFloat(); mmDirty();
+}
+const toWorld=(cx,cy)=>({x:(cx-view.x)/view.s, y:(cy-view.y)/view.s});
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function zoomAt(cx,cy,factor){
+  const ns=clamp(view.s*factor,.06,4);
+  view.x=cx-(cx-view.x)*(ns/view.s);
+  view.y=cy-(cy-view.y)*(ns/view.s);
+  view.s=ns;
+  applyView(); save(false);
+}
+function itemsBBox(pad){
+  if(!state.items.length) return null;
+  let x1=1/0,y1=1/0,x2=-1/0,y2=-1/0;
+  state.items.forEach(it=>{
+    const el=elById[it.id];
+    const w=(it.type==='frame'?it.w:(el?el.offsetWidth:it.w||200));
+    const h=(it.type==='frame'?it.h:(el?el.offsetHeight:150));
+    x1=Math.min(x1,it.x); y1=Math.min(y1,it.y);
+    x2=Math.max(x2,it.x+w); y2=Math.max(y2,it.y+h);
+  });
+  return {x:x1-pad,y:y1-pad,w:(x2-x1)+2*pad,h:(y2-y1)+2*pad};
+}
+function fitView(){
+  const bb=itemsBBox(130); if(!bb) return;
+  const availH=innerHeight-56;
+  const s=clamp(Math.min(innerWidth/bb.w, availH/bb.h),.06,1.4);
+  view.s=s;
+  view.x=(innerWidth-bb.w*s)/2 - bb.x*s;
+  view.y=56+(availH-bb.h*s)/2 - bb.y*s;
+  applyView(); save(false);
+}
+
+/* ============ selection / floatbar ============ */
+function select(id){
+  if(selWireId){selWireId=null; drawWires();}
+  if(selId&&elById[selId]) elById[selId].classList.remove('sel');
+  selId=id;
+  if(id){
+    const el=elById[id], it=byId(id);
+    el.classList.add('sel');
+    if(it.type!=='frame'&&it.type!=='label') el.style.zIndex=10+(++zc);
+  }
+  syncFloat();
+}
+function selectWire(id){
+  select(null);
+  selWireId=id; drawWires();
+}
+function syncFloat(){
+  if(!selId||!elById[selId]){floatbar.style.display='none';return;}
+  const it=byId(selId), el=elById[selId];
+  const sx=(it.x+el.offsetWidth/2)*view.s+view.x;
+  const sy=it.y*view.s+view.y;
+  floatbar.style.display='flex';
+  floatbar.style.left=sx+'px';
+  floatbar.style.top=Math.max(sy-14,70)+'px';
+  const isSticky=it.type==='sticky';
+  swatches.style.display=isSticky?'flex':'none';
+  fbsep.style.display=isSticky?'block':'none';
+}
+function deleteSel(){
+  if(selWireId){
+    state.wires=state.wires.filter(w=>w.id!==selWireId);
+    selWireId=null; drawWires(); save(); return;
+  }
+  if(!selId) return;
+  const id=selId;
+  const it=byId(id);
+  if(it&&it.locked) return;
+  select(null);
+  state.items=state.items.filter(i=>i.id!==id);
+  state.wires=state.wires.filter(w=>w.a!==id&&w.b!==id);
+  if(elById[id]){elById[id].remove(); delete elById[id];}
+  drawWires(); save(); mmDirty();
+}
+function duplicateSel(){
+  if(!selId) return;
+  const it=byId(selId); if(!it||it.type==='frame') return;
+  const copy=JSON.parse(JSON.stringify(it));
+  copy.id=nid(); copy.x+=28; copy.y+=28; delete copy.locked;
+  state.items.push(copy);
+  renderItem(copy);
+  select(copy.id); save(); mmDirty();
+}
+
+/* ============ editing ============ */
+function editEl(el,commit){
+  try{el.contentEditable='plaintext-only';}catch(e){el.contentEditable='true';}
+  el.focus();
+  const r=document.createRange(); r.selectNodeContents(el);
+  const s=getSelection(); s.removeAllRanges(); s.addRange(r);
+  const onKey=ev=>{
+    if(ev.key==='Escape'){ev.preventDefault();el.blur();}
+    ev.stopPropagation();
+  };
+  el.addEventListener('keydown',onKey);
+  el.addEventListener('blur',()=>{
+    el.removeEventListener('keydown',onKey);
+    el.contentEditable='false';
+    commit(el.innerText.replace(/\s+$/,''));
+    drawWires(); save(); mmDirty();
+  },{once:true});
+}
+
+/* ============ placement ============ */
+function placeAt(type,p){
+  let it;
+  if(type==='sticky'){
+    it={id:nid(),type:'sticky',x:p.x-115,y:p.y-90,w:230,color:PALETTE[palIdx%PALETTE.length],rot:((idc*53)%5)-2,text:'New note'};
+    palIdx++;
+  }else if(type==='card'){
+    it={id:nid(),type:'card',x:p.x-160,y:p.y-70,w:320,title:'🧾 New specimen card',text:'Double-click the title or this body to edit…'};
+  }else{
+    it={id:nid(),type:'frame',x:p.x-450,y:p.y-280,w:900,h:560,title:'🧪 EXPERIMENT — UNTITLED'};
+  }
+  state.items.push(it);
+  if(type==='frame'){renderAll();}else{renderItem(it);}
+  select(it.id); save(); mmDirty();
+  return it;
+}
+
+/* ============ tools ============ */
+function setTool(t){
+  tool=t;
+  if(t!=='connect') cancelConnect();
+  document.querySelectorAll('#toolbar [data-tool]').forEach(b=>b.classList.toggle('active',b.dataset.tool===t));
+  document.body.classList.toggle('placing',['sticky','card','frame'].includes(t));
+  document.body.classList.toggle('connecting',t==='connect');
+}
+function cancelConnect(){
+  if(wireSrc&&elById[wireSrc]) elById[wireSrc].classList.remove('wire-src');
+  wireSrc=null;
+}
+function handleConnectClick(id){
+  if(!wireSrc){
+    wireSrc=id;
+    elById[id].classList.add('wire-src');
+  }else if(wireSrc!==id){
+    state.wires.push({id:nid(),a:wireSrc,b:id});
+    cancelConnect(); setTool('select'); drawWires(); save();
+  }
+}
+
+/* ============ drag handlers ============ */
+function startPan(e){
+  vp.classList.add('grabbing');
+  const sx=e.clientX, sy=e.clientY, ox=view.x, oy=view.y;
+  const mv=ev=>{view.x=ox+ev.clientX-sx; view.y=oy+ev.clientY-sy; applyView();};
+  const up=()=>{
+    window.removeEventListener('pointermove',mv);
+    vp.classList.remove('grabbing');
+    save(false);
+  };
+  window.addEventListener('pointermove',mv);
+  window.addEventListener('pointerup',up,{once:true});
+}
+function insideFrame(o,f){
+  const el=elById[o.id]; if(!el) return false;
+  const cx=o.x+el.offsetWidth/2, cy=o.y+el.offsetHeight/2;
+  return cx>f.x&&cx<f.x+f.w&&cy>f.y&&cy<f.y+f.h;
+}
+function startItemDrag(e,id){
+  const it=byId(id);
+  const sx=e.clientX, sy=e.clientY, ox=it.x, oy=it.y;
+  let group=[];
+  if(it.type==='frame'){
+    group=state.items.filter(o=>o.id!==id&&o.type!=='frame'&&insideFrame(o,it)).map(o=>({o,x:o.x,y:o.y}));
+  }
+  let moved=false;
+  const mv=ev=>{
+    const dx=(ev.clientX-sx)/view.s, dy=(ev.clientY-sy)/view.s;
+    if(Math.abs(ev.clientX-sx)+Math.abs(ev.clientY-sy)>3) moved=true;
+    it.x=ox+dx; it.y=oy+dy; positionEl(it);
+    group.forEach(g=>{g.o.x=g.x+dx; g.o.y=g.y+dy; positionEl(g.o);});
+    drawWires(); syncFloat(); mmDirty();
+  };
+  const up=()=>{
+    window.removeEventListener('pointermove',mv);
+    if(moved) save();
+  };
+  window.addEventListener('pointermove',mv);
+  window.addEventListener('pointerup',up,{once:true});
+}
+
+/* ============ pointer events ============ */
+vp.addEventListener('pointerdown',e=>{
+  if(e.button===2) return;
+  const editing=document.activeElement&&document.activeElement.isContentEditable;
+  if(e.target.isContentEditable) return;
+  if(editing) document.activeElement.blur();
+  if(spaceDown||e.button===1){e.preventDefault(); startPan(e); return;}
+
+  const itemEl=e.target.closest&&e.target.closest('.item');
+  const wireEl=e.target.closest&&e.target.closest('.wire, .wire-hit');
+
+  if(tool==='connect'){
+    if(itemEl) handleConnectClick(itemEl.dataset.id);
+    else {cancelConnect(); setTool('select');}
+    return;
+  }
+  if(['sticky','card','frame'].includes(tool)){
+    placeAt(tool,toWorld(e.clientX,e.clientY));
+    if(!e.shiftKey) setTool('select');
+    return;
+  }
+  if(itemEl){
+    select(itemEl.dataset.id);
+    startItemDrag(e,itemEl.dataset.id);
+  }else if(wireEl){
+    selectWire(wireEl.dataset.id);
+  }else{
+    select(null);
+    startPan(e);
+  }
+});
+
+vp.addEventListener('dblclick',e=>{
+  if(e.target.isContentEditable) return;
+  const itemEl=e.target.closest&&e.target.closest('.item');
+  if(itemEl){
+    const it=byId(itemEl.dataset.id);
+    if(!it||it.locked) return;
+    if(it.type==='frame'){
+      editEl(itemEl.querySelector('.tab'),v=>{it.title=v;});
+    }else if(it.type==='card'){
+      if(it.html) return;
+      const t=e.target.closest('.ct');
+      if(t) editEl(t,v=>{it.title=v;});
+      else editEl(itemEl.querySelector('.cb'),v=>{it.text=v;});
+    }else if(it.type==='sticky'){
+      editEl(itemEl.querySelector('.sb'),v=>{it.text=v;});
+    }else if(it.type==='label'){
+      editEl(itemEl,v=>{it.text=v;});
+    }
+  }else{
+    const it=placeAt('sticky',toWorld(e.clientX,e.clientY));
+    const sb=elById[it.id].querySelector('.sb');
+    editEl(sb,v=>{it.text=v||'…';});
+  }
+});
+
+vp.addEventListener('wheel',e=>{
+  e.preventDefault();
+  if(e.ctrlKey||e.metaKey){
+    zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0022));
+  }else{
+    view.x-=e.deltaX; view.y-=e.deltaY;
+    applyView(); save(false);
+  }
+},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+vp.addEventListener('contextmenu',e=>e.preventDefault());
+
+/* ============ keyboard ============ */
+window.addEventListener('keydown',e=>{
+  const t=e.target;
+  if((t&&t.isContentEditable)||/INPUT|TEXTAREA/.test(t&&t.tagName||'')) return;
+  if(e.key===' '){spaceDown=true; vp.style.cursor='grab'; e.preventDefault(); return;}
+  if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault(); deleteSel(); return;}
+  if(e.key==='Escape'){select(null); cancelConnect(); setTool('select'); return;}
+  if((e.metaKey||e.ctrlKey)&&(e.key==='d'||e.key==='D')){e.preventDefault(); duplicateSel(); return;}
+  if(e.metaKey||e.ctrlKey) return;
+  const k=e.key.toLowerCase();
+  if(k==='v') setTool('select');
+  else if(k==='s') setTool('sticky');
+  else if(k==='c') setTool('card');
+  else if(k==='f') setTool('frame');
+  else if(k==='l') setTool('connect');
+  else if(k==='1') fitView();
+  else if(k==='0'){view.s=1; applyView();}
+  else if(k==='='||k==='+') zoomAt(innerWidth/2,innerHeight/2,1.25);
+  else if(k==='-') zoomAt(innerWidth/2,innerHeight/2,.8);
+});
+window.addEventListener('keyup',e=>{
+  if(e.key===' '){spaceDown=false; vp.style.cursor='';}
+});
+window.addEventListener('resize',()=>{applyView();});
+
+/* ============ minimap ============ */
+let mmScale=1, mmOx=0, mmOy=0, mmQueued=false;
+function mmDirty(){
+  if(mmQueued) return;
+  mmQueued=true;
+  requestAnimationFrame(()=>{mmQueued=false; drawMap();});
+}
+function drawMap(){
+  const W=212,H=132;
+  mmctx.setTransform(2,0,0,2,0,0);
+  mmctx.clearRect(0,0,W,H);
+  const bb=itemsBBox(240); if(!bb) return;
+  const k=Math.min(W/bb.w,H/bb.h);
+  const ox=(W-bb.w*k)/2-bb.x*k, oy=(H-bb.h*k)/2-bb.y*k;
+  mmScale=k; mmOx=ox; mmOy=oy;
+  state.items.forEach(it=>{
+    const el=elById[it.id];
+    const w=(it.type==='frame'?it.w:(el?el.offsetWidth:200));
+    const h=(it.type==='frame'?it.h:(el?el.offsetHeight:150));
+    const x=it.x*k+ox, y=it.y*k+oy;
+    if(it.type==='frame'){
+      mmctx.strokeStyle=it.dim?'rgba(140,160,190,.5)':'rgba(0,229,160,.55)';
+      mmctx.lineWidth=1;
+      mmctx.strokeRect(x,y,w*k,h*k);
+    }else if(it.type==='label'){
+      /* skip labels on map */
+    }else if(it.type==='card'){
+      mmctx.fillStyle='rgba(120,150,200,.75)';
+      mmctx.fillRect(x,y,w*k,h*k);
+    }else{
+      mmctx.fillStyle=it.color||'#ccc';
+      mmctx.fillRect(x,y,w*k,h*k);
+    }
+  });
+  const vx=(-view.x)/view.s, vy=(-view.y)/view.s;
+  const vw=innerWidth/view.s, vh=innerHeight/view.s;
+  mmctx.strokeStyle='#5bd7ff';
+  mmctx.lineWidth=1.4;
+  mmctx.strokeRect(vx*k+ox,vy*k+oy,vw*k,vh*k);
+}
+mmc.addEventListener('pointerdown',e=>{
+  const move=ev=>{
+    const r=mmc.getBoundingClientRect();
+    const wx=((ev.clientX-r.left)-mmOx)/mmScale;
+    const wy=((ev.clientY-r.top)-mmOy)/mmScale;
+    view.x=innerWidth/2-wx*view.s;
+    view.y=innerHeight/2-wy*view.s;
+    applyView();
+  };
+  move(e);
+  window.addEventListener('pointermove',move);
+  window.addEventListener('pointerup',()=>{
+    window.removeEventListener('pointermove',move);
+    save(false);
+  },{once:true});
+});
+
+/* ============ persistence ============ */
+let saveTimer=null;
+function save(flash){
+  if(flash===undefined) flash=true;
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    try{
+      localStorage.setItem(LS_KEY,JSON.stringify({view,items:state.items,wires:state.wires,idc}));
+      if(flash){
+        savedChip.classList.add('on');
+        setTimeout(()=>savedChip.classList.remove('on'),900);
+      }
+    }catch(err){/* storage unavailable */}
+  },300);
+}
+function load(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(raw){
+      const d=JSON.parse(raw);
+      if(d&&Array.isArray(d.items)&&d.items.length){
+        state={items:d.items,wires:d.wires||[]};
+        idc=d.idc||d.items.length+50;
+        if(d.view) view=d.view;
+        return true;
+      }
+    }
+  }catch(err){}
+  state=seed();
+  return false;
+}
+
+/* ============ topbar / toolbar / floatbar wiring ============ */
+document.querySelectorAll('#toolbar [data-tool]').forEach(b=>{
+  b.addEventListener('click',()=>setTool(b.dataset.tool));
+});
+document.getElementById('fitBtn').addEventListener('click',fitView);
+document.getElementById('fitBtn2').addEventListener('click',fitView);
+document.getElementById('zoomIn').addEventListener('click',()=>zoomAt(innerWidth/2,innerHeight/2,1.25));
+document.getElementById('zoomOut').addEventListener('click',()=>zoomAt(innerWidth/2,innerHeight/2,.8));
+document.getElementById('dupBtn').addEventListener('click',duplicateSel);
+document.getElementById('delBtn').addEventListener('click',deleteSel);
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify({view,items:state.items,wires:state.wires},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='copo-lab-exp01-market-research.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(!confirm('Reset the lab to the original EXP-01 market-research board?\nEverything you added or moved will be lost.')) return;
+  select(null);
+  state=seed();
+  renderAll();
+  fitView();
+  save();
+});
+PALETTE.forEach(c=>{
+  const b=document.createElement('button');
+  b.style.background=c;
+  b.title='Recolor';
+  b.addEventListener('click',()=>{
+    if(!selId) return;
+    const it=byId(selId);
+    if(it.type!=='sticky') return;
+    it.color=c;
+    elById[selId].style.background=c;
+    save(); mmDirty();
+  });
+  swatches.appendChild(b);
+});
+
+/* ============ boot ============ */
+const hadSave=load();
+renderAll();
+requestAnimationFrame(()=>{
+  if(hadSave){applyView();}
+  else fitView();
+  drawWires(); mmDirty();
+});
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{drawWires(); mmDirty();});
+})();
+</script>
+</body>
+</html>
