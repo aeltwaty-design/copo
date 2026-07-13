@@ -14,12 +14,7 @@ export default async function handler(req, res) {
   const secret = process.env.AUTH_SECRET;
 
   if (!validUser || !validPass || !secret) {
-    res.status(500).json({
-      ok: false,
-      error: 'Auth is not configured on the server',
-      // TEMPORARY diagnostic — booleans only, never the actual values. Remove once resolved.
-      missing: { AUTH_USER: !validUser, AUTH_PASS: !validPass, AUTH_SECRET: !secret },
-    });
+    res.status(500).json({ ok: false, error: 'Auth is not configured on the server' });
     return;
   }
 
