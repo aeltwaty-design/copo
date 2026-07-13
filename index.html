@@ -311,7 +311,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 <script>
 (() => {
 'use strict';
-const LS_KEY = 'copoLab.board.v2';
+const LS_KEY = 'copoLab.board.v3';
 const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
 const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
 
@@ -458,6 +458,37 @@ function seed(){
     '≥ 3 of 4 RQs clear their signal → greenlight the Riyadh dining MVP. Otherwise, iterate the value prop before we spend on build.',
     {accent:'violet'});
 
+  /* ============ EXPERIMENT 03 — RESEARCH READOUT (virtual run of EXP-02) ============ */
+  F(3420,1760,2760,1200,'🧪 EXPERIMENT 03 — RESEARCH READOUT · SIMULATED RUN OF EXP-02');
+  S(3520,1800,AMBER,'⚠️ SIMULATED / VIRTUAL RUN — findings below are synthesized from the EXP-01 personas & market data, NOT real fieldwork. Treat as a dry-run to sharpen the study before recruiting real users.',760);
+
+  /* P — verdicts (how each RQ resolved) */
+  L(3520,2010,'P · Verdicts — how each research question resolved');
+  const v1=S(3520,2060,GREEN,'RQ1 ✓ SUPPORTED — coupon + cashback lifted stated repeat-intent ≈ 2.3× vs coupon-only');
+  const v2=S(3775,2060,GREEN,'RQ2 ✓ SUPPORTED — instant SAR cashback out-ranked points by ≈ 22 MaxDiff pts');
+  const v3=S(3520,2300,AMBER,'RQ3 ◑ MIXED — SMEs accept 8–10% only if payout ≤ 14 days and discounts stay shallow');
+  const v4=S(3775,2300,GREEN,'RQ4 ✓ SUPPORTED — dining & entertainment drew the highest intent; retail lagged badly');
+
+  /* Q — voices (persona quotes) */
+  L(4470,2010,'Q · Voices from the (virtual) field');
+  S(4470,2060,CYAN,'“If I actually get money back, I’d open it again next week.” — Deal Hunter, 24');
+  S(4725,2060,CYAN,'“Points feel fake — real riyals in a wallet I understand.” — Cashback Maximizer, 31');
+  S(4470,2300,CYAN,'“I plan Thursday dinner around offers — give me family bundles.” — Family Optimizer, 38');
+  S(4725,2300,CYAN,'“Weekday footfall is worth it, but don’t torch my margin.” — SME Merchant, Riyadh café');
+
+  /* R — numbers (survey & usability) */
+  L(5420,2010,'R · Numbers — survey & usability');
+  C(5420,2060,510,'📊 Survey · n = 412 (simulated)',
+    'Reward preference (MaxDiff): Cashback 46% · Discount 33% · Points 21%. Merchant fee tolerance clusters 8–12%. Users expect ≥ 5% back to feel “worth it”.');
+  C(5420,2300,510,'🖥️ Usability · 8 tasks',
+    'Coupon→wallet task success 88%. “Keep the change” understood unaided by 7 / 8. Main confusion: where cashback lands and when it becomes spendable.');
+
+  /* S — decision gate outcome */
+  L(3520,2560,'S · Decision gate outcome');
+  const decisionOutcome=C(3520,2610,760,'🧬 CONDITIONAL GREENLIGHT — 3.5 / 4 cleared',
+    'Greenlight a Riyadh dining + entertainment MVP built around an instant SAR cashback wallet. De-risk RQ3 first: lock merchant payout ≤ 14 days and cap discount depth before onboarding at scale.',
+    {accent:'violet'});
+
   /* EXP-01 internal wires */
   W(wkLoop,pos,'the gap');
   W(wkAccum,pos,'the gap');
@@ -471,6 +502,13 @@ function seed(){
   W(h3,RQ3,'test');
   W(h4,RQ4,'test');
   W(pos,decisionGate,'the bet');
+
+  /* EXP-02 → EXP-03: each research question resolves to a verdict */
+  W(RQ1,v1,'result');
+  W(RQ2,v2,'result');
+  W(RQ3,v3,'result');
+  W(RQ4,v4,'result');
+  W(decisionGate,decisionOutcome,'run');
 
   return {items,wires};
 }
@@ -958,7 +996,7 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   URL.revokeObjectURL(a.href);
 });
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(!confirm('Reset the lab to the original EXP-01 + EXP-02 research board?\nEverything you added or moved will be lost.')) return;
+  if(!confirm('Reset the lab to the original seeded research board (EXP-01 → EXP-03)?\nEverything you added or moved will be lost.')) return;
   select(null);
   state=seed();
   renderAll();
