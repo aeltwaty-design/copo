@@ -228,6 +228,67 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
   max-width:560px;line-height:1.7;
 }
 #hint b{color:#b9cbe6;font-weight:600}
+
+/* ---------- EXP-04 wireframe screens ---------- */
+.screen{cursor:grab;z-index:10}
+.screen .scap{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:9px;white-space:nowrap}
+.phone{background:#0a0f1c;border:2px solid #283850;border-radius:32px;padding:10px;box-shadow:0 26px 60px rgba(0,0,0,.6)}
+.pscr{position:relative;height:566px;background:#0d1524;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.pisl{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:62px;height:17px;background:#05080f;border-radius:11px;z-index:5}
+.pbar{display:flex;justify-content:space-between;padding:8px 18px 4px;font-size:10.5px;font-weight:700;color:#c7d4ea;flex:none}
+.u-wrap{flex:1;display:flex;flex-direction:column;min-height:0}
+.u-pad{flex:1;padding:8px 13px;display:flex;flex-direction:column;gap:10px;overflow:hidden;color:#e8eef7}
+.u-top{display:flex;justify-content:space-between;align-items:center}
+.u-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px}
+.u-logo em{font-style:normal;color:var(--green)}
+.u-wal{display:flex;align-items:center;gap:5px;background:rgba(0,229,160,.13);border:1px solid rgba(0,229,160,.45);color:var(--green);border-radius:999px;padding:4px 9px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700}
+.u-srch{background:#16223a;border:1px solid #2a3a58;border-radius:11px;padding:9px 12px;color:#7183a1;font-size:11.5px;display:flex;gap:8px}
+.u-cats{display:flex;gap:6px}
+.u-cat{flex:1;background:#141f34;border:1px solid #26344e;border-radius:10px;padding:8px 3px;text-align:center;font-size:9px;color:#c9d6ea}
+.u-cat b{display:block;font-size:17px;font-weight:400;margin-bottom:2px}
+.u-sec{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;font-weight:700}
+.u-sec span{color:#5bd7ff;font-size:9.5px;font-weight:600}
+.u-deal{background:#111c30;border:1px solid #26344e;border-radius:13px;overflow:hidden}
+.u-img{height:64px;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative}
+.u-badge{position:absolute;top:7px;left:7px;background:#ff5c8a;color:#fff;font-size:9.5px;font-weight:800;border-radius:7px;padding:2px 7px}
+.u-din{padding:8px 10px 10px}
+.u-mer{font-size:11.5px;font-weight:700}
+.u-sub{font-size:9.5px;color:#8ea3c0;margin-top:1px}
+.u-prow{display:flex;align-items:center;gap:7px;margin-top:7px}
+.u-now{font-size:14px;font-weight:800}
+.u-old{font-size:10px;color:#7183a1;text-decoration:line-through}
+.u-cb{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:var(--green);background:rgba(0,229,160,.1);border-radius:6px;padding:2px 6px}
+.u-nav{margin-top:auto;display:flex;justify-content:space-around;padding:8px 4px 10px;border-top:1px solid #1b2740;background:#0b1220;flex:none}
+.u-nav div{font-size:8px;color:#5f7391;text-align:center;font-weight:600}
+.u-nav b{display:block;font-size:15px;font-weight:400;margin-bottom:1px}
+.u-nav .on{color:var(--green)}
+.u-back{display:flex;justify-content:space-between;align-items:center;font-size:17px;color:#c9d6ea}
+.u-hero{height:118px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:46px;position:relative}
+.u-h1{font-size:15px;font-weight:800;line-height:1.25}
+.u-cash{display:flex;align-items:center;gap:8px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.35);border-radius:11px;padding:9px 11px;font-size:10.5px;color:#bfeede}
+.u-cash b{color:var(--green)}
+.u-li{font-size:10px;color:#8ea3c0;display:flex;gap:6px}
+.u-bot{margin-top:auto;padding:11px 13px;border-top:1px solid #1b2740;background:#0b1220;flex:none}
+.u-btn{background:var(--green);color:#04231a;font-weight:800;text-align:center;border-radius:12px;padding:12px;font-size:13px}
+.u-btn2{background:transparent;color:#c9d6ea;border:1px solid #2a3a58;font-weight:600;text-align:center;border-radius:12px;padding:11px;font-size:12px;margin-top:8px}
+.u-card{background:#111c30;border:1px solid #26344e;border-radius:13px;padding:11px 12px}
+.u-row{display:flex;justify-content:space-between;font-size:11px;padding:5px 0;color:#c9d6ea}
+.u-row.tot{border-top:1px solid #26344e;margin-top:4px;padding-top:9px;font-weight:800;font-size:13px;color:#fff}
+.u-pay{display:flex;align-items:center;gap:9px;background:#111c30;border:1px solid #2a3a58;border-radius:11px;padding:10px 11px;font-size:11px}
+.u-pay.sel{border-color:var(--green)}
+.u-dot{margin-left:auto;width:15px;height:15px;border-radius:50%;border:2px solid #2a3a58}
+.u-pay.sel .u-dot{border-color:var(--green);background:radial-gradient(circle,var(--green) 44%,transparent 48%)}
+.u-check{width:72px;height:72px;border-radius:50%;background:rgba(0,229,160,.15);border:2px solid var(--green);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:36px;margin:10px auto 2px}
+.u-cen{text-align:center}
+.u-toast{display:flex;align-items:center;gap:8px;justify-content:center;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.35);border-radius:10px;padding:9px;font-size:10.5px;color:var(--green);font-weight:700}
+.u-qr{width:92px;height:92px;border-radius:12px;margin:2px auto;background:#e8eef7;display:flex;align-items:center;justify-content:center;font-size:60px;color:#0b1120;line-height:1}
+.u-code{font-family:'IBM Plex Mono',monospace;text-align:center;letter-spacing:.22em;font-size:14px;font-weight:700;color:#fff;margin-top:7px}
+.u-bal{font-size:29px;font-weight:800}
+.u-tabs{display:flex;gap:8px}
+.u-tab{flex:1;text-align:center;font-size:11px;font-weight:700;padding:8px;border-radius:9px;color:#8ea3c0;background:#141f34}
+.u-tab.on{color:#04231a;background:var(--green)}
+.u-txn{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;padding:7px 0;border-bottom:1px solid #1b2740;color:#c9d6ea}
+.u-txn .g{color:var(--green);font-weight:700}
 </style>
 </head>
 <body>
@@ -311,7 +372,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 <script>
 (() => {
 'use strict';
-const LS_KEY = 'copoLab.board.v3';
+const LS_KEY = 'copoLab.board.v4';
 const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
 const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
 
@@ -334,6 +395,7 @@ function seed(){
   idc=1; const items=[],wires=[];
   const S=(x,y,color,text,w=230)=>{const it={id:nid(),type:'sticky',x,y,w,color,rot:((idc*53)%5)-2,text};items.push(it);return it;};
   const C=(x,y,w,title,text,opt={})=>{const it=Object.assign({id:nid(),type:'card',x,y,w,title,text},opt);items.push(it);return it;};
+  const SC=(x,y,title,html,w=300)=>{const it={id:nid(),type:'screen',x,y,w,title,html};items.push(it);return it;};
   const L=(x,y,text,opt={})=>{const it=Object.assign({id:nid(),type:'label',x,y,text},opt);items.push(it);return it;};
   const F=(x,y,w,h,title,opt={})=>{const it=Object.assign({id:nid(),type:'frame',x,y,w,h,title},opt);items.push(it);return it;};
   const W=(a,b,label)=>wires.push({id:nid(),a:a.id,b:b.id,label});
@@ -489,6 +551,72 @@ function seed(){
     'Greenlight a Riyadh dining + entertainment MVP built around an instant SAR cashback wallet. De-risk RQ3 first: lock merchant payout ≤ 14 days and cap discount depth before onboarding at scale.',
     {accent:'violet'});
 
+  /* ============ EXPERIMENT 04 — UX WIREFRAMES (happy path) ============ */
+  F(120,2100,2360,900,'🧪 EXPERIMENT 04 — UX WIREFRAMES · HAPPY PATH: HOME → PURCHASE');
+  L(160,2150,'⌁ happy path only — empty / error / edge states not shown',{dim:true});
+
+  const wf1=SC(160,2210,'1 · Home',
+    '<div class="u-wrap"><div class="u-pad">'+
+      '<div class="u-top"><div class="u-logo">CO<em>PO</em></div><div class="u-wal">◆ SR 48.50</div></div>'+
+      '<div class="u-srch">🔍 Search deals, places…</div>'+
+      '<div class="u-cats"><div class="u-cat"><b>🍽</b>Dining</div><div class="u-cat"><b>☕</b>Cafés</div><div class="u-cat"><b>💆</b>Beauty</div><div class="u-cat"><b>🎬</b>Fun</div></div>'+
+      '<div class="u-sec">Featured deals <span>See all ›</span></div>'+
+      '<div class="u-deal"><div class="u-img" style="background:linear-gradient(135deg,#3a2c1e,#6b4b2a)">☕<div class="u-badge">-40%</div></div>'+
+        '<div class="u-din"><div class="u-mer">Barn’s Café</div><div class="u-sub">Riyadh · Specialty coffee</div>'+
+        '<div class="u-prow"><span class="u-now">SR 29</span><span class="u-old">SR 49</span><span class="u-cb">+5% back</span></div></div></div>'+
+      '<div class="u-deal"><div class="u-img" style="background:linear-gradient(135deg,#1e2f3a,#2a5a6b)">🍔<div class="u-badge">-30%</div></div>'+
+        '<div class="u-din"><div class="u-mer">Estabina Burgers</div><div class="u-sub">Jeddah · Casual dining</div>'+
+        '<div class="u-prow"><span class="u-now">SR 42</span><span class="u-old">SR 60</span><span class="u-cb">+5% back</span></div></div></div>'+
+    '</div><div class="u-nav"><div class="on"><b>⌂</b>Home</div><div><b>🎟</b>Deals</div><div><b>👛</b>Wallet</div><div><b>☺</b>Me</div></div></div>');
+
+  const wf2=SC(620,2210,'2 · Deal detail',
+    '<div class="u-wrap"><div class="u-pad">'+
+      '<div class="u-back"><span>‹</span><span>♡</span></div>'+
+      '<div class="u-hero" style="background:linear-gradient(135deg,#3a2c1e,#6b4b2a)">☕<div class="u-badge">-40%</div></div>'+
+      '<div class="u-mer" style="font-size:13px">Barn’s Café</div><div class="u-sub">Riyadh · Specialty coffee · ★ 4.7</div>'+
+      '<div class="u-h1">40% off any specialty coffee</div>'+
+      '<div class="u-prow"><span class="u-now" style="font-size:19px">SR 29</span><span class="u-old">SR 49</span></div>'+
+      '<div class="u-cash">💸<div>Earn <b>SR 1.45</b> cashback (5%) to your wallet</div></div>'+
+      '<div class="u-li">✓ Valid 90 days · dine-in or takeaway</div>'+
+      '<div class="u-li">✓ One per visit · not with other offers</div>'+
+    '</div><div class="u-bot"><div class="u-btn">Buy coupon · SR 29</div></div></div>');
+
+  const wf3=SC(1080,2210,'3 · Checkout',
+    '<div class="u-wrap"><div class="u-pad">'+
+      '<div class="u-back"><span>‹</span><span style="font-size:13px;font-weight:700">Checkout</span><span style="width:14px"></span></div>'+
+      '<div class="u-card"><div class="u-mer" style="margin-bottom:4px">Barn’s Café — 40% off coffee</div>'+
+        '<div class="u-row"><span>Coupon price</span><span>SR 29.00</span></div>'+
+        '<div class="u-row"><span>Cashback earned</span><span class="u-cb" style="margin:0">+ SR 1.45</span></div>'+
+        '<div class="u-row tot"><span>Total</span><span>SR 29.00</span></div></div>'+
+      '<div class="u-sec" style="margin-top:2px">Pay with</div>'+
+      '<div class="u-pay sel">💳<div><b>mada</b> ···· 4921</div><div class="u-dot"></div></div>'+
+      '<div class="u-pay">🍎<div>Apple Pay</div><div class="u-dot"></div></div>'+
+    '</div><div class="u-bot"><div class="u-btn">Pay SR 29.00</div></div></div>');
+
+  const wf4=SC(1540,2210,'4 · Success',
+    '<div class="u-wrap"><div class="u-pad u-cen">'+
+      '<div class="u-check">✓</div>'+
+      '<div style="font-size:16px;font-weight:800">Payment successful</div>'+
+      '<div class="u-sub" style="margin-bottom:4px">Your coupon is ready to use</div>'+
+      '<div class="u-card"><div class="u-qr">▚</div><div class="u-code">CPO-8F3K</div>'+
+        '<div class="u-sub" style="margin-top:6px">Barn’s Café · 40% off · exp 12 Oct</div></div>'+
+      '<div class="u-toast">🎉 SR 1.45 added to your wallet</div>'+
+    '</div><div class="u-bot"><div class="u-btn">View in wallet</div><div class="u-btn2">Back to home</div></div></div>');
+
+  const wf5=SC(2000,2210,'5 · Wallet',
+    '<div class="u-wrap"><div class="u-pad">'+
+      '<div class="u-sec" style="font-size:14px">Wallet</div>'+
+      '<div class="u-sub" style="margin-top:-5px">Cashback balance</div>'+
+      '<div class="u-bal">SR 49.95</div>'+
+      '<div class="u-sub" style="margin-top:-7px;color:#00e5a0">▲ SR 1.45 just added</div>'+
+      '<div class="u-tabs"><div class="u-tab on">Coupons</div><div class="u-tab">Cashback</div></div>'+
+      '<div class="u-deal"><div class="u-din"><div class="u-prow" style="margin:0"><span class="u-mer">Barn’s Café</span><span class="u-cb" style="margin-left:auto">Active</span></div>'+
+        '<div class="u-sub">40% off · code CPO-8F3K · exp 12 Oct</div>'+
+        '<div class="u-btn" style="margin-top:9px;padding:9px;font-size:12px">Use now</div></div></div>'+
+      '<div class="u-txn"><span>Barn’s Café · cashback</span><span class="g">+ SR 1.45</span></div>'+
+      '<div class="u-txn"><span>Estabina · cashback</span><span class="g">+ SR 2.10</span></div>'+
+    '</div><div class="u-nav"><div><b>⌂</b>Home</div><div><b>🎟</b>Deals</div><div class="on"><b>👛</b>Wallet</div><div><b>☺</b>Me</div></div></div>');
+
   /* EXP-01 internal wires */
   W(wkLoop,pos,'the gap');
   W(wkAccum,pos,'the gap');
@@ -509,6 +637,12 @@ function seed(){
   W(RQ3,v3,'result');
   W(RQ4,v4,'result');
   W(decisionGate,decisionOutcome,'run');
+
+  /* EXP-04 happy-path flow */
+  W(wf1,wf2,'tap deal');
+  W(wf2,wf3,'buy');
+  W(wf3,wf4,'pay');
+  W(wf4,wf5,'view wallet');
 
   return {items,wires};
 }
@@ -539,6 +673,12 @@ function renderItem(it){
     if(it.html) b.innerHTML=it.text; else b.textContent=it.text;
     el.append(t,b);
     el.style.zIndex=10+(++zc);
+  }else if(it.type==='screen'){
+    const cap=document.createElement('div'); cap.className='scap'; cap.textContent=it.title;
+    const ph=document.createElement('div'); ph.className='phone';
+    ph.innerHTML='<div class="pisl"></div><div class="pscr"><div class="pbar"><span>9:41</span><span>5G ▮▮▮ 100%</span></div>'+it.html+'</div>';
+    el.append(cap,ph);
+    el.style.zIndex=10+(++zc);
   }else{ /* sticky */
     el.style.background=it.color;
     if(it.rot) el.style.transform='rotate('+it.rot+'deg)';
@@ -553,7 +693,7 @@ function renderItem(it){
 function renderAll(){
   Object.keys(elById).forEach(k=>delete elById[k]);
   world.querySelectorAll('.item').forEach(e=>e.remove());
-  const order={frame:0,label:1,card:2,sticky:2};
+  const order={frame:0,label:1,card:2,sticky:2,screen:2};
   [...state.items].sort((a,b)=>order[a.type]-order[b.type]).forEach(renderItem);
   drawWires(); mmDirty();
 }
@@ -914,7 +1054,7 @@ function drawMap(){
       mmctx.strokeRect(x,y,w*k,h*k);
     }else if(it.type==='label'){
       /* skip labels on map */
-    }else if(it.type==='card'){
+    }else if(it.type==='card'||it.type==='screen'){
       mmctx.fillStyle='rgba(120,150,200,.75)';
       mmctx.fillRect(x,y,w*k,h*k);
     }else{
@@ -996,7 +1136,7 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   URL.revokeObjectURL(a.href);
 });
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(!confirm('Reset the lab to the original seeded research board (EXP-01 → EXP-03)?\nEverything you added or moved will be lost.')) return;
+  if(!confirm('Reset the lab to the original seeded board (EXP-01 → EXP-04)?\nEverything you added or moved will be lost.')) return;
   select(null);
   state=seed();
   renderAll();
