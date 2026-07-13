@@ -311,7 +311,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 <script>
 (() => {
 'use strict';
-const LS_KEY = 'copoLab.board.v1';
+const LS_KEY = 'copoLab.board.v2';
 const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
 const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
 
@@ -408,19 +408,69 @@ function seed(){
   const h1=S(220,1672,VIOLET,'H1 · Coupons + cashback lifts 90-day repeat purchase ≥ 2× vs coupons alone');
   const h2=S(475,1672,VIOLET,'H2 · Users prefer instant SAR wallet cashback over points (Qitaf/Mokafaa fatigue)');
   const h3=S(730,1672,VIOLET,'H3 · SME merchants accept an 8–12% take rate if we cap discount depth');
-  S(985,1672,VIOLET,'H4 · Dining + entertainment in Riyadh & Jeddah beat retail as launch verticals');
+  const h4=S(985,1672,VIOLET,'H4 · Dining + entertainment in Riyadh & Jeddah beat retail as launch verticals');
 
-  /* EXP-02 placeholder */
-  F(3420,160,980,780,'🧫 EXPERIMENT 02 — AWAITING SAMPLE',{dim:true});
-  L(3480,250,'⌁ sterile zone — drop next findings here',{dim:true});
-  S(3480,330,WHITE,'🧫 Next samples → value-prop map · persona interviews · merchant pitch deck · pricing & take-rate model',280);
-  S(3800,430,CYAN,'Tip: S note · C card · F frame · L connector. Double-click anywhere to drop a note.');
+  /* ============ EXPERIMENT 02 — USER RESEARCH ============ */
+  F(3420,160,2760,1420,'🧪 EXPERIMENT 02 — USER RESEARCH · VALIDATING COUPONS × CASHBACK');
+  C(3520,-140,620,'🧪 Study snapshot',
+    'Mixed-method, ~6 weeks, Riyadh + Jeddah. Purpose: pressure-test the four EXP-01 hypotheses (H1–H4) with real users before we build anything. Arabic-first fieldwork.',
+    {locked:true});
 
+  /* H — research questions (trace back to EXP-01 hypotheses) */
+  L(3520,248,'H · Research questions — what we must validate');
+  const RQ1=S(3520,300,VIOLET,'RQ1 · Does adding cashback to a coupon lift repeat-purchase intent vs a coupon alone?');
+  const RQ2=S(3775,300,VIOLET,'RQ2 · Do users prefer instant SAR wallet cashback over the points they already hold?');
+  const RQ3=S(3520,545,VIOLET,'RQ3 · Will SME merchants trade margin for weekday footfall at an 8–12% take rate?');
+  const RQ4=S(3775,545,VIOLET,'RQ4 · Are dining & entertainment the right verticals to launch and test first?');
+
+  /* I — method */
+  L(4470,248,'I · Method — how we run the assay');
+  C(4470,300,430,'🧫 Phase 1 · Discovery interviews',
+    '12 × 45-min moderated sessions, Arabic-first — 3 per persona. In the second half users react to a clickable coupon→wallet prototype.');
+  C(4470,560,430,'📋 Phase 2 · Validation survey',
+    'n ≈ 400 across KSA. MaxDiff on reward type (cashback vs points vs deeper discount) + Van Westendorp price sensitivity on fees.');
+  C(4470,820,430,'🖥️ Phase 3 · Usability test',
+    '8 unmoderated tasks on the coupon→wallet flow. Measure task success, time-on-task, and comprehension of “keep the change”.');
+
+  /* J — participants (reuse EXP-01 personas as recruit quotas) */
+  L(5420,248,'J · Specimens — who we recruit');
+  S(5420,300,CYAN,'🧍 Deal Hunter ×4 — 18–28, already juggles ≥3 deal apps');
+  S(5675,300,CYAN,'👨‍👩‍👧 Family Optimizer ×3 — 30–45, plans weekends for 4+');
+  S(5420,545,CYAN,'🧮 Cashback Maximizer ×3 — won’t swipe without a % back');
+  S(5675,545,CYAN,'🏪 SME Merchant ×4 — F&B owner / manager');
+  C(5420,790,510,'🔬 Screener & incentive',
+    'Recruit via panel + café intercepts in Riyadh & Jeddah. SR 150 incentive. Exclude anyone in market research or working for a rival deals app.');
+
+  /* L — signals */
+  L(3520,1080,'L · Signals — what confirms or kills each RQ');
+  S(3520,1130,GREEN,'✅ Stated repeat-intent ≥ 2× with cashback → H1 holds');
+  S(3775,1130,GREEN,'✅ Cashback beats points in MaxDiff by ≥ 15 pts → H2 holds');
+  S(3520,1360,AMBER,'⚠️ Merchants balk below 8% take → rework the H3 model');
+  S(3775,1360,GREEN,'✅ Task success ≥ 80% on the wallet flow → concept is learnable');
+
+  /* N — deliverables + decision gate */
+  L(4470,1080,'N · Deliverables — what leaves the lab');
+  S(4470,1130,GREEN,'📦 Validated (or killed) persona set + JTBD map');
+  S(4725,1130,GREEN,'📦 Reward-type preference & price-sensitivity readout');
+  S(4470,1360,GREEN,'📦 Prioritized MVP feature list');
+  S(4725,1360,GREEN,'📦 Go / no-go on the dining + entertainment launch');
+  const decisionGate=C(5420,1110,510,'🧬 Decision gate',
+    '≥ 3 of 4 RQs clear their signal → greenlight the Riyadh dining MVP. Otherwise, iterate the value prop before we spend on build.',
+    {accent:'violet'});
+
+  /* EXP-01 internal wires */
   W(wkLoop,pos,'the gap');
   W(wkAccum,pos,'the gap');
   W(waffarx,h2,'proves demand');
   W(pos,h1,'test first');
   W(riskBurn,h3,'constrains');
+
+  /* EXP-01 → EXP-02 traceability: each hypothesis becomes a research question */
+  W(h1,RQ1,'test');
+  W(h2,RQ2,'test');
+  W(h3,RQ3,'test');
+  W(h4,RQ4,'test');
+  W(pos,decisionGate,'the bet');
 
   return {items,wires};
 }
@@ -908,7 +958,7 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   URL.revokeObjectURL(a.href);
 });
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(!confirm('Reset the lab to the original EXP-01 market-research board?\nEverything you added or moved will be lost.')) return;
+  if(!confirm('Reset the lab to the original EXP-01 + EXP-02 research board?\nEverything you added or moved will be lost.')) return;
   select(null);
   state=seed();
   renderAll();
