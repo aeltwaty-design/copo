@@ -827,12 +827,25 @@ function deleteSel(){
 }
 function duplicateSel(){
   if(!selId) return;
-  const it=byId(selId); if(!it||it.type==='frame') return;
-  const copy=JSON.parse(JSON.stringify(it));
-  copy.id=nid(); copy.x+=28; copy.y+=28; delete copy.locked;
-  state.items.push(copy);
-  renderItem(copy);
-  select(copy.id); save(); mmDirty();
+  const it=byId(selId); if(!it) return;
+  const group=it.type==='frame'
+    ? [it,...state.items.filter(o=>o.id!==it.id&&o.type!=='frame'&&insideFrame(o,it))]
+    : [it];
+  const idMap={};
+  const copies=group.map(o=>{
+    const copy=JSON.parse(JSON.stringify(o));
+    copy.id=nid(); idMap[o.id]=copy.id;
+    copy.x+=28; copy.y+=28; delete copy.locked;
+    return copy;
+  });
+  const oldIds=new Set(group.map(o=>o.id));
+  const wireCopies=state.wires
+    .filter(w=>oldIds.has(w.a)&&oldIds.has(w.b))
+    .map(w=>({id:nid(),a:idMap[w.a],b:idMap[w.b],label:w.label}));
+  state.items.push(...copies);
+  state.wires.push(...wireCopies);
+  if(it.type==='frame'){renderAll();}else{renderItem(copies[0]);}
+  select(idMap[it.id]); save(); mmDirty();
 }
 
 /* ============ editing ============ */
