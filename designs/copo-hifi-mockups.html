@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Copo — Hi-Fi Mockups</title>
+<style>
+/* ============================================================
+   COPO — High-fidelity mockups · Light theme
+   Brand: coral-red #FF4D4F · reward gold #FFC24B
+   ============================================================ */
+:root{
+  --brand:#FF4D4F; --brand-d:#EF3B3E; --brand-t:#FF7A7C; --brand-wash:#FFECEC;
+  --gold:#FFC24B; --gold-d:#F2A82E;
+  --ink:#16181D; --ink2:#5B6070; --ink3:#9AA0B0;
+  --line:#ECEDF1; --line2:#F4F5F8;
+  --bg:#FFF7F3; --card:#FFFFFF; --wash:#F7F8FB;
+  --ok:#12B76A;
+  --sh-sm:0 1px 2px rgba(16,18,25,.05),0 3px 8px rgba(16,18,25,.05);
+  --sh-md:0 8px 22px rgba(16,18,25,.10);
+  --sh-lg:0 20px 46px rgba(16,18,25,.17);
+  --sh-br:0 10px 22px rgba(255,77,79,.34);
+  --cluster:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='12' viewBox='0 0 68 12' fill='%2316181D'%3E%3Crect x='0' y='6' width='3' height='6' rx='1'/%3E%3Crect x='5' y='4' width='3' height='8' rx='1'/%3E%3Crect x='10' y='2' width='3' height='10' rx='1'/%3E%3Crect x='15' y='0' width='3' height='12' rx='1'/%3E%3Cpath d='M28 3.2c3-2.9 8-2.9 11 0l-1.6 1.6c-2-2-5.8-2-7.8 0z'/%3E%3Ccircle cx='33.5' cy='8.2' r='1.7'/%3E%3Crect x='50' y='1' width='15' height='9.5' rx='2.4' fill='none' stroke='%2316181D' stroke-width='1.2'/%3E%3Crect x='51.5' y='2.6' width='10.5' height='6.3' rx='1.2'/%3E%3Crect x='66' y='3.6' width='1.7' height='4.3' rx='.85'/%3E%3C/svg%3E");
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:
+  radial-gradient(1200px 500px at 80% -5%, #FFE7E3 0%, transparent 60%),
+  radial-gradient(900px 500px at 0% 10%, #FFF1E9 0%, transparent 55%),
+  var(--bg);
+  color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.4;min-height:100vh}
+.wrap{max-width:1300px;margin:0 auto;padding:44px 28px 130px}
+img{max-width:100%}
+
+/* ---------- doc chrome ---------- */
+.dhead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:26px}
+.logo-badge{width:52px;height:52px;border-radius:15px;background:linear-gradient(160deg,#FF6567,var(--brand-d));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px;box-shadow:var(--sh-br)}
+.dhead h1{font-size:27px;font-weight:800;letter-spacing:-.02em}
+.dhead .tag{color:var(--ink2);font-size:13.5px;margin-top:2px}
+.dhead .pill{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tagpill{font-size:11px;font-weight:700;color:var(--ink2);background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:6px}
+.tagpill .sw{width:12px;height:12px;border-radius:4px}
+
+.sec{margin-top:56px}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-h .no{font-size:12px;font-weight:800;color:#fff;background:var(--brand);border-radius:8px;padding:4px 9px;letter-spacing:.06em}
+.sec-h h2{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.sec-d{color:var(--ink2);font-size:13.5px;max-width:840px;margin:0 0 24px}
+.sec-d b{color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:34px 28px;align-items:flex-start}
+.fig{display:flex;flex-direction:column;gap:11px;width:300px}
+.cap{font-size:12px;color:var(--ink2)}
+.cap b{color:var(--ink);font-weight:700}
+
+/* ============================================================
+   PHONE
+   ============================================================ */
+.phone{width:300px;height:648px;background:linear-gradient(145deg,#25262B,#0C0D10);border-radius:44px;
+  padding:11px;box-shadow:var(--sh-lg);position:relative;flex:none}
+.phone::before{content:"";position:absolute;inset:5px;border-radius:40px;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.10);pointer-events:none;z-index:60}
+.scr{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;background:var(--card)}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:86px;height:22px;
+  background:#08090B;border-radius:13px;z-index:45}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:13px 22px 6px;flex:none;z-index:20}
+.stat b{font-size:12px;font-weight:700}
+.stat .cluster{width:64px;height:11px;background:var(--cluster) no-repeat center/contain}
+.stat.light b{color:#fff}
+.stat.light .cluster{filter:brightness(0) invert(1)}
+.home-i{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:120px;height:5px;
+  border-radius:3px;background:rgba(22,24,29,.28);z-index:45}
+.scr.dk .home-i{background:rgba(255,255,255,.5)}
+.body{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.pad{padding:6px 15px 14px;display:flex;flex-direction:column;gap:13px;flex:1;overflow:hidden}
+.fade-b::after{content:"";position:absolute;left:0;right:0;bottom:0;height:44px;
+  background:linear-gradient(transparent,var(--card));pointer-events:none;z-index:6}
+
+/* ---------- icons (inline helpers) ---------- */
+.ic{width:22px;height:22px;display:inline-block;flex:none}
+.iconbtn{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-sm);color:var(--ink)}
+.iconbtn.plain{background:transparent;border:none;box-shadow:none;width:30px}
+
+/* ---------- text ---------- */
+.h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.h2{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.t-sub{font-size:12px;color:var(--ink2)}
+.t-mut{font-size:11px;color:var(--ink3)}
+.sec-t{display:flex;justify-content:space-between;align-items:center}
+.sec-t .st{font-size:14.5px;font-weight:800}
+.sec-t .sa{font-size:11.5px;font-weight:700;color:var(--brand)}
+
+/* ---------- buttons ---------- */
+.btn{background:linear-gradient(180deg,#FF5C5E,var(--brand-d));color:#fff;font-weight:700;font-size:14px;
+  text-align:center;border-radius:15px;padding:14px;box-shadow:var(--sh-br);letter-spacing:.01em}
+.btn.blk{width:100%}
+.btn.sm{padding:11px;font-size:12.5px;border-radius:12px}
+.btn.out{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost{background:transparent;color:var(--ink2);box-shadow:none;font-weight:600}
+.btn.gold{background:linear-gradient(180deg,#FFCF6A,var(--gold-d));color:#3A2A05;box-shadow:0 10px 22px rgba(255,194,75,.4)}
+.btn.dark{background:#000;color:#fff;box-shadow:var(--sh-md)}
+
+/* ---------- search ---------- */
+.search{background:var(--wash);border:1px solid var(--line);border-radius:15px;padding:12px 14px;
+  color:var(--ink3);font-size:12.5px;display:flex;gap:9px;align-items:center;box-shadow:var(--sh-sm)}
+.search svg{flex:none}
+
+/* ---------- chips ---------- */
+.chips{display:flex;gap:8px;overflow:hidden}
+.chip{border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:11.5px;font-weight:600;
+  color:var(--ink2);white-space:nowrap;background:var(--card)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tabbar{gap:6px;border-bottom:1px solid var(--line);padding-bottom:11px}
+.tabbar .tab{font-size:12.5px;font-weight:700;color:var(--ink3);padding:4px 2px;position:relative}
+.tabbar .tab.on{color:var(--ink)}
+.tabbar .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-11px;height:2.5px;background:var(--brand);border-radius:2px}
+
+/* ---------- category tiles ---------- */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;font-weight:600;color:var(--ink2)}
+.cat .cico{width:52px;height:52px;border-radius:17px;display:flex;align-items:center;justify-content:center;
+  font-size:23px;box-shadow:var(--sh-sm)}
+
+/* ---------- store cards ---------- */
+.scard{border-radius:20px;overflow:hidden;background:var(--card);box-shadow:var(--sh-sm);border:1px solid var(--line2)}
+.cover{height:96px;position:relative;display:flex;align-items:center;justify-content:center;font-size:40px}
+.cover .badge{position:absolute;top:9px;left:9px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:800;
+  border-radius:8px;padding:4px 8px;backdrop-filter:blur(4px)}
+.cover .fav{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-sm)}
+.cover .lvlchip{position:absolute;bottom:-13px;right:12px;background:var(--card);border-radius:11px;padding:5px 9px;
+  box-shadow:var(--sh-md);display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:800}
+.srow{display:flex;gap:11px;padding:12px 13px 13px;align-items:center}
+.slogo{width:40px;height:40px;border-radius:12px;flex:none;box-shadow:var(--sh-sm);display:flex;align-items:center;justify-content:center;font-size:19px}
+.sname{font-size:13.5px;font-weight:800}
+.smeta{font-size:10px;color:var(--ink2);margin-top:2px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.star{color:var(--gold-d);font-weight:800}
+.dots{display:flex;gap:4px;margin-left:auto}
+.dots i{width:8px;height:8px;border-radius:50%;border:1.6px solid var(--brand);display:inline-block}
+.dots i.f{background:var(--brand)}
+.dots i.l{border-color:var(--ink3);border-style:dotted}
+
+/* image gradient presets (fake photos) */
+.im-coffee{background:linear-gradient(150deg,#6F4A2E,#B98A4E)}
+.im-latte{background:linear-gradient(150deg,#8A5A34,#D9B27E)}
+.im-cinema{background:linear-gradient(150deg,#2A2350,#5B4C86)}
+.im-burger{background:linear-gradient(150deg,#7A3B1E,#C98A3C)}
+.im-cafe{background:linear-gradient(150deg,#4E6B57,#96B487)}
+.im-beauty{background:linear-gradient(150deg,#7A3556,#C77E9C)}
+.im-fun{background:linear-gradient(150deg,#25507A,#5E9BC9)}
+.im-brunch{background:linear-gradient(150deg,#846029,#D8B15C)}
+.im-dessert{background:linear-gradient(150deg,#7A2E44,#C97E8E)}
+.logo-a{background:linear-gradient(150deg,#3A2A1B,#7A5636);color:#fff}
+.logo-b{background:linear-gradient(150deg,#2A2350,#5B4C86);color:#fff}
+.logo-c{background:linear-gradient(150deg,#4E6B57,#8FB185);color:#fff}
+.logo-d{background:linear-gradient(150deg,#7A3B1E,#C98A3C);color:#fff}
+
+/* ============================================================
+   LEVEL SYSTEM — the signature UI
+   ============================================================ */
+.track{border-radius:20px;padding:15px 15px 16px;background:
+  linear-gradient(160deg,#FFF3F1,#FFFFFF);border:1px solid var(--line);box-shadow:var(--sh-sm)}
+.track.gold{background:linear-gradient(160deg,#FFF6E6,#FFFFFF)}
+.track-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.track-top .tt{font-size:13px;font-weight:800}
+.track-top .tp{font-size:10.5px;font-weight:800;color:var(--brand);background:var(--brand-wash);border-radius:999px;padding:4px 9px}
+.track.gold .tp{color:var(--gold-d);background:#FFF1CF}
+.steps{display:flex;align-items:flex-start}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.step .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;z-index:2;background:var(--wash);color:var(--ink3);border:2px solid var(--line)}
+.step.done .dot{background:linear-gradient(180deg,#FF5C5E,var(--brand-d));color:#fff;border-color:transparent;box-shadow:var(--sh-br)}
+.step.on .dot{background:linear-gradient(180deg,#FF5C5E,var(--brand-d));color:#fff;border-color:transparent;
+  box-shadow:0 0 0 5px var(--brand-wash),var(--sh-br)}
+.step.lock .dot{background:var(--wash);color:var(--ink3);border-style:solid}
+.step .lvln{font-size:8.5px;font-weight:800;letter-spacing:.02em}
+.step .lvld{font-size:9px;font-weight:700;color:var(--ink2)}
+.step.lock .lvln,.step.lock .lvld{color:var(--ink3)}
+.step .bar{position:absolute;top:16px;left:-50%;width:100%;height:3px;background:var(--line);z-index:1;border-radius:2px}
+.step .bar.fill{background:linear-gradient(90deg,var(--brand),var(--brand-t))}
+.step:first-child .bar{display:none}
+.track-hint{margin-top:14px;font-size:11px;color:var(--ink2);background:var(--card);border:1px dashed var(--line);
+  border-radius:12px;padding:9px 11px;display:flex;align-items:center;gap:8px}
+.track-hint b{color:var(--ink)}
+.track-hint .spark{color:var(--brand)}
+.mini-prog{height:8px;border-radius:5px;background:var(--line2);overflow:hidden}
+.mini-prog span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-t));border-radius:5px}
+
+/* level groups */
+.lvl{border-radius:18px;border:1px solid var(--line);overflow:hidden;background:var(--card);box-shadow:var(--sh-sm)}
+.lvl-hd{display:flex;align-items:center;gap:10px;padding:11px 13px}
+.lvl-hd .lno{width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;background:linear-gradient(180deg,#FF5C5E,var(--brand-d));flex:none}
+.lvl-hd .lname{font-size:12.5px;font-weight:800}
+.lvl-hd .ldisc{font-size:10px;color:var(--ink2)}
+.lvl-hd .lstate{margin-left:auto;font-size:9px;font-weight:800;color:var(--ok);background:#E7F8F0;border-radius:999px;padding:4px 9px}
+.lvl-hd .lstate.lk{color:var(--ink3);background:var(--wash)}
+.lvl.locked .lvl-hd .lno{background:var(--wash);color:var(--ink3)}
+.lvl-body{padding:0 11px 11px;display:flex;flex-direction:column;gap:9px}
+
+/* coupon ticket */
+.coupon{display:flex;gap:11px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:9px;
+  background:var(--card);position:relative}
+.coupon .cim{width:46px;height:46px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:21px}
+.coupon .cb{flex:1;min-width:0}
+.coupon .ctit{font-size:12.5px;font-weight:800}
+.coupon .csub{font-size:9.5px;color:var(--ink2);margin-top:1px}
+.coupon .cpr{display:flex;align-items:center;gap:7px;margin-top:6px}
+.coupon .now{font-size:14px;font-weight:800}
+.coupon .old{font-size:10px;color:var(--ink3);text-decoration:line-through}
+.disc{font-size:9px;font-weight:800;color:#fff;background:var(--brand);border-radius:6px;padding:2px 6px}
+.disc.gold{background:var(--gold);color:#3A2A05}
+.add{width:32px;height:32px;border-radius:11px;background:linear-gradient(180deg,#FF5C5E,var(--brand-d));color:#fff;
+  flex:none;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;box-shadow:var(--sh-br)}
+.add.out{background:#E7F8F0;color:var(--ok);box-shadow:none}
+.qtybox{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:11px;padding:5px 6px}
+.qtybox b{font-size:12px;font-weight:800;min-width:12px;text-align:center}
+.qtybox .qb{width:24px;height:24px;border-radius:8px;background:var(--wash);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.lockwrap{position:relative;border-radius:12px;overflow:hidden}
+.blurred{filter:blur(3px);opacity:.5;pointer-events:none}
+.lockov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.82));
+  backdrop-filter:blur(2px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:12px}
+.lockov .lk{width:38px;height:38px;border-radius:50%;background:var(--card);box-shadow:var(--sh-md);display:flex;align-items:center;justify-content:center}
+.lockov .lkt{font-size:11px;font-weight:800}
+.lockov .lks{font-size:9.5px;color:var(--ink2);max-width:200px}
+.teaser{font-size:9px;font-weight:800;color:var(--gold-d);background:#FFF1CF;border-radius:999px;padding:3px 8px}
+
+/* ---------- bottom nav ---------- */
+.nav{flex:none;display:flex;justify-content:space-around;padding:9px 8px 14px;background:var(--card);
+  border-top:1px solid var(--line);position:relative;z-index:10}
+.navi{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9.5px;font-weight:700;color:var(--ink3)}
+.navi.on{color:var(--brand)}
+
+/* ---------- sheets / drawers ---------- */
+.scrim{position:absolute;inset:0;background:rgba(16,18,25,.42);z-index:50;border-radius:34px;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.sheet{background:var(--card);border-radius:26px 26px 0 0;padding:8px 17px 20px;display:flex;flex-direction:column;gap:13px;box-shadow:0 -14px 40px rgba(0,0,0,.22)}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:6px auto 4px}
+.sheet-t{font-size:16px;font-weight:800}
+
+/* ---------- checkout ---------- */
+.field{border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font-size:12.5px;color:var(--ink3);background:var(--card)}
+.field.on{border-color:var(--ink);color:var(--ink);font-weight:600}
+.flabel{font-size:10px;font-weight:800;color:var(--ink2);letter-spacing:.04em;margin-bottom:6px}
+.pm{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:15px;padding:13px;background:var(--card)}
+.pm.sel{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-wash)}
+.pm .pmi{width:40px;height:26px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:800;color:#fff}
+.pm .radio{margin-left:auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--line)}
+.pm.sel .radio{border-color:var(--brand);background:radial-gradient(circle,var(--brand) 42%,transparent 46%)}
+.orow{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;color:var(--ink2)}
+.orow.tot{border-top:1px solid var(--line);margin-top:4px;padding-top:11px;font-weight:800;font-size:15px;color:var(--ink)}
+.save-pill{font-size:10px;font-weight:800;color:var(--ok);background:#E7F8F0;border-radius:999px;padding:3px 9px}
+.checkc{width:74px;height:74px;border-radius:50%;background:linear-gradient(180deg,#19C177,#0FA362);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:34px;margin:8px auto 4px;box-shadow:0 12px 26px rgba(18,183,106,.4)}
+.qr{width:96px;height:96px;border-radius:14px;margin:6px auto;background:
+  repeating-linear-gradient(0deg,#16181D 0 4px,#fff 4px 8px),repeating-linear-gradient(90deg,#16181D 0 4px,transparent 4px 8px);
+  background-blend-mode:multiply;border:5px solid #fff;box-shadow:var(--sh-sm)}
+.toast{display:flex;align-items:center;gap:9px;justify-content:center;background:#FFF1CF;border:1px solid #F4D98B;
+  border-radius:13px;padding:11px;font-size:11px;font-weight:800;color:#6A4E12}
+
+/* apple pay */
+.ap-sheet{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 -14px 40px rgba(0,0,0,.28);border:1px solid var(--line)}
+.ap-head{display:flex;align-items:center;gap:8px;padding:14px;font-weight:800;font-size:15px;border-bottom:1px solid var(--line2)}
+.ap-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line2);font-size:12px}
+.ap-row .k{color:var(--ink2)}.ap-row .v{font-weight:700}
+.ap-pay{margin:13px 14px 6px;background:#000;color:#fff;border-radius:12px;text-align:center;padding:14px;font-weight:800;font-size:14px}
+.ap-side{position:absolute;right:-11px;top:150px;width:5px;height:64px;background:#0C0D10;border-radius:0 4px 4px 0;z-index:44}
+
+/* confetti (congrats) */
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.confetti i{position:absolute;width:7px;height:11px;border-radius:2px;opacity:.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== DOC HEADER ===== -->
+  <header class="dhead">
+    <div class="logo-badge">c</div>
+    <div>
+      <h1>Copo — Hi-Fi Mockups</h1>
+      <div class="tag">KSA coupons · the 4-level store journey · light theme</div>
+    </div>
+    <div class="pill">
+      <span class="tagpill"><span class="sw" style="background:#FF4D4F"></span>#FF4D4F brand</span>
+      <span class="tagpill"><span class="sw" style="background:#FFC24B"></span>#FFC24B reward</span>
+      <span class="tagpill">21 screens</span>
+    </div>
+  </header>
+
+  <!-- ===== 1 · ONBOARDING ===== -->
+  <section class="sec">
+    <div class="sec-h"><span class="no">01</span><h2>Onboarding → Sign in → Location</h2></div>
+    <p class="sec-d">Three quick slides (slide 2 teaches the level journey), then phone + OTP sign-in and a value-first location ask.</p>
+    <div class="row">
+
+      <!-- 1a splash -->
+      <div class="fig">
+        <div class="cap"><b>1a</b> · Splash</div>
+        <div class="phone"><div class="island"></div><div class="scr dk" style="background:linear-gradient(165deg,#FF6567 0%,#EF3B3E 55%,#C92B2E 100%)">
+          <div class="stat light"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body" style="align-items:center;justify-content:center;color:#fff;gap:18px;text-align:center">
+            <div style="width:88px;height:88px;border-radius:26px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);
+              display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;backdrop-filter:blur(4px)">c</div>
+            <div style="font-size:34px;font-weight:800;letter-spacing:-.03em">copo</div>
+            <div style="font-size:13.5px;opacity:.92;max-width:210px">Buy the deal — level up the discount.</div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1b slide 1 -->
+      <div class="fig">
+        <div class="cap"><b>1b</b> · Value slide 1</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="justify-content:space-between">
+            <div style="display:flex;justify-content:flex-end"><span class="btn ghost sm">Skip</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+              <div style="width:170px;height:170px;border-radius:34px;background:linear-gradient(160deg,#FFE2DE,#FFF3F1);
+                display:flex;align-items:center;justify-content:center;font-size:74px;box-shadow:var(--sh-md)">🎟️</div>
+              <div style="font-size:22px;font-weight:800;text-align:center;letter-spacing:-.02em">Thousands of coupons,<br>near you</div>
+              <div class="t-sub" style="text-align:center;max-width:230px">Dining, cafés, beauty and fun — discounted across the Kingdom.</div>
+            </div>
+            <div style="display:flex;gap:7px;justify-content:center">
+              <span style="width:22px;height:7px;border-radius:4px;background:var(--brand)"></span>
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+            </div>
+            <div class="btn blk">Next</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1c slide 2 level idea -->
+      <div class="fig">
+        <div class="cap"><b>1c</b> · Value slide 2 — the level idea</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="justify-content:space-between">
+            <div style="display:flex;justify-content:flex-end"><span class="btn ghost sm">Skip</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px">
+              <div style="display:flex;gap:9px;align-items:flex-end">
+                <div style="width:46px;height:56px;border-radius:13px;background:linear-gradient(180deg,#FF5C5E,#EF3B3E);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:var(--sh-br)">L1</div>
+                <div style="width:46px;height:74px;border-radius:13px;background:#FFE7E3;color:var(--brand-d);display:flex;align-items:center;justify-content:center;font-weight:800">L2</div>
+                <div style="width:46px;height:92px;border-radius:13px;background:#FFEFC9;color:var(--gold-d);display:flex;align-items:center;justify-content:center;font-weight:800">L3</div>
+                <div style="width:46px;height:110px;border-radius:13px;background:linear-gradient(180deg,#FFD46A,#F2A82E);color:#3A2A05;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-weight:800">L4</div>
+              </div>
+              <div style="font-size:22px;font-weight:800;text-align:center;letter-spacing:-.02em">Every store has<br>4 discount levels</div>
+              <div class="t-sub" style="text-align:center;max-width:240px">Start at Level 1. Buy 2 coupons to unlock the next level — and bigger discounts, up to 60% off.</div>
+            </div>
+            <div style="display:flex;gap:7px;justify-content:center">
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+              <span style="width:22px;height:7px;border-radius:4px;background:var(--brand)"></span>
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+            </div>
+            <div class="btn blk">Next</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1d slide 3 -->
+      <div class="fig">
+        <div class="cap"><b>1d</b> · Value slide 3</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="justify-content:space-between">
+            <div style="display:flex;justify-content:flex-end"><span class="btn ghost sm">Skip</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+              <div style="width:170px;height:170px;border-radius:34px;background:linear-gradient(160deg,#FFEFC9,#FFF8EA);
+                display:flex;align-items:center;justify-content:center;font-size:74px;box-shadow:var(--sh-md)">📱</div>
+              <div style="font-size:22px;font-weight:800;text-align:center;letter-spacing:-.02em">Buy once,<br>redeem in store</div>
+              <div class="t-sub" style="text-align:center;max-width:230px">Pay with card or Apple Pay. Show the QR at the counter. Done.</div>
+            </div>
+            <div style="display:flex;gap:7px;justify-content:center">
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+              <span style="width:7px;height:7px;border-radius:4px;background:var(--line)"></span>
+              <span style="width:22px;height:7px;border-radius:4px;background:var(--brand)"></span>
+            </div>
+            <div class="btn blk">Get started</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1e phone -->
+      <div class="fig">
+        <div class="cap"><b>1e</b> · Phone number</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:18px;padding-top:14px">
+            <div class="iconbtn plain" style="justify-content:flex-start">‹ Back</div>
+            <div class="h1">What's your number?</div>
+            <div class="t-sub" style="margin-top:-10px">We'll text a 4-digit code to verify it's you.</div>
+            <div style="display:flex;gap:9px">
+              <div class="field on" style="display:flex;align-items:center;gap:7px;font-size:14px">🇸🇦 +966</div>
+              <div class="field" style="flex:1;font-size:14px">5X XXX XXXX</div>
+            </div>
+            <div class="t-mut" style="font-size:10px">By continuing you agree to Copo's Terms &amp; Privacy Policy.</div>
+            <div style="flex:1"></div>
+            <div class="btn blk">Send code</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1f otp -->
+      <div class="fig">
+        <div class="cap"><b>1f</b> · OTP verify</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:18px;padding-top:14px">
+            <div class="iconbtn plain" style="justify-content:flex-start">‹ Back</div>
+            <div class="h1">Enter the code</div>
+            <div class="t-sub" style="margin-top:-10px">Sent to +966 5X XXX 4821 · <b style="color:var(--brand)">Edit</b></div>
+            <div style="display:flex;gap:11px">
+              <div class="field on" style="flex:1;height:60px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">4</div>
+              <div class="field on" style="flex:1;height:60px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">8</div>
+              <div class="field" style="flex:1;height:60px;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-wash)"></div>
+              <div class="field" style="flex:1;height:60px"></div>
+            </div>
+            <div class="t-sub">Resend code in 0:24</div>
+            <div style="flex:1"></div>
+            <div class="btn blk">Verify</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 1g location -->
+      <div class="fig">
+        <div class="cap"><b>1g</b> · Location permission</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="justify-content:space-between">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+              <div style="width:130px;height:130px;border-radius:50%;background:linear-gradient(160deg,#FFE2DE,#FFF3F1);
+                display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:var(--sh-md)">📍</div>
+              <div style="font-size:21px;font-weight:800;text-align:center;letter-spacing:-.02em">Show deals near you</div>
+              <div class="t-sub" style="text-align:center;max-width:240px">We use your location to surface the nearest stores and accurate distances. Change it anytime.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="btn blk">Enable location</div>
+              <div class="btn out blk">Choose city instead</div>
+            </div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 2 · HOME ===== -->
+  <section class="sec">
+    <div class="sec-h"><span class="no">02</span><h2>Home</h2></div>
+    <p class="sec-d">Search, categories, a <b>“Continue leveling up”</b> rail that pulls people back into stores they've started, and featured stores — every card shows its level state.</p>
+    <div class="row">
+      <div class="fig">
+        <div class="cap"><b>2a</b> · Home</div>
+        <div class="phone"><div class="island"></div><div class="scr fade-b">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div class="t-mut">📍 Riyadh · Al Nakheel ▾</div>
+                <div class="h2" style="margin-top:2px">Hey, Faisal 👋</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <div class="iconbtn">🔔</div>
+                <div class="iconbtn" style="position:relative">🛒<span style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--brand);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span></div>
+              </div>
+            </div>
+            <div class="search"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA0B0" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg> Search a store or a deal</div>
+            <div class="cats">
+              <div class="cat"><div class="cico" style="background:#FFE7E3">🍽️</div>Dining</div>
+              <div class="cat"><div class="cico" style="background:#FFEFC9">☕</div>Cafés</div>
+              <div class="cat"><div class="cico" style="background:#F3E8FF">💆</div>Beauty</div>
+              <div class="cat"><div class="cico" style="background:#E3F0FF">🎬</div>Fun</div>
+            </div>
+            <div class="sec-t"><span class="st">Continue leveling up</span><span class="sa">See all</span></div>
+            <div style="display:flex;gap:12px;overflow:hidden;padding-bottom:4px">
+              <div class="scard" style="width:158px;flex:none">
+                <div class="cover im-burger">🍔<span class="badge">LEVEL 2</span>
+                  <span class="lvlchip"><span class="dots" style="margin:0"><i class="f"></i><i class="f"></i><i></i><i class="l"></i></span></span></div>
+                <div class="srow" style="padding:15px 11px 11px">
+                  <div class="cb" style="flex:1"><div class="sname" style="font-size:12px">Burger Lab</div>
+                    <div class="mini-prog" style="margin-top:6px"><span style="width:50%"></span></div>
+                    <div class="t-mut" style="font-size:8.5px;margin-top:4px">1 more to Level 3</div></div>
+                </div>
+              </div>
+              <div class="scard" style="width:158px;flex:none">
+                <div class="cover im-coffee">☕<span class="badge">LEVEL 1</span>
+                  <span class="lvlchip"><span class="dots" style="margin:0"><i class="f"></i><i></i><i></i><i class="l"></i></span></span></div>
+                <div class="srow" style="padding:15px 11px 11px">
+                  <div class="cb" style="flex:1"><div class="sname" style="font-size:12px">Barn's Café</div>
+                    <div class="mini-prog" style="margin-top:6px"><span style="width:10%"></span></div>
+                    <div class="t-mut" style="font-size:8.5px;margin-top:4px">Buy 2 to unlock Level 2</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="sec-t"><span class="st">Featured stores</span><span class="sa">See all</span></div>
+            <div class="scard">
+              <div class="srow">
+                <div class="slogo logo-c">☕</div>
+                <div style="flex:1"><div class="sname">Nuss Nuss Café</div>
+                  <div class="smeta"><span class="star">★ 4.7</span> · 0.8 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+                <div style="text-align:right"><span class="teaser">All open</span></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="nav">
+            <div class="navi on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/></svg>Home</div>
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5H5.5z"/><path d="M8 7a4 4 0 0 1 8 0"/></svg>Market</div>
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>Orders</div>
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.5-3.5 5-4.5 7-4.5s5.5 1 7 4.5"/></svg>Profile</div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <div class="fig" style="width:340px">
+        <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--sh-sm)">
+          <div style="font-size:14px;font-weight:800;margin-bottom:8px">Edge-case stores</div>
+          <div class="t-sub" style="line-height:1.7">Seeded on Home &amp; Market, each opens a store case in section 04:
+          <br>• <b style="color:var(--ink)">Barn's Café</b> → many coupons (4a)
+          <br>• <b style="color:var(--ink)">Lumière Cinema</b> → one per level (4e)
+          <br>• <b style="color:var(--ink)">Nuss Nuss Café</b> → all open (4f)
+          <br>• <b style="color:var(--ink)">Burger Lab</b> → just leveled up (4g)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3 · MARKET ===== -->
+  <section class="sec">
+    <div class="sec-h"><span class="no">03</span><h2>Market</h2></div>
+    <p class="sec-d">The full browse surface: category chips, a live count with Sort &amp; Filter, and a scannable store list with level indicators on every card.</p>
+    <div class="row">
+      <div class="fig">
+        <div class="cap"><b>3a</b> · Market — store list</div>
+        <div class="phone"><div class="island"></div><div class="scr fade-b">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:13px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div class="h2">Market</div>
+              <div class="iconbtn" style="position:relative">🛒<span style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--brand);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span></div>
+            </div>
+            <div class="search"><svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA0B0" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg> Search stores &amp; deals</div>
+            <div class="chips"><div class="chip on">All</div><div class="chip">Dining</div><div class="chip">Cafés</div><div class="chip">Beauty</div><div class="chip">Fun</div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div class="t-sub"><b style="color:var(--ink)">128</b> stores near you</div>
+              <div style="display:flex;gap:8px">
+                <span class="chip" style="padding:6px 11px;font-size:11px;font-weight:700">⇅ Sort</span>
+                <span class="chip" style="padding:6px 11px;font-size:11px;font-weight:700">⚙ Filter</span>
+              </div>
+            </div>
+            <div class="scard">
+              <div class="srow"><div class="slogo logo-b">🎬</div>
+                <div style="flex:1"><div class="sname">Lumière Cinema</div><div class="smeta"><span class="star">★ 4.8</span> · 1.2 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+                <div style="text-align:right"><div class="t-mut" style="font-size:9px;font-weight:800">Level 1</div><span class="dots" style="margin-top:4px"><i class="f"></i><i></i><i></i><i class="l"></i></span></div></div>
+            </div>
+            <div class="scard">
+              <div class="srow"><div class="slogo logo-a">☕</div>
+                <div style="flex:1"><div class="sname">Barn's Café</div><div class="smeta"><span class="star">★ 4.7</span> · 2.1 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+                <div style="text-align:right"><div class="t-mut" style="font-size:9px;font-weight:800">Level 1</div><span class="dots" style="margin-top:4px"><i class="f"></i><i></i><i></i><i class="l"></i></span></div></div>
+            </div>
+            <div class="scard">
+              <div class="srow"><div class="slogo logo-d">🍔</div>
+                <div style="flex:1"><div class="sname">Burger Lab</div><div class="smeta"><span class="star">★ 4.6</span> · 3.0 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+                <div style="text-align:right"><div class="t-mut" style="font-size:9px;font-weight:800">Level 2</div><span class="dots" style="margin-top:4px"><i class="f"></i><i class="f"></i><i></i><i class="l"></i></span></div></div>
+            </div>
+            <div class="scard">
+              <div class="srow"><div class="slogo logo-c">☕</div>
+                <div style="flex:1"><div class="sname">Nuss Nuss Café</div><div class="smeta"><span class="star">★ 4.7</span> · 0.8 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+                <div style="text-align:right"><span class="teaser">All open</span></div></div>
+            </div>
+          </div></div>
+          <div class="nav">
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/></svg>Home</div>
+            <div class="navi on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16l-1.5 12.5H5.5z"/><path d="M8 7a4 4 0 0 1 8 0"/></svg>Market</div>
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg>Orders</div>
+            <div class="navi"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.5-3.5 5-4.5 7-4.5s5.5 1 7 4.5"/></svg>Profile</div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4 · STORE — THE LEVEL JOURNEY ===== -->
+  <section class="sec">
+    <div class="sec-h"><span class="no">04</span><h2>Store — the 4-level coupon journey</h2></div>
+    <p class="sec-d">The heart of Copo. Enter at <b>Level 1</b> (coupons open); Levels 2–4 sit below, visible but <b>locked</b> behind bigger discounts. The journey track shows where you are and what's next — <b>buy 2 coupons in a level to unlock the next.</b> Below: the default, the interactions, then the three other cases.</p>
+
+    <!-- 4a default -->
+    <div class="row">
+      <div class="fig">
+        <div class="cap"><b>4a</b> · Level 1 active — many coupons <i style="color:var(--ink3)">· Barn's Café</i></div>
+        <div class="phone"><div class="island"></div><div class="scr fade-b">
+          <div class="stat light" style="position:absolute;left:0;right:0;top:0"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body">
+            <div class="cover im-coffee" style="height:132px;font-size:52px;color:#fff">☕
+              <div style="position:absolute;top:44px;left:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh-sm)">‹</div>
+              <div style="position:absolute;top:44px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:var(--sh-sm)">♡</div>
+              <div style="position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.5);color:#fff;font-size:9px;font-weight:800;border-radius:8px;padding:3px 8px;backdrop-filter:blur(4px)">1 / 4</div>
+            </div>
+            <div class="pad" style="gap:12px;padding-top:0;margin-top:-20px">
+              <div style="display:flex;gap:12px;align-items:flex-end">
+                <div class="slogo logo-a" style="width:60px;height:60px;font-size:26px;border:3px solid #fff">☕</div>
+                <div style="padding-bottom:3px"><div style="font-size:16px;font-weight:800;display:flex;align-items:center;gap:5px">Barn's Café <span style="color:var(--brand)">✓</span></div>
+                  <div class="smeta"><span class="star">★ 4.8</span> (1,240) · 1.2 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+              </div>
+              <div style="display:flex;gap:6px"><span class="chip" style="padding:5px 10px;font-size:10px">☕ Café</span><span class="chip" style="padding:5px 10px;font-size:10px">Specialty coffee</span></div>
+              <!-- LEVEL TRACK -->
+              <div class="track">
+                <div class="track-top"><span class="tt">Your level journey</span><span class="tp">LEVEL 1 / 4</span></div>
+                <div class="steps">
+                  <div class="step on"><div class="dot">1</div><div class="lvln">LEVEL 1</div><div class="lvld">15% off</div></div>
+                  <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 2</div><div class="lvld">25% off</div></div>
+                  <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 3</div><div class="lvld">40% off</div></div>
+                  <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 4</div><div class="lvld">60% off</div></div>
+                </div>
+                <div class="track-hint"><span class="spark">✦</span> Buy <b>2 coupons</b> in Level 1 to unlock Level 2 · <b>0 / 2</b></div>
+              </div>
+              <div class="chips tabbar"><div class="tab on">Coupons</div><div class="tab">How to use</div><div class="tab">Details</div><div class="tab">Branches</div></div>
+              <!-- LEVEL 1 OPEN -->
+              <div class="lvl">
+                <div class="lvl-hd"><div class="lno">1</div><div><div class="lname">Level 1</div><div class="ldisc">up to 15% off</div></div><div class="lstate">OPEN</div></div>
+                <div class="lvl-body">
+                  <div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Any hot coffee</div><div class="csub">Dine-in or takeaway</div><div class="cpr"><span class="now">SAR 17</span><span class="old">SAR 20</span><span class="disc">15% OFF</span></div></div><div class="add">+</div></div>
+                  <div class="coupon"><div class="cim im-latte">🥤</div><div class="cb"><div class="ctit">Iced latte</div><div class="csub">Any size</div><div class="cpr"><span class="now">SAR 19</span><span class="old">SAR 22</span><span class="disc">14% OFF</span></div></div><div class="add">+</div></div>
+                  <div class="coupon"><div class="cim im-brunch">🥐</div><div class="cb"><div class="ctit">Croissant + coffee</div><div class="csub">Breakfast combo</div><div class="cpr"><span class="now">SAR 25</span><span class="old">SAR 29</span><span class="disc">14% OFF</span></div></div><div class="add">+</div></div>
+                </div>
+              </div>
+              <!-- LEVEL 2 LOCKED -->
+              <div class="lvl locked">
+                <div class="lvl-hd"><div class="lno">2</div><div><div class="lname">Level 2</div><div class="ldisc">up to 25% off</div></div><div class="lstate lk">🔒 LOCKED</div></div>
+                <div class="lvl-body"><div class="lockwrap">
+                  <div class="blurred"><div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Signature drink</div><div class="cpr"><span class="now">SAR 24</span></div></div></div></div>
+                  <div class="lockov"><div class="lk">🔒</div><div class="lkt">Buy 2 in Level 1 to unlock</div><span class="teaser">up to 25% off waiting</span></div>
+                </div></div>
+              </div>
+            </div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4b locked level sheet -->
+      <div class="fig">
+        <div class="cap"><b>4b</b> · Tapped a locked level</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:11px;filter:blur(1px);opacity:.55">
+            <div class="h2">Barn's Café</div>
+            <div class="lvl locked"><div class="lvl-hd"><div class="lno">3</div><div><div class="lname">Level 3</div></div><div class="lstate lk">🔒</div></div></div>
+            <div class="lvl locked"><div class="lvl-hd"><div class="lno">4</div><div><div class="lname">Level 4</div></div><div class="lstate lk">🔒</div></div></div>
+          </div></div>
+          <div class="scrim"><div class="sheet">
+            <div class="grab"></div>
+            <div style="text-align:center;margin-top:4px"><div style="width:56px;height:56px;border-radius:50%;background:var(--brand-wash);display:inline-flex;align-items:center;justify-content:center;font-size:26px">🔒</div></div>
+            <div class="sheet-t" style="text-align:center">Level 2 is locked</div>
+            <div class="t-sub" style="text-align:center;margin-top:-6px">Buy <b style="color:var(--ink)">2 coupons</b> in Level 1 to unlock deals up to <b style="color:var(--ink)">25% off</b>.</div>
+            <div style="background:var(--wash);border-radius:15px;padding:13px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;margin-bottom:8px"><span>Level 1 progress</span><span style="color:var(--brand)">0 / 2</span></div>
+              <div class="mini-prog"><span style="width:6%"></span></div>
+            </div>
+            <div class="btn blk">Browse Level 1 deals</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4c add to cart -->
+      <div class="fig">
+        <div class="cap"><b>4c</b> · Add coupon</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:11px;filter:blur(1px);opacity:.55">
+            <div class="h2">Barn's Café · Level 1</div>
+            <div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Any hot coffee</div><div class="cpr"><span class="now">SAR 17</span><span class="old">SAR 20</span></div></div></div>
+          </div></div>
+          <div class="scrim"><div class="sheet">
+            <div class="grab"></div>
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="cim im-coffee" style="width:56px;height:56px;border-radius:15px;font-size:26px">☕</div>
+              <div><div class="sheet-t">Any hot coffee</div><div class="t-sub">Dine-in or takeaway · Barn's Café</div></div>
+            </div>
+            <div class="cpr" style="display:flex;align-items:center;gap:8px"><span class="now" style="font-size:19px;font-weight:800">SAR 17</span><span class="old">SAR 20</span><span class="disc">15% OFF</span></div>
+            <div class="flabel" style="margin:2px 0 -4px">Quantity</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--line);border-radius:15px;padding:8px 14px">
+              <div class="qb" style="width:34px;height:34px;border-radius:11px;background:var(--wash);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">−</div>
+              <div style="font-size:18px;font-weight:800">1</div>
+              <div class="qb" style="width:34px;height:34px;border-radius:11px;background:var(--brand-wash);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">+</div>
+            </div>
+            <div class="btn blk">Add to cart · SAR 17</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4d progressed + cart bar -->
+      <div class="fig">
+        <div class="cap"><b>4d</b> · After buying 1 — progress moves</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px">
+            <div style="display:flex;gap:11px;align-items:center">
+              <div class="slogo logo-a" style="width:42px;height:42px">☕</div>
+              <div><div style="font-size:15px;font-weight:800">Barn's Café <span style="color:var(--brand)">✓</span></div><div class="smeta"><span class="star">★ 4.8</span> · 1.2 km</div></div>
+            </div>
+            <div class="track">
+              <div class="track-top"><span class="tt">Your level journey</span><span class="tp">LEVEL 1 / 4</span></div>
+              <div class="steps">
+                <div class="step on"><div class="dot">1</div><div class="lvln">LEVEL 1</div><div class="lvld">15% off</div></div>
+                <div class="step lock"><span class="bar fill" style="width:50%"></span><div class="dot">🔒</div><div class="lvln">LEVEL 2</div><div class="lvld">25% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 3</div><div class="lvld">40% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 4</div><div class="lvld">60% off</div></div>
+              </div>
+              <div class="track-hint"><span class="spark">✦</span> <b>1 more coupon</b> in Level 1 unlocks Level 2 · <b>1 / 2</b></div>
+            </div>
+            <div class="lvl"><div class="lvl-hd"><div class="lno">1</div><div><div class="lname">Level 1</div><div class="ldisc">up to 15% off</div></div><div class="lstate">OPEN</div></div>
+              <div class="lvl-body">
+                <div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Any hot coffee</div><div class="csub" style="color:var(--ok);font-weight:700">✓ In cart</div></div><div class="add out">✓</div></div>
+                <div class="coupon"><div class="cim im-latte">🥤</div><div class="cb"><div class="ctit">Iced latte</div><div class="cpr"><span class="now">SAR 19</span><span class="old">SAR 22</span></div></div><div class="add">+</div></div>
+              </div>
+            </div>
+          </div></div>
+          <div style="flex:none;border-top:1px solid var(--line);background:var(--card);padding:11px 15px;display:flex;align-items:center;gap:11px">
+            <div style="width:30px;height:30px;border-radius:10px;background:var(--brand);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">1</div>
+            <div><div style="font-size:13px;font-weight:800">SAR 17</div><div class="t-mut" style="font-size:9px">1 coupon in cart</div></div>
+            <div class="btn sm" style="margin-left:auto;padding:11px 20px">View cart</div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4e one per level -->
+      <div class="fig">
+        <div class="cap"><b>4e</b> · Case: one coupon per level <i style="color:var(--ink3)">· Lumière Cinema</i></div>
+        <div class="phone"><div class="island"></div><div class="scr fade-b">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px">
+            <div style="display:flex;gap:11px;align-items:center">
+              <div class="slogo logo-b" style="width:42px;height:42px">🎬</div>
+              <div><div style="font-size:15px;font-weight:800">Lumière Cinema <span style="color:var(--brand)">✓</span></div><div class="smeta"><span class="star">★ 4.8</span> · 1.2 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+            </div>
+            <div class="track">
+              <div class="track-top"><span class="tt">Your level journey</span><span class="tp">LEVEL 1 / 4</span></div>
+              <div class="steps">
+                <div class="step on"><div class="dot">1</div><div class="lvln">LEVEL 1</div><div class="lvld">15% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 2</div><div class="lvld">30% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 3</div><div class="lvld">45% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 4</div><div class="lvld">60% off</div></div>
+              </div>
+              <div class="track-hint"><span class="spark">✦</span> One coupon here — <b>buy it</b> to unlock Level 2 · <b>0 / 1</b></div>
+            </div>
+            <div class="lvl"><div class="lvl-hd"><div class="lno">1</div><div><div class="lname">Level 1</div><div class="ldisc">up to 15% off</div></div><div class="lstate">OPEN</div></div>
+              <div class="lvl-body">
+                <div class="coupon"><div class="cim im-cinema">🎬</div><div class="cb"><div class="ctit">Two standard tickets</div><div class="csub">Any 2D movie · Sun–Wed</div><div class="cpr"><span class="now">SAR 47</span><span class="old">SAR 55</span><span class="disc">15% OFF</span></div></div><div class="add">+</div></div>
+              </div>
+            </div>
+            <div class="lvl locked"><div class="lvl-hd"><div class="lno">2</div><div><div class="lname">Level 2</div><div class="ldisc">up to 30% off</div></div><div class="lstate lk">🔒 LOCKED</div></div>
+              <div class="lvl-body"><div class="lockwrap">
+                <div class="blurred"><div class="coupon"><div class="cim im-cinema">🍿</div><div class="cb"><div class="ctit">Two VIP recliners</div><div class="cpr"><span class="now">SAR 79</span></div></div></div></div>
+                <div class="lockov"><div class="lk">🔒</div><div class="lkt">Buy the Level 1 coupon to unlock</div><span class="teaser">one purchase moves you up</span></div>
+              </div></div>
+            </div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4f all open -->
+      <div class="fig">
+        <div class="cap"><b>4f</b> · Case: all coupons open <i style="color:var(--ink3)">· Nuss Nuss Café</i></div>
+        <div class="phone"><div class="island"></div><div class="scr fade-b">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px">
+            <div style="display:flex;gap:11px;align-items:center">
+              <div class="slogo logo-c" style="width:42px;height:42px">☕</div>
+              <div><div style="font-size:15px;font-weight:800">Nuss Nuss Café <span style="color:var(--brand)">✓</span></div><div class="smeta"><span class="star">★ 4.7</span> · 0.8 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+            </div>
+            <div class="track gold">
+              <div class="track-top"><span class="tt">All levels open ✨</span><span class="tp">no locks</span></div>
+              <div class="steps">
+                <div class="step done"><div class="dot">✓</div><div class="lvln">LEVEL 1</div><div class="lvld">15%</div></div>
+                <div class="step done"><span class="bar fill"></span><div class="dot">✓</div><div class="lvln">LEVEL 2</div><div class="lvld">25%</div></div>
+                <div class="step done"><span class="bar fill"></span><div class="dot">✓</div><div class="lvln">LEVEL 3</div><div class="lvld">40%</div></div>
+                <div class="step done"><span class="bar fill"></span><div class="dot">✓</div><div class="lvln">LEVEL 4</div><div class="lvld">60%</div></div>
+              </div>
+              <div class="track-hint"><span class="spark" style="color:var(--gold-d)">★</span> This store has <b>no level gate</b> — every deal is available now.</div>
+            </div>
+            <div class="lvl"><div class="lvl-hd"><div class="lno" style="background:linear-gradient(180deg,#FFD46A,#F2A82E);color:#3A2A05">★</div><div><div class="lname">All deals</div><div class="ldisc">up to 60% off</div></div><div class="lstate">OPEN</div></div>
+              <div class="lvl-body">
+                <div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Specialty coffee ×2</div><div class="cpr"><span class="now">SAR 29</span><span class="old">SAR 40</span><span class="disc">28% OFF</span></div></div><div class="add">+</div></div>
+                <div class="coupon"><div class="cim im-brunch">🍳</div><div class="cb"><div class="ctit">Brunch for two</div><div class="cpr"><span class="now">SAR 79</span><span class="old">SAR 140</span><span class="disc gold">44% OFF</span></div></div><div class="add">+</div></div>
+                <div class="coupon"><div class="cim im-dessert">🍰</div><div class="cb"><div class="ctit">Dessert platter</div><div class="cpr"><span class="now">SAR 35</span><span class="old">SAR 60</span><span class="disc gold">42% OFF</span></div></div><div class="add">+</div></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 4g just leveled up -->
+      <div class="fig">
+        <div class="cap"><b>4g</b> · Case: reached a new level <i style="color:var(--ink3)">· Burger Lab</i></div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px;filter:brightness(.98)">
+            <div style="display:flex;gap:11px;align-items:center">
+              <div class="slogo logo-d" style="width:42px;height:42px">🍔</div>
+              <div><div style="font-size:15px;font-weight:800">Burger Lab <span style="color:var(--brand)">✓</span></div><div class="smeta"><span class="star">★ 4.6</span> · 3.0 km · <span style="color:var(--ok);font-weight:700">Open</span></div></div>
+            </div>
+            <div class="track">
+              <div class="track-top"><span class="tt">Your level journey</span><span class="tp">LEVEL 2 / 4</span></div>
+              <div class="steps">
+                <div class="step done"><div class="dot">✓</div><div class="lvln">LEVEL 1</div><div class="lvld">15% off</div></div>
+                <div class="step on"><span class="bar fill"></span><div class="dot">2</div><div class="lvln">LEVEL 2</div><div class="lvld">25% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 3</div><div class="lvld">40% off</div></div>
+                <div class="step lock"><span class="bar"></span><div class="dot">🔒</div><div class="lvln">LEVEL 4</div><div class="lvld">60% off</div></div>
+              </div>
+              <div class="track-hint"><span class="spark">✦</span> You're on <b>Level 2</b> — buy <b>2 coupons</b> to reach Level 3 · <b>0 / 2</b></div>
+            </div>
+          </div></div>
+          <!-- congrats drawer -->
+          <div class="scrim" style="background:rgba(16,18,25,.5)">
+            <div class="confetti">
+              <i style="background:#FF4D4F;left:14%;top:34%;transform:rotate(20deg)"></i>
+              <i style="background:#FFC24B;left:30%;top:30%;transform:rotate(-15deg)"></i>
+              <i style="background:#FF7A7C;left:52%;top:32%;transform:rotate(40deg)"></i>
+              <i style="background:#FFC24B;left:70%;top:29%;transform:rotate(10deg)"></i>
+              <i style="background:#FF4D4F;left:84%;top:35%;transform:rotate(-25deg)"></i>
+              <i style="background:#12B76A;left:22%;top:40%;transform:rotate(30deg)"></i>
+              <i style="background:#FF7A7C;left:62%;top:38%;transform:rotate(-10deg)"></i>
+              <i style="background:#FFC24B;left:44%;top:27%;transform:rotate(50deg)"></i>
+            </div>
+            <div class="sheet" style="text-align:center">
+              <div class="grab"></div>
+              <div style="width:74px;height:74px;border-radius:50%;margin:4px auto 0;background:linear-gradient(180deg,#FFD46A,#F2A82E);display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 12px 26px rgba(255,194,75,.5)">🎉</div>
+              <div class="sheet-t" style="font-size:19px">Level 2 unlocked!</div>
+              <div class="t-sub" style="margin-top:-6px">You bought 2 coupons at Burger Lab — <b style="color:var(--ink)">deals up to 25% off</b> are now open.</div>
+              <div class="track gold" style="padding:12px 12px 13px">
+                <div class="steps">
+                  <div class="step done"><div class="dot" style="width:28px;height:28px">✓</div><div class="lvln">L1</div></div>
+                  <div class="step on"><span class="bar fill"></span><div class="dot" style="width:28px;height:28px">2</div><div class="lvln">L2</div></div>
+                  <div class="step lock"><span class="bar"></span><div class="dot" style="width:28px;height:28px">🔒</div><div class="lvln">L3</div></div>
+                  <div class="step lock"><span class="bar"></span><div class="dot" style="width:28px;height:28px">🔒</div><div class="lvln">L4</div></div>
+                </div>
+              </div>
+              <div class="btn blk">See Level 2 deals</div>
+              <div class="btn ghost">Maybe later</div>
+            </div>
+          </div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== 5 · CART → CHECKOUT → PAYMENT → SUCCESS ===== -->
+  <section class="sec">
+    <div class="sec-h"><span class="no">05</span><h2>Cart → Checkout → Payment → Success</h2></div>
+    <p class="sec-d">Coupons are digital, so checkout is short: review the cart, pick <b>card or Apple Pay</b>, pay, and land on a success screen that hands over the coupon <b>and</b> nudges the level journey forward.</p>
+    <div class="row">
+
+      <!-- 5a cart -->
+      <div class="fig">
+        <div class="cap"><b>5a</b> · Cart</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px">
+            <div style="display:flex;align-items:center;gap:10px"><div class="iconbtn plain">‹</div><div class="h2">Cart</div></div>
+            <div class="flabel" style="margin-bottom:-4px">☕ BARN'S CAFÉ</div>
+            <div class="coupon"><div class="cim im-coffee">☕</div><div class="cb"><div class="ctit">Any hot coffee</div><div class="cpr"><span class="now">SAR 17</span><span class="old">SAR 20</span></div></div>
+              <div class="qtybox"><span class="qb">−</span><b>1</b><span class="qb">+</span></div></div>
+            <div class="coupon"><div class="cim im-latte">🥤</div><div class="cb"><div class="ctit">Iced latte</div><div class="cpr"><span class="now">SAR 19</span><span class="old">SAR 22</span></div></div>
+              <div class="qtybox"><span class="qb">−</span><b>1</b><span class="qb">+</span></div></div>
+            <div class="field" style="display:flex;justify-content:space-between;align-items:center"><span>🎟️ Promo code</span><span style="font-weight:800;color:var(--brand)">Apply</span></div>
+            <div style="flex:1"></div>
+            <div style="background:var(--wash);border-radius:16px;padding:13px 15px">
+              <div class="orow"><span>Subtotal</span><span>SAR 41</span></div>
+              <div class="orow"><span>You save</span><span class="save-pill">− SAR 6</span></div>
+              <div class="orow tot"><span>Total</span><span>SAR 36</span></div>
+            </div>
+            <div class="btn blk">Proceed to checkout</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 5b checkout -->
+      <div class="fig">
+        <div class="cap"><b>5b</b> · Checkout — payment method</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:13px">
+            <div style="display:flex;align-items:center;gap:10px"><div class="iconbtn plain">‹</div><div class="h2">Checkout</div></div>
+            <div style="border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:var(--sh-sm)">
+              <div class="flabel" style="margin:0 0 6px">ORDER · 2 COUPONS</div>
+              <div class="orow" style="padding:4px 0"><span>Any hot coffee · Barn's</span><span style="color:var(--ink);font-weight:700">SAR 17</span></div>
+              <div class="orow" style="padding:4px 0"><span>Iced latte · Barn's</span><span style="color:var(--ink);font-weight:700">SAR 19</span></div>
+            </div>
+            <div class="flabel" style="margin-bottom:-5px">PAY WITH</div>
+            <div class="pm sel"><div class="pmi" style="background:linear-gradient(135deg,#00A651,#0072BC)">mada</div><div><div style="font-size:12.5px;font-weight:800">mada ···· 4921</div><div class="t-mut" style="font-size:9px">Default card</div></div><div class="radio"></div></div>
+            <div class="pm"><div class="pmi" style="background:#000"> Pay</div><div style="font-size:12.5px;font-weight:800">Apple Pay</div><div class="radio"></div></div>
+            <div class="pm" style="border-style:dashed;justify-content:center;color:var(--brand);font-size:12.5px;font-weight:800">＋ Add debit / credit card</div>
+            <div style="flex:1"></div>
+            <div style="background:var(--wash);border-radius:16px;padding:12px 15px">
+              <div class="orow"><span>Subtotal</span><span>SAR 41</span></div>
+              <div class="orow"><span>You save</span><span class="save-pill">− SAR 6</span></div>
+              <div class="orow tot"><span>Total</span><span>SAR 36</span></div>
+            </div>
+            <div class="btn blk">Pay SAR 36</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 5c add card -->
+      <div class="fig">
+        <div class="cap"><b>5c</b> · Add card</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:14px">
+            <div style="display:flex;align-items:center;gap:10px"><div class="iconbtn plain">‹</div><div class="h2">Add card</div></div>
+            <div style="height:88px;border-radius:16px;background:linear-gradient(135deg,#2A2C34,#16181D);color:#fff;padding:13px 15px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--sh-md)">
+              <div style="display:flex;justify-content:space-between;font-size:10px;opacity:.7">copo pay<span>mada</span></div>
+              <div style="font-size:15px;letter-spacing:.14em;font-family:monospace">•••• •••• •••• ••••</div>
+              <div style="font-size:9px;opacity:.7;display:flex;justify-content:space-between">CARD HOLDER<span>MM/YY</span></div>
+            </div>
+            <div><div class="flabel">CARD NUMBER</div><div class="field">•••• •••• •••• ••••</div></div>
+            <div style="display:flex;gap:11px">
+              <div style="flex:1"><div class="flabel">EXPIRY</div><div class="field">MM / YY</div></div>
+              <div style="flex:1"><div class="flabel">CVV</div><div class="field">•••</div></div>
+            </div>
+            <div><div class="flabel">NAME ON CARD</div><div class="field">Full name</div></div>
+            <div class="t-mut" style="font-size:9px">🔒 Encrypted &amp; processed by the payment gateway. Copo never stores full card numbers.</div>
+            <div style="flex:1"></div>
+            <div class="btn blk">Save card</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 5d apple pay -->
+      <div class="fig">
+        <div class="cap"><b>5d</b> · Apple Pay — confirm</div>
+        <div class="phone"><div class="island"></div><div class="scr"><div class="ap-side"></div>
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:11px;filter:blur(2px);opacity:.5">
+            <div class="h2">Checkout</div>
+            <div class="pm"><div class="pmi" style="background:linear-gradient(135deg,#00A651,#0072BC)">mada</div><div style="font-size:12.5px;font-weight:800">mada ···· 4921</div></div>
+            <div class="pm sel"><div class="pmi" style="background:#000"> Pay</div><div style="font-size:12.5px;font-weight:800">Apple Pay</div></div>
+          </div></div>
+          <div class="scrim" style="background:rgba(16,18,25,.3)"><div class="ap-sheet">
+            <div class="ap-head"> Pay</div>
+            <div class="ap-row"><span class="k">Card</span><span class="v">mada ···· 4921</span></div>
+            <div class="ap-row"><span class="k">Pay Copo</span><span class="v">SAR 36.00</span></div>
+            <div class="ap-row"><span class="k">Account</span><span class="v">faisal@icloud.com</span></div>
+            <div class="ap-pay">Confirm with side button ⟩⟩</div>
+            <div style="text-align:center;font-size:9.5px;color:var(--ink2);padding:0 0 13px">Double-click the side button to pay</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+      <!-- 5e success -->
+      <div class="fig">
+        <div class="cap"><b>5e</b> · Payment successful</div>
+        <div class="phone"><div class="island"></div><div class="scr">
+          <div class="stat"><b>9:41</b><i class="cluster"></i></div>
+          <div class="body"><div class="pad" style="gap:12px;text-align:center">
+            <div class="confetti">
+              <i style="background:#FF4D4F;left:16%;top:9%;transform:rotate(20deg)"></i>
+              <i style="background:#FFC24B;left:34%;top:7%;transform:rotate(-15deg)"></i>
+              <i style="background:#12B76A;left:66%;top:8%;transform:rotate(30deg)"></i>
+              <i style="background:#FF7A7C;left:82%;top:10%;transform:rotate(-20deg)"></i>
+            </div>
+            <div class="checkc">✓</div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-.01em">Payment successful</div>
+            <div class="t-sub" style="margin-top:-6px">2 coupons are in Orders, ready to scan in store.</div>
+            <div style="border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--sh-sm)">
+              <div class="qr"></div>
+              <div style="font-family:monospace;letter-spacing:.2em;font-weight:800;font-size:15px;margin-top:8px">CPO-8F3K</div>
+              <div class="t-mut" style="margin-top:4px">Barn's Café · valid 30 days</div>
+            </div>
+            <div class="track" style="text-align:left;padding:13px 14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span style="font-size:12px;font-weight:800">Barn's Café journey</span><span class="tp">1 / 2</span></div>
+              <div class="mini-prog" style="margin-bottom:9px"><span style="width:50%"></span></div>
+              <div style="font-size:10.5px;color:var(--ink2)"><b style="color:var(--ink)">1 more coupon</b> unlocks Level 2 — up to 25% off.</div>
+            </div>
+            <div style="flex:1"></div>
+            <div class="btn blk">View my coupons</div>
+            <div class="btn out blk">Keep browsing deals</div>
+          </div></div>
+          <div class="home-i"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="margin-top:74px;border-top:1px solid var(--line);padding-top:22px;color:var(--ink3);font-size:12px">
+    Copo · high-fidelity mockups · coral brand · light theme · Orders &amp; Profile tabs present in nav but out of scope for this flow.
+  </footer>
+
+</div>
+</body>
+</html>
