@@ -408,6 +408,9 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 (() => {
 'use strict';
 const LS_KEY = 'copoLab.board.v4';
+// Bump this to publish the current seed() as everyone's board on their next load
+// (a deliberate "reset everyone to a new base" — it replaces live boards).
+const SEED_VERSION = 1;
 const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
 const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
 
@@ -1286,7 +1289,7 @@ function pushBoard(flash){
   fetch('/api/board',{
     method:'PUT',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({items:state.items,wires:state.wires,idc,writerId})
+    body:JSON.stringify({items:state.items,wires:state.wires,idc,writerId,seedVersion:SEED_VERSION})
   }).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
     if(typeof d.version==='number') lastSyncedVersion=d.version;
     pendingDirty=false;
@@ -1319,11 +1322,26 @@ function startSync(){
     }).catch(()=>{});
   },2500);
 }
+// Reset the shared board to the current seed() and publish it (a SEED_VERSION rollout).
+function rolloutSeed(){
+  select(null);
+  state=seed();
+  renderAll(); fitView();
+  undoStack.length=0; redoStack.length=0; committedSnap=snapshot(); updateHistoryButtons();
+  pendingDirty=true;
+  pushBoard(true);            // stamps the new SEED_VERSION and bumps the board version
+}
 // One-time reconcile at startup, then begin polling.
 function initSync(){
   fetch('/api/board').then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
     if(d&&d.items){
-      adoptBoard(d);          // server already has a shared board — it wins
+      // A board exists. If the code carries a newer base than the stored one, publish
+      // the new seed to everyone; otherwise the server board wins (legacy = no reseed).
+      if(typeof d.seedVersion==='number' && d.seedVersion<SEED_VERSION){
+        rolloutSeed();
+      }else{
+        adoptBoard(d);
+      }
     }else{
       pushBoard(false);       // first run: seed the shared board from this client
     }

@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PUT' || req.method === 'POST') {
-      const { items, wires, idc, writerId } = req.body || {};
+      const { items, wires, idc, writerId, seedVersion } = req.body || {};
       if (!Array.isArray(items)) {
         res.status(400).json({ ok: false, error: 'items array required' });
         return;
@@ -59,6 +59,7 @@ export default async function handler(req, res) {
         wires: Array.isArray(wires) ? wires : [],
         idc: Number(idc) || 0,
         writerId: writerId || null,
+        seedVersion: Number(seedVersion) || 0,
         updatedAt: Date.now(),
       };
       let version;
