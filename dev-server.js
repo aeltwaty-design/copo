@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import middleware, { config as middlewareConfig } from './middleware.js';
 import loginHandler from './api/login.js';
 import logoutHandler from './api/logout.js';
+import boardHandler from './api/board.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4173;
@@ -70,6 +71,14 @@ const server = http.createServer(async (req, res) => {
     }
     if (urlPath === '/api/logout') {
       await logoutHandler(req, res);
+      return;
+    }
+    if (urlPath === '/api/board') {
+      if (req.method === 'PUT' || req.method === 'POST') {
+        const raw = await readBody(req);
+        try { req.body = JSON.parse(raw.toString() || '{}'); } catch { req.body = {}; }
+      }
+      await boardHandler(req, res);
       return;
     }
 

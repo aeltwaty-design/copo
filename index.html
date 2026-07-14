@@ -319,7 +319,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
     </div>
   </div>
   <span class="chip">EXP-01 · MARKET RESEARCH</span>
-  <span class="chip" id="saved">● saved in this browser</span>
+  <span class="chip" id="saved">● synced to shared lab</span>
   <div class="grow"></div>
   <button class="tbtn" id="exportBtn">⇩ EXPORT JSON</button>
   <button class="tbtn" id="resetBtn">↺ RESET LAB</button>
@@ -387,6 +387,11 @@ let state={items:[],wires:[]};
 let view={x:0,y:0,s:1};
 let tool='select', selId=null, selWireId=null, wireSrc=null;
 let zc=20, spaceDown=false, palIdx=0;
+/* ---- collaboration sync ---- */
+const writerId=(crypto.randomUUID?crypto.randomUUID():'w'+Math.random().toString(36).slice(2));
+let lastSyncedVersion=0;   // highest server version this tab has seen/applied
+let pendingDirty=false;    // local edits not yet confirmed pushed
+let interacting=false;     // true during a live drag / inline text edit
 const elById={};
 const byId=id=>state.items.find(i=>i.id===id);
 
@@ -850,6 +855,7 @@ function duplicateSel(){
 
 /* ============ editing ============ */
 function editEl(el,commit){
+  interacting=true;                  // don't let a sync poll clobber a live text edit
   try{el.contentEditable='plaintext-only';}catch(e){el.contentEditable='true';}
   el.focus();
   const r=document.createRange(); r.selectNodeContents(el);
@@ -862,6 +868,7 @@ function editEl(el,commit){
   el.addEventListener('blur',()=>{
     el.removeEventListener('keydown',onKey);
     el.contentEditable='false';
+    interacting=false;
     commit(el.innerText.replace(/\s+$/,''));
     drawWires(); save(); mmDirty();
   },{once:true});
@@ -926,6 +933,7 @@ function insideFrame(o,f){
 }
 function startItemDrag(e,id){
   const it=byId(id);
+  interacting=true;                  // don't let a sync poll clobber a live drag
   const sx=e.clientX, sy=e.clientY, ox=it.x, oy=it.y;
   let group=[];
   if(it.type==='frame'){
@@ -941,6 +949,7 @@ function startItemDrag(e,id){
   };
   const up=()=>{
     window.removeEventListener('pointermove',mv);
+    interacting=false;
     if(moved) save();
   };
   window.addEventListener('pointermove',mv);
@@ -1102,15 +1111,14 @@ mmc.addEventListener('pointerdown',e=>{
 let saveTimer=null;
 function save(flash){
   if(flash===undefined) flash=true;
+  pendingDirty=true;                 // content changed locally; guards poll from clobbering us
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
     try{
+      // view (pan/zoom) is per-user and stays local; only items/wires/idc are shared.
       localStorage.setItem(LS_KEY,JSON.stringify({view,items:state.items,wires:state.wires,idc}));
-      if(flash){
-        savedChip.classList.add('on');
-        setTimeout(()=>savedChip.classList.remove('on'),900);
-      }
     }catch(err){/* storage unavailable */}
+    pushBoard(flash);
   },300);
 }
 function load(){
@@ -1128,6 +1136,54 @@ function load(){
   }catch(err){}
   state=seed();
   return false;
+}
+
+/* ============ collaboration sync ============ */
+// Push the local board to the shared server store (whole-board last-write-wins).
+function pushBoard(flash){
+  fetch('/api/board',{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({items:state.items,wires:state.wires,idc,writerId})
+  }).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+    if(typeof d.version==='number') lastSyncedVersion=d.version;
+    pendingDirty=false;
+    if(flash){
+      savedChip.classList.add('on');
+      setTimeout(()=>savedChip.classList.remove('on'),900);
+    }
+  }).catch(()=>{/* offline: keep localStorage copy, retry on next change/poll */});
+}
+// Replace local board content with the server's (keeps this user's own view/selection).
+function adoptBoard(d){
+  const keepSel=selId;
+  state={items:Array.isArray(d.items)?d.items:[],wires:Array.isArray(d.wires)?d.wires:[]};
+  idc=Math.max(idc,Number(d.idc)||0);
+  lastSyncedVersion=Number(d.version)||lastSyncedVersion;
+  renderAll();
+  if(keepSel&&byId(keepSel)) select(keepSel); else select(null);
+}
+// Poll the shared board; adopt it only when it's newer, not our own echo, and we're idle.
+function startSync(){
+  setInterval(()=>{
+    if(interacting||pendingDirty) return;
+    fetch('/api/board').then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+      if(interacting||pendingDirty) return; // re-check after the await
+      if(d&&d.items&&Number(d.version)>lastSyncedVersion&&d.writerId!==writerId){
+        adoptBoard(d);
+      }
+    }).catch(()=>{});
+  },2500);
+}
+// One-time reconcile at startup, then begin polling.
+function initSync(){
+  fetch('/api/board').then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+    if(d&&d.items){
+      adoptBoard(d);          // server already has a shared board — it wins
+    }else{
+      pushBoard(false);       // first run: seed the shared board from this client
+    }
+  }).catch(()=>{}).finally(startSync);
 }
 
 /* ============ topbar / toolbar / floatbar wiring ============ */
@@ -1149,7 +1205,7 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   URL.revokeObjectURL(a.href);
 });
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(!confirm('Reset the lab to the original seeded board (EXP-01 → EXP-04)?\nEverything you added or moved will be lost.')) return;
+  if(!confirm('Reset the SHARED lab to the original seeded board (EXP-01 → EXP-04)?\nThis affects everyone — everything anyone added or moved will be lost.')) return;
   select(null);
   state=seed();
   renderAll();
@@ -1183,6 +1239,7 @@ requestAnimationFrame(()=>{
   drawWires(); mmDirty();
 });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{drawWires(); mmDirty();});
+initSync();   // reconcile with the shared board, then poll for others' changes
 })();
 </script>
 </body>
