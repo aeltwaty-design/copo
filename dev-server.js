@@ -11,6 +11,7 @@ import middleware, { config as middlewareConfig } from './middleware.js';
 import loginHandler from './api/login.js';
 import logoutHandler from './api/logout.js';
 import boardHandler from './api/board.js';
+import presenceHandler from './api/presence.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4173;
@@ -79,6 +80,14 @@ const server = http.createServer(async (req, res) => {
         try { req.body = JSON.parse(raw.toString() || '{}'); } catch { req.body = {}; }
       }
       await boardHandler(req, res);
+      return;
+    }
+    if (urlPath === '/api/presence') {
+      if (req.method === 'PUT' || req.method === 'POST') {
+        const raw = await readBody(req);
+        try { req.body = JSON.parse(raw.toString() || '{}'); } catch { req.body = {}; }
+      }
+      await presenceHandler(req, res);
       return;
     }
 
