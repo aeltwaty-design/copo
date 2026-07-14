@@ -161,6 +161,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
   border:1px solid var(--line);border-radius:9px;padding:7px 13px;cursor:pointer;
 }
 .tbtn:hover{color:var(--ink);border-color:#3d5378;background:rgba(91,215,255,.06)}
+.tbtn:disabled{opacity:.35;cursor:default;color:var(--mut);border-color:var(--line);background:transparent}
 
 /* ---------- toolbar ---------- */
 #toolbar{
@@ -352,6 +353,8 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
   <span class="chip" id="saved">● synced to shared lab</span>
   <div id="roster" title="Who's in the lab"></div>
   <div class="grow"></div>
+  <button class="tbtn" id="undoBtn" title="Undo (⌘Z)" disabled>↶ UNDO</button>
+  <button class="tbtn" id="redoBtn" title="Redo (⌘⇧Z)" disabled>↷ REDO</button>
   <button class="tbtn" id="exportBtn">⇩ EXPORT JSON</button>
   <button class="tbtn" id="resetBtn">↺ RESET LAB</button>
   <button class="tbtn" id="logoutBtn">⏻ LOGOUT</button>
@@ -397,7 +400,8 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 
 <div id="hint">
   <b>drag canvas</b> pan · <b>⌘/ctrl+scroll</b> zoom · <b>scroll</b> pan · <b>dbl-click canvas</b> new note ·
-  <b>dbl-click text</b> edit · <b>⌫</b> delete · <b>V S C F L</b> tools · <b>1</b> fit
+  <b>dbl-click text</b> edit · <b>⌫</b> delete · <b>V S C F L</b> tools · <b>1</b> fit ·
+  <b>⌘Z</b> undo · <b>⌘C/X/V</b> copy·cut·paste · <b>↑↓←→</b> nudge
 </div>
 
 <script>
@@ -427,6 +431,10 @@ let interacting=false;     // true during a live drag / inline text edit
 const cursorEls={};        // writerId -> {el,name,face} for each remote cursor
 let myCursor={x:0,y:0,active:false};  // my pointer in world coords
 let presenceTimer=null;
+/* ---- undo / redo + clipboard ---- */
+const HISTORY_LIMIT=60;
+let undoStack=[], redoStack=[], committedSnap=null;  // whole-board snapshots
+let clipboard=null;        // copied item group {items,wires,anchor}
 const elById={};
 const byId=id=>state.items.find(i=>i.id===id);
 
@@ -867,27 +875,66 @@ function deleteSel(){
   if(elById[id]){elById[id].remove(); delete elById[id];}
   drawWires(); save(); mmDirty();
 }
-function duplicateSel(){
-  if(!selId) return;
-  const it=byId(selId); if(!it) return;
-  const group=it.type==='frame'
+// The item plus (for a frame) everything inside it — the unit that moves/copies together.
+function selGroup(it){
+  return it.type==='frame'
     ? [it,...state.items.filter(o=>o.id!==it.id&&o.type!=='frame'&&insideFrame(o,it))]
     : [it];
+}
+// Deep-clone items (+ intra-group wires) with fresh ids, offset by dx,dy, append to state.
+// Shared by duplicate and paste. Returns the old->new id map.
+function cloneInto(items,wires,dx,dy){
   const idMap={};
-  const copies=group.map(o=>{
+  const copies=items.map(o=>{
     const copy=JSON.parse(JSON.stringify(o));
     copy.id=nid(); idMap[o.id]=copy.id;
-    copy.x+=28; copy.y+=28; delete copy.locked;
+    copy.x+=dx; copy.y+=dy; delete copy.locked;
     return copy;
   });
-  const oldIds=new Set(group.map(o=>o.id));
-  const wireCopies=state.wires
+  const oldIds=new Set(items.map(o=>o.id));
+  const wireCopies=(wires||[])
     .filter(w=>oldIds.has(w.a)&&oldIds.has(w.b))
     .map(w=>({id:nid(),a:idMap[w.a],b:idMap[w.b],label:w.label}));
   state.items.push(...copies);
   state.wires.push(...wireCopies);
-  if(it.type==='frame'){renderAll();}else{renderItem(copies[0]);}
+  return idMap;
+}
+function duplicateSel(){
+  if(!selId) return;
+  const it=byId(selId); if(!it) return;
+  const idMap=cloneInto(selGroup(it),state.wires,28,28);
+  renderAll();
   select(idMap[it.id]); save(); mmDirty();
+}
+function copySel(){
+  if(!selId) return;
+  const it=byId(selId); if(!it) return;
+  const group=selGroup(it);
+  const oldIds=new Set(group.map(o=>o.id));
+  clipboard={
+    items:JSON.parse(JSON.stringify(group)),
+    wires:JSON.parse(JSON.stringify(state.wires.filter(w=>oldIds.has(w.a)&&oldIds.has(w.b)))),
+    anchor:{x:it.x,y:it.y}
+  };
+}
+function cutSel(){ copySel(); deleteSel(); }
+function pasteClip(){
+  if(!clipboard||!clipboard.items.length) return;
+  let dx=28,dy=28;
+  if(myCursor&&myCursor.active){ dx=myCursor.x-clipboard.anchor.x; dy=myCursor.y-clipboard.anchor.y; }
+  const primaryOld=clipboard.items[0].id;
+  const idMap=cloneInto(clipboard.items,clipboard.wires,dx,dy);
+  renderAll();
+  select(idMap[primaryOld]); save(); mmDirty();
+}
+function nudgeSel(key,big){
+  if(!selId) return;
+  const it=byId(selId); if(!it||it.locked) return;
+  const step=big?20:2;
+  const dx=key==='ArrowLeft'?-step:key==='ArrowRight'?step:0;
+  const dy=key==='ArrowUp'?-step:key==='ArrowDown'?step:0;
+  selGroup(it).forEach(o=>{ o.x+=dx; o.y+=dy; positionEl(o); });
+  drawWires(); syncFloat(); mmDirty(); save();
 }
 
 /* ============ editing ============ */
@@ -1069,8 +1116,17 @@ window.addEventListener('keydown',e=>{
   if(e.key===' '){spaceDown=true; vp.style.cursor='grab'; e.preventDefault(); return;}
   if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault(); deleteSel(); return;}
   if(e.key==='Escape'){select(null); cancelConnect(); setTool('select'); return;}
-  if((e.metaKey||e.ctrlKey)&&(e.key==='d'||e.key==='D')){e.preventDefault(); duplicateSel(); return;}
-  if(e.metaKey||e.ctrlKey) return;
+  if(e.metaKey||e.ctrlKey){
+    const mk=e.key.toLowerCase();
+    if(mk==='z'){e.preventDefault(); e.shiftKey?redo():undo(); return;}
+    if(mk==='y'){e.preventDefault(); redo(); return;}
+    if(mk==='d'){e.preventDefault(); duplicateSel(); return;}
+    if(mk==='c'){e.preventDefault(); copySel(); return;}
+    if(mk==='x'){e.preventDefault(); cutSel(); return;}
+    if(mk==='v'){e.preventDefault(); pasteClip(); return;}
+    return;
+  }
+  if(e.key.indexOf('Arrow')===0){e.preventDefault(); nudgeSel(e.key,e.shiftKey); return;}
   const k=e.key.toLowerCase();
   if(k==='v') setTool('select');
   else if(k==='s') setTool('sticky');
@@ -1155,6 +1211,14 @@ function save(flash){
       // view (pan/zoom) is per-user and stays local; only items/wires/idc are shared.
       localStorage.setItem(LS_KEY,JSON.stringify({view,items:state.items,wires:state.wires,idc}));
     }catch(err){/* storage unavailable */}
+    // record this committed edit for undo (only genuine local edits reach save()).
+    if(committedSnap!==null){
+      undoStack.push(committedSnap);
+      if(undoStack.length>HISTORY_LIMIT) undoStack.shift();
+      redoStack.length=0;
+    }
+    committedSnap=snapshot();
+    updateHistoryButtons();
     pushBoard(flash);
   },300);
 }
@@ -1183,6 +1247,39 @@ function load(){
   return false;
 }
 
+/* ============ undo / redo ============ */
+const snapshot=()=>JSON.stringify({items:state.items,wires:state.wires,idc});
+function updateHistoryButtons(){
+  const u=document.getElementById('undoBtn'), r=document.getElementById('redoBtn');
+  if(u) u.disabled=!undoStack.length;
+  if(r) r.disabled=!redoStack.length;
+}
+// Apply a snapshot as the current board and sync it to everyone (whole-board LWW).
+function restoreSnap(str){
+  const d=JSON.parse(str);
+  const keepSel=selId;
+  state={items:d.items,wires:d.wires};
+  idc=d.idc;
+  renderAll();
+  if(keepSel&&byId(keepSel)) select(keepSel); else select(null);
+  try{localStorage.setItem(LS_KEY,JSON.stringify({view,items:state.items,wires:state.wires,idc}));}catch(err){}
+  pendingDirty=true;            // guard the poll while our undo/redo is in flight
+  pushBoard(true);
+  updateHistoryButtons();
+}
+function undo(){
+  if(!undoStack.length) return;
+  redoStack.push(committedSnap);
+  committedSnap=undoStack.pop();
+  restoreSnap(committedSnap);
+}
+function redo(){
+  if(!redoStack.length) return;
+  undoStack.push(committedSnap);
+  committedSnap=redoStack.pop();
+  restoreSnap(committedSnap);
+}
+
 /* ============ collaboration sync ============ */
 // Push the local board to the shared server store (whole-board last-write-wins).
 function pushBoard(flash){
@@ -1207,6 +1304,8 @@ function adoptBoard(d){
   lastSyncedVersion=Number(d.version)||lastSyncedVersion;
   renderAll();
   if(keepSel&&byId(keepSel)) select(keepSel); else select(null);
+  // a remote edit becomes the new undo baseline and invalidates redo
+  committedSnap=snapshot(); redoStack.length=0; updateHistoryButtons();
 }
 // Poll the shared board; adopt it only when it's newer, not our own echo, and we're idle.
 function startSync(){
@@ -1241,6 +1340,8 @@ document.getElementById('zoomIn').addEventListener('click',()=>zoomAt(innerWidth
 document.getElementById('zoomOut').addEventListener('click',()=>zoomAt(innerWidth/2,innerHeight/2,.8));
 document.getElementById('dupBtn').addEventListener('click',duplicateSel);
 document.getElementById('delBtn').addEventListener('click',deleteSel);
+document.getElementById('undoBtn').addEventListener('click',undo);
+document.getElementById('redoBtn').addEventListener('click',redo);
 document.getElementById('exportBtn').addEventListener('click',()=>{
   const blob=new Blob([JSON.stringify({view,items:state.items,wires:state.wires},null,2)],{type:'application/json'});
   const a=document.createElement('a');
@@ -1373,6 +1474,8 @@ function startPresence(){ tickPresence(); }
 
 /* ============ boot ============ */
 const hadSave=load();
+committedSnap=snapshot();   // undo baseline: the board as first loaded
+updateHistoryButtons();
 renderAll();
 requestAnimationFrame(()=>{
   if(hadSave){applyView();}
