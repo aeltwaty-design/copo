@@ -1,0 +1,751 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COPO · V1 السلّم الدائم — Interactive Prototype</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(900px 500px at 15% -10%, #FFE9C8, transparent 60%),
+    radial-gradient(900px 600px at 100% 110%, #FFE2D2, transparent 55%),
+    linear-gradient(180deg,#FAF3E7,#F1E4CF);
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;color:#3B2E24;
+  display:flex;flex-direction:column;align-items:center;overflow:hidden;
+}
+header{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 24px;font-size:13px;font-weight:700;color:#6B584A;
+}
+header .t b{color:#B4560A}
+header a{color:#6B584A;text-decoration:none;border:1.5px solid #E3D2BA;background:#fff;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800}
+header a:hover{color:#B4560A;border-color:#F2C879}
+#stage{flex:1;display:flex;align-items:center;justify-content:center;transform:scale(var(--z,1));transform-origin:top center}
+
+/* ---------- iPhone 17 mockup ---------- */
+#frame{
+  width:410px;height:864px;border-radius:64px;padding:10px;position:relative;
+  background:linear-gradient(160deg,#e8e8ec,#9c9ca4 45%,#c9c9cf);
+  box-shadow:0 40px 80px rgba(107,78,46,.35), inset 0 0 3px rgba(255,255,255,.8);
+}
+#frame::before{content:'';position:absolute;right:-2.5px;top:190px;width:3px;height:96px;border-radius:2px;background:#a8a8b0}
+#frame::after{content:'';position:absolute;left:-2.5px;top:230px;width:3px;height:64px;border-radius:2px;background:#a8a8b0}
+#scrn{width:390px;height:844px;border-radius:55px;overflow:hidden;background:#FFF9F0;position:relative}
+#island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:118px;height:34px;background:#0a0a0c;border-radius:20px;z-index:80}
+#sbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:24px 30px 0;font-size:14px;font-weight:700;color:#3B2E24;z-index:70;direction:ltr;pointer-events:none}
+
+.ic{display:inline-block;vertical-align:-3px;flex:none}
+button{font-family:inherit;border:0;background:none;cursor:pointer;text-align:right;color:inherit;font-size:inherit}
+
+/* ---------- screens ---------- */
+.scr{
+  position:absolute;inset:0;padding:72px 18px 116px;display:flex;flex-direction:column;gap:12px;
+  direction:rtl;text-align:right;color:#3B2E24;
+  opacity:0;pointer-events:none;transform:translateX(-26px);transition:opacity .3s,transform .3s;
+  background:linear-gradient(180deg,#FFF9F0,#FBEFDD);overflow-y:auto;scrollbar-width:none;
+}
+.scr::-webkit-scrollbar{display:none}
+.scr.stack{padding-bottom:22px}
+.scr.on{opacity:1;pointer-events:auto;transform:none}
+.scr b{font-size:15px}
+.scr small{font-size:11.5px;color:#9C8570;display:block;line-height:1.6}
+
+.hi{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hi b{font-size:17px}
+.hicons{display:flex;gap:6px;align-items:center}
+.hicons .rnd{width:36px;height:36px;border-radius:50%;background:#fff;border:1.5px solid #F0DFC8;display:flex;align-items:center;justify-content:center;color:#8A6D4F;position:relative}
+.badge{position:absolute;top:-4px;left:-4px;min-width:16px;height:16px;border-radius:99px;background:#E11D48;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.coin{background:#FFE9C2;border:1.5px solid #F2C879;color:#8A5A00;font-weight:800;font-size:12px;padding:6px 12px;border-radius:999px;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.search{background:#fff;border:1.5px solid #F0DFC8;border-radius:14px;color:#B49E86;font-size:13px;padding:12px 14px;display:flex;align-items:center;gap:7px}
+.hero{border-radius:18px;padding:16px;background:linear-gradient(120deg,#FF8A5B,#F7A928);color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 24px rgba(247,138,40,.3)}
+.hero::after{content:'';position:absolute;left:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.16)}
+.hero b{font-size:17px;display:block}
+.hero small{color:rgba(255,255,255,.9)}
+.hero .hcta{display:inline-block;margin-top:8px;background:#fff;color:#B4560A;font-size:12px;font-weight:800;border-radius:999px;padding:6px 14px}
+.cats{display:flex;gap:8px}
+.cat{flex:1;background:#fff;border:1.5px solid #F0DFC8;border-radius:14px;padding:9px 4px;text-align:center;font-size:11px;font-weight:800;color:#6B584A}
+.cat .ic{display:block;margin:0 auto 4px;color:#E8890C}
+.sec{display:flex;justify-content:space-between;align-items:baseline;font-size:14.5px;font-weight:800}
+.sec i{font-style:normal;color:#E8890C;font-size:11px;font-weight:700}
+.row{display:flex;gap:10px}
+.lcard,.dcard{flex:1;border-radius:18px;padding:12px;position:relative;min-height:106px;display:block;width:100%}
+.lcard{background:#fff;border:2px solid #F5C97B;box-shadow:0 6px 16px rgba(232,137,12,.14)}
+.dcard{background:#fff;border:1.5px solid #F0DFC8}
+.lcard b,.dcard b{font-size:13.5px;display:block;margin-top:4px}
+.lcard small,.dcard small{font-size:10.5px}
+.logo{width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid #F5C97B;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#8A5A00;flex:none}
+.ring{width:38px;height:38px;border-radius:50%;background:conic-gradient(#E8890C var(--p,40%),#F3E3CD 0);position:absolute;top:10px;left:10px;display:flex;align-items:center;justify-content:center}
+.ring b{background:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:#8A5A00;margin:0}
+.tag{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.tagf{position:absolute;top:10px;left:10px}
+.tag2{position:absolute;top:10px;left:10px;background:#F4EADB;color:#8A6D4F;font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px}
+.lvl{background:linear-gradient(135deg,#33261B,#5C4326);color:#FFE9C2;border-radius:18px;padding:14px;display:block;width:100%;text-align:right}
+.lvl b{font-size:14px}
+.lvl small{color:#D9BC8F}
+.lvl .bar{height:7px;background:rgba(255,233,194,.22);border-radius:99px;margin:9px 0 6px;overflow:hidden}
+.lvl .bar i{display:block;height:100%;background:linear-gradient(90deg,#F7A928,#FFD98A);border-radius:99px;transition:width .6s}
+.refer{display:flex;align-items:center;gap:10px;background:linear-gradient(120deg,#FFEFD2,#FFE2B8);border:1.5px solid #F2C879;border-radius:16px;padding:12px}
+.refer .ic{color:#B4560A}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:#fff;border:1.5px solid #F0DFC8;color:#8A6D4F;border-radius:999px;padding:7px 13px;font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;gap:5px}
+.chip.on{background:linear-gradient(135deg,#F7A928,#E8890C);border-color:#E8890C;color:#fff}
+.heroimg{min-height:96px;border-radius:18px;background:linear-gradient(120deg,#6B4E2E,#33261B);display:flex;align-items:flex-end;padding:12px;color:#FFE9C2}
+.avs{display:inline-flex;vertical-align:middle;margin-inline-start:4px}
+.avs i{width:18px;height:18px;border-radius:50%;border:2px solid #fff;margin-inline-start:-6px;font-style:normal;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+.avs i:first-child{margin-inline-start:0}
+.vipbar{background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFE9C2;border-radius:15px;padding:12px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.tabs{display:flex;gap:2px;border-bottom:2px solid #F0DFC8;font-size:12px;font-weight:800;color:#9C8570}
+.tabs button{padding:9px 10px;color:inherit}
+.tabs .on{color:#E8890C;box-shadow:inset 0 -2.5px 0 #E8890C}
+.tkt{position:relative;background:#fff;border:1.5px solid #F0DFC8;border-radius:16px;padding:11px 13px;display:flex;gap:9px;align-items:center}
+.tkt::before,.tkt::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#FBEFDD;border:1.5px solid #F0DFC8;top:50%;transform:translateY(-50%)}
+.tkt::before{right:-8px}
+.tkt::after{left:-8px}
+.tkt b{font-size:13px}
+.tkt small{font-size:10.5px}
+.off{background:#FFF1D6;color:#8A5A00;font-weight:900;font-size:11px;border-radius:9px;padding:4px 8px;white-space:nowrap}
+.pts{font-size:9.5px;color:#0E7A43;background:#DCF5E4;border-radius:99px;padding:2px 8px;font-weight:800;white-space:nowrap;display:inline-block}
+.end{margin-inline-start:auto;display:flex;align-items:center;gap:8px;white-space:nowrap;flex:none}
+.buy{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-weight:800;font-size:12px;padding:8px 15px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
+.buy.ghosty{background:#fff;color:#E8890C;border:1.5px solid #F2C879}
+.stp{display:flex;align-items:center;gap:7px;background:#FBF4E9;border-radius:99px;padding:3px 5px;font-weight:800;font-size:13px}
+.stp button{width:22px;height:22px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:#E8890C;border:1.5px solid #F0DFC8}
+.note{background:#FFF1D6;border:1.5px solid #F2C879;color:#8A5A00;border-radius:14px;padding:11px 13px;font-size:12px;font-weight:700;line-height:1.7;display:flex;align-items:center;gap:8px}
+.sum{display:flex;justify-content:space-between;font-size:13px;color:#6B584A;padding:3px 0}
+.sum.g{color:#0E7A43}
+.sum.t{border-top:1.5px dashed #E3D2BA;margin-top:6px;padding-top:9px;font-weight:800;color:#3B2E24;font-size:15.5px}
+.codebx{display:flex;align-items:center;gap:9px;border:2px dashed #E8890C;background:#FFF3DC;border-radius:14px;padding:10px 12px}
+.codebx code{font-family:Consolas,monospace;font-weight:800;letter-spacing:.12em;color:#8A5A00;font-size:13px}
+.usebtn{background:#0E7A43;color:#fff;font-size:10.5px;font-weight:800;border-radius:999px;padding:6px 11px;white-space:nowrap}
+.promo{display:flex;gap:7px}
+.promo input{flex:1;border:1.5px solid #F0DFC8;border-radius:12px;padding:10px 12px;font-family:inherit;font-size:12px;background:#fff;color:#3B2E24;outline:none;text-align:right}
+.promo input:focus{border-color:#F2C879}
+.lad{display:flex;flex-direction:column;gap:9px}
+.rung{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #F0DFC8;border-radius:16px;padding:11px 13px;width:100%}
+.rung .n{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;background:#F4EADB;color:#8A6D4F}
+.rung.done{opacity:.72}
+.rung.done .n{background:#DCF5E4;color:#0E7A43}
+.rung.now{border:2px solid #E8890C;box-shadow:0 7px 18px rgba(232,137,12,.2)}
+.rung.now .n{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff}
+.rung.lock{background:#FBF4E9;border-style:dashed}
+.rung b{font-size:13.5px}
+.rung small{font-size:10.5px}
+.ranks{display:flex;align-items:flex-start;gap:4px;padding:4px 0}
+.rank{flex:1;text-align:center}
+.rank .d{width:40px;height:40px;margin:0 auto 5px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#F4EADB;color:#8A6D4F}
+.rank.done .d{background:#DCF5E4;color:#0E7A43}
+.rank.cur .d{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;box-shadow:0 6px 14px rgba(232,137,12,.4)}
+.rank b{font-size:11px;display:block}
+.rank small{font-size:9px}
+.tile{flex:1;background:#fff;border:1.5px solid #F0DFC8;border-radius:15px;padding:11px 7px;text-align:center}
+.tile .ic{display:block;margin:0 auto 5px;color:#E8890C}
+.tile b{font-size:11px;display:block}
+.tile small{font-size:9px}
+.unlock{background:linear-gradient(135deg,#FFF3DC,#FFE9C2);border:2px solid #F2C879;border-radius:16px;padding:13px;text-align:center}
+.unlock b{color:#8A5A00;font-size:15px}
+.unlock.pop{animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+.vipcard{background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFE9C2;border-radius:18px;padding:16px;box-shadow:0 12px 28px rgba(51,38,27,.4)}
+.vipcard b{font-size:16px}
+.vipcard small{color:#D9BC8F}
+.perk{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid #F0DFC8;border-radius:14px;padding:12px 13px;font-size:13px;font-weight:700;width:100%}
+.perk .ic{color:#B4560A}
+.dots{text-align:center;letter-spacing:.3em;color:#E8890C;font-size:16px}
+.ghost{text-align:center;color:#9C8570;font-size:12.5px;font-weight:700;padding:8px;width:100%}
+.foot{display:flex;gap:8px;margin-top:auto;flex:none}
+.cta{flex:1;text-align:center;background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-weight:800;font-size:15px;padding:15px;border-radius:16px;box-shadow:0 10px 22px rgba(232,137,12,.35);display:flex;align-items:center;justify-content:center;gap:7px}
+.back{position:absolute;top:68px;left:16px;z-index:60;width:38px;height:38px;border-radius:50%;background:#fff;border:1.5px solid #F0DFC8;display:flex;align-items:center;justify-content:center;color:#8A6D4F}
+.hero54{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:#fff}
+
+/* bottom nav */
+#nav{
+  position:absolute;left:12px;right:12px;bottom:14px;z-index:65;
+  display:flex;gap:4px;background:#fff;border:1.5px solid #F0DFC8;border-radius:20px;padding:7px;
+  box-shadow:0 -6px 24px rgba(59,46,36,.12);transition:transform .3s,opacity .3s;
+}
+#nav.hide{transform:translateY(120px);opacity:0;pointer-events:none}
+#nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;color:#B49E86;padding:8px 2px;border-radius:14px}
+#nav button.on{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff}
+
+/* floating cart pill */
+#fab{
+  position:absolute;left:16px;bottom:96px;z-index:64;display:none;align-items:center;gap:7px;
+  background:#33261B;color:#FFE9C2;border-radius:999px;padding:10px 16px;font-size:12.5px;font-weight:800;
+  box-shadow:0 10px 24px rgba(51,38,27,.4);
+}
+#fab.show{display:flex}
+
+/* swipe-to-pay */
+#track{position:relative;height:56px;border-radius:999px;background:linear-gradient(90deg,#E8890C,#F7A928);box-shadow:0 10px 22px rgba(232,137,12,.35);overflow:hidden;user-select:none;touch-action:none;flex:none}
+#track.mid{background:linear-gradient(90deg,#D97706,#F5B301)}
+#track.ok{background:linear-gradient(90deg,#16A34A,#22C55E)}
+#tlabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;pointer-events:none}
+#knob{position:absolute;top:5px;right:5px;width:46px;height:46px;border-radius:50%;background:#fff;color:#E8890C;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.2);cursor:grab}
+
+/* sheet / toast / confetti */
+#shade{position:absolute;inset:0;background:rgba(59,46,36,.5);opacity:0;pointer-events:none;transition:.3s;z-index:70}
+#shade.show{opacity:1;pointer-events:auto}
+#sheet{position:absolute;left:0;right:0;bottom:-75%;background:#fff;border-radius:26px 26px 0 0;padding:22px 18px;z-index:71;transition:bottom .38s cubic-bezier(.3,1.2,.4,1);display:flex;flex-direction:column;gap:10px;direction:rtl;text-align:center;color:#3B2E24}
+#sheet.show{bottom:0}
+#toast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);background:#33261B;color:#FFE9C2;font-size:12.5px;font-weight:700;padding:11px 18px;border-radius:999px;opacity:0;transition:.35s;z-index:85;white-space:nowrap;max-width:88%}
+#toast.show{opacity:1;transform:translateX(-50%)}
+.cf{position:absolute;top:-30px;z-index:66;animation:fall 1.7s ease-in forwards;color:#E8890C}
+@keyframes fall{to{transform:translateY(880px) rotate(320deg);opacity:.15}}
+</style>
+</head>
+<body>
+<header>
+  <div class="t">COPO LAB · <b>V1 — The Committed Path «السلّم الدائم»</b> · interactive prototype</div>
+  <a href="/">⟵ Back to board</a>
+</header>
+<div id="stage">
+  <div id="frame">
+    <div id="scrn">
+      <div id="island"></div>
+      <div id="sbar"><span>9:41</span><span style="letter-spacing:2px">▮▮▮ ⌁</span></div>
+
+      <!-- ======== TAB · Home ======== -->
+      <section class="scr on" id="t-home">
+        <div class="hi">
+          <div><b>هلا فيك، سلمان</b><small>وش نوفّر لك اليوم؟</small></div>
+          <div class="hicons">
+            <span class="coin"><i data-ic="coin" data-s="14"></i><span id="coins1">2,000</span></span>
+            <span class="rnd"><i data-ic="bell" data-s="16"></i></span>
+            <button class="rnd" onclick="openCart()"><i data-ic="cart" data-s="16"></i><span class="badge" id="bdg1" style="display:none">0</span></button>
+          </div>
+        </div>
+        <div class="search"><i data-ic="search" data-s="15"></i> ابحث عن متجر أو كوبون…</div>
+        <div class="hero"><b>عروض صيف ماكس</b><small>وفّر حتى 60% وبرّد جيبك من حرّ الأسعار</small><button class="hcta" onclick="root('t-market')">تسوق الآن</button></div>
+        <div class="cats">
+          <button class="cat" onclick="root('t-market')"><i data-ic="food" data-s="18"></i>طعام</button>
+          <button class="cat" onclick="root('t-market')"><i data-ic="shirt" data-s="18"></i>موضة</button>
+          <button class="cat" onclick="root('t-market')"><i data-ic="play" data-s="18"></i>تسلية</button>
+          <button class="cat" onclick="root('t-market')"><i data-ic="pin" data-s="18"></i>قريب</button>
+        </div>
+        <div class="sec"><span><i data-ic="flame" data-s="15"></i> رحلاتك النشطة</span><i>واصل تقدّمك</i></div>
+        <div class="row">
+          <button class="lcard" onclick="go('p-shopB')"><span class="ring" id="homeRing" style="--p:40%"><b id="homeRingTxt">2/5</b></span><span class="logo">نمق</span><b>نمق قهوة</b><small id="homeRingHint">المرحلة 3 بانتظارك — خصم 35%</small></button>
+          <button class="lcard" onclick="toast('نفس التجربة — جرّب سلّم نمق')"><span class="ring" style="--p:20%"><b>1/5</b></span><span class="logo">دو</span><b>دومينوز</b><small>ابدأ مرحلتك الثانية</small></button>
+        </div>
+        <button class="lvl" onclick="root('t-rank')">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span><b>مستواك: مكتشف</b><small>حقائب الخبرة: <span class="xpTxt">2,340</span> حقيبة</small></span><i data-ic="medal" data-s="26"></i></div>
+          <div class="bar"><i class="xpBar" style="width:78%"></i></div>
+          <small><span class="xpLeft">660</span> حقيبة إضافية للوصول إلى مستوى خبير</small>
+        </button>
+        <div class="sec"><span><i data-ic="steps" data-s="15"></i> متاجر السلالم</span><i>النوع B</i></div>
+        <div class="row">
+          <button class="lcard" onclick="go('p-shopB')"><span class="tag tagf"><i data-ic="steps" data-s="11"></i> سلّم</span><span class="logo">هم</span><b>هاف مليون</b><small>5 مراحل تنتهي بـ VIP</small></button>
+          <button class="dcard" onclick="go('p-shopA')"><span class="tag2">حتى 40%</span><span class="logo">إك</span><b>ايكيا</b><small>كوبونات مفتوحة — اشترِ مباشرة</small></button>
+        </div>
+        <div class="refer"><i data-ic="gift" data-s="22"></i><div><b style="font-size:13px">ادعُ أصدقاءك واربح كاش باك</b><small>كل صديق يشتري كوبون يرجعلك كاش باك</small></div></div>
+      </section>
+
+      <!-- ======== TAB · Market ======== -->
+      <section class="scr" id="t-market">
+        <div class="hi">
+          <b>تسوق</b>
+          <div class="hicons">
+            <button class="rnd" onclick="openCart()"><i data-ic="cart" data-s="16"></i><span class="badge" id="bdg2" style="display:none">0</span></button>
+          </div>
+        </div>
+        <div class="search"><i data-ic="search" data-s="15"></i> ابحث في السوق…</div>
+        <div class="chips" id="mFilters">
+          <button class="chip on" data-f="all">الكل</button>
+          <button class="chip" data-f="b"><i data-ic="steps" data-s="12"></i> سلالم</button>
+          <button class="chip" data-f="a"><i data-ic="ticket" data-s="12"></i> كوبونات مفتوحة</button>
+        </div>
+        <div class="cats">
+          <span class="cat"><i data-ic="food" data-s="18"></i>طعام</span>
+          <span class="cat"><i data-ic="shirt" data-s="18"></i>موضة</span>
+          <span class="cat"><i data-ic="play" data-s="18"></i>تسلية</span>
+          <span class="cat"><i data-ic="pin" data-s="18"></i>قريب</span>
+        </div>
+        <div class="row" data-t="b">
+          <button class="lcard" onclick="go('p-shopB')"><span class="ring" id="mktRing" style="--p:40%"><b id="mktRingTxt">2/5</b></span><span class="logo">نمق</span><b>نمق قهوة</b><small><i data-ic="steps" data-s="10"></i> سلّم · خصم يتصاعد كل مرحلة</small></button>
+          <button class="lcard" onclick="toast('نفس التجربة — جرّب سلّم نمق')"><span class="ring" style="--p:20%"><b>1/5</b></span><span class="logo">دو</span><b>دومينوز</b><small><i data-ic="steps" data-s="10"></i> سلّم · المرحلة 2 جاهزة</small></button>
+        </div>
+        <div class="row" data-t="a">
+          <button class="dcard" onclick="go('p-shopA')"><span class="tag2">حتى 40%</span><span class="logo">إك</span><b>ايكيا</b><small>كوبونات مفتوحة · يبدأ من 25 ﷼</small></button>
+          <button class="dcard" onclick="toast('نموذج: نفس تجربة النوع A — جرّب ايكيا')"><span class="tag2">حتى 50%</span><span class="logo">قس</span><b>قولدن سنت</b><small>كوبونات مفتوحة · يبدأ من 30 ﷼</small></button>
+        </div>
+        <div class="row" data-t="b">
+          <button class="lcard" onclick="toast('نفس التجربة — جرّب سلّم نمق')"><span class="tag tagf"><i data-ic="steps" data-s="11"></i> سلّم</span><span class="logo">هم</span><b>هاف مليون</b><small>ابدأ سلّمك — 5 مراحل حتى VIP</small></button>
+          <button class="dcard" data-t="a" onclick="toast('نموذج: نفس تجربة النوع A')"><span class="tag2">حتى 45%</span><span class="logo">سب</span><b>سنتر بوينت</b><small>كوبونات مفتوحة · يبدأ من 50 ﷼</small></button>
+        </div>
+      </section>
+
+      <!-- ======== TAB · Rank (Figma loyalty) ======== -->
+      <section class="scr" id="t-rank">
+        <div class="hi"><b>مستواك الحالي</b><span class="coin"><i data-ic="coin" data-s="14"></i><span class="xpTxt">2,340</span> حقيبة</span></div>
+        <div class="lvl">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span><b>مستواك: مكتشف</b><small>حقائب الخبرة: <span class="xpTxt">2,340</span> حقيبة</small></span><i data-ic="medal" data-s="26"></i></div>
+          <div class="bar"><i class="xpBar" style="width:78%"></i></div>
+          <small><span class="xpLeft">660</span> حقيبة إضافية للوصول إلى مستوى خبير</small>
+        </div>
+        <div class="ranks">
+          <div class="rank done"><span class="d"><i data-ic="check" data-s="17"></i></span><b>مبتدئ</b></div>
+          <div class="rank cur"><span class="d"><i data-ic="medal" data-s="17"></i></span><b>مكتشف</b><small>أنت هنا</small></div>
+          <div class="rank"><span class="d"><i data-ic="lock" data-s="16"></i></span><b>خبير</b></div>
+          <div class="rank"><span class="d"><i data-ic="lock" data-s="16"></i></span><b>أسطورة</b></div>
+        </div>
+        <div class="note"><i data-ic="gift" data-s="18"></i> استمتع بكوبونات مخصصة، والعديد من المزايا الأخرى</div>
+        <div class="sec">مزايا المستوى الحالي</div>
+        <div class="row">
+          <div class="tile"><i data-ic="ticket" data-s="20"></i><b>كوبونات مخصصة</b><small>احصل على كوبونات خاصة</small></div>
+          <div class="tile"><i data-ic="gem" data-s="20"></i><b>خصومات حصرية</b><small>خصومات حصرية للمستوى</small></div>
+          <div class="tile"><i data-ic="zap" data-s="20"></i><b>الوصول المبكر</b><small>كن أول من يجرب متاجر جديدة</small></div>
+        </div>
+        <div class="sec">الإنجازات<i>عرض الكل</i></div>
+        <div class="row">
+          <div class="tile"><i data-ic="trophy" data-s="20"></i><b>الشراء الأول</b><small>تبدأ رحلتك في التوفير</small></div>
+          <div class="tile"><i data-ic="medal" data-s="20"></i><b>صائد الحصريات</b><small>شراء 5 كوبونات حصرية</small></div>
+          <div class="tile"><i data-ic="crown" data-s="20"></i><b>ملك التوفير</b><small>شراء 10 كوبونات في شهر</small></div>
+        </div>
+        <div class="sec"><span><i data-ic="steps" data-s="15"></i> سلالمك النشطة</span><i>مصدر الخبرة الأسرع</i></div>
+        <div class="row">
+          <button class="lcard" onclick="go('p-shopB')"><span class="ring" id="rankRing" style="--p:40%"><b id="rankRingTxt">2/5</b></span><span class="logo">نمق</span><b>نمق قهوة</b><small>+160 خبرة في المرحلة القادمة</small></button>
+          <div class="tile" style="display:flex;flex-direction:column;justify-content:center"><i data-ic="steps" data-s="20"></i><b>سفير السلالم</b><small>أكمل سلّم متجر كاملًا — إنجاز جديد</small></div>
+        </div>
+      </section>
+
+      <!-- ======== TAB · My coupons ======== -->
+      <section class="scr" id="t-coupons">
+        <div class="hi"><b>كوبوناتي</b><span class="coin" id="cpCount">0 نشطة</span></div>
+        <div class="tabs"><button class="on">النشطة</button><button onclick="toast('نموذج: قائمة الكوبونات المستخدمة')">المستخدمة</button><button onclick="toast('نموذج: قائمة الكوبونات المنتهية')">المنتهية</button></div>
+        <div id="cpList" style="display:flex;flex-direction:column;gap:9px"></div>
+        <div class="tkt" style="opacity:.45"><span class="logo" style="width:30px;height:30px;font-size:9px">نمق</span><div><b>قهوة اليوم — المرحلة 1</b><small>مستخدم · 2025/1/12</small></div><span class="usebtn" style="background:#B49E86">مستخدم</span></div>
+      </section>
+
+      <!-- ======== STACK · Retailer A (open shelf) ======== -->
+      <section class="scr stack" id="p-shopA">
+        <button class="back" onclick="root('t-market')"><i data-ic="back" data-s="16"></i></button>
+        <div class="heroimg"><div style="display:flex;align-items:center;gap:9px;width:100%"><span class="logo">إك</span><div style="flex:1"><b style="font-size:14px">ايكيا</b><small style="color:#D9BC8F"><i data-ic="star" data-s="11"></i> 4.8 · +1,342 تقييم<span class="avs"><i style="background:#E8890C">س</i><i style="background:#B4560A">م</i><i style="background:#0E7A43">ر</i></span></small></div><span class="tag2" style="position:static">حتى 40%</span></div></div>
+        <div class="chips"><span class="chip on">حتى 40%</span><span class="chip"><i data-ic="pin" data-s="12"></i> فروع</span><span class="chip"><i data-ic="zap" data-s="12"></i> أونلاين</span></div>
+        <div class="note"><i data-ic="spark" data-s="16"></i><span style="flex:1">خصم إضافي 15% لفترة محدودة — الحد الأدنى 120 ﷼</span><button class="buy ghosty" onclick="toast('أُضيف الخصم الإضافي لسلتك')">أضف</button></div>
+        <div class="tabs" id="aTabs">
+          <button class="on" data-p="aCoupons">الكوبونات</button>
+          <button data-p="aHow">طريقة الاستخدام</button>
+          <button onclick="toast('نموذج: قائمة الفروع على الخريطة')">الفروع</button>
+          <button onclick="toast('نموذج: الشروط والأحكام')">الشروط</button>
+        </div>
+        <div id="aCoupons" style="display:flex;flex-direction:column;gap:9px">
+          <div class="tkt"><span class="off">34%</span><div><b>كوبون أثاث غرفة النوم</b><small>ينتهي 2025/2/29 · <span class="pts">30 نقطة مستوى</span></small></div><div class="end"><small style="text-decoration:line-through">37</small><b>25 ﷼</b><span class="stp"><button onclick="addQ('ikeaBed',1)"><i data-ic="plus" data-s="12"></i></button><span id="q-ikeaBed">0</span><button onclick="addQ('ikeaBed',-1)"><i data-ic="minus" data-s="12"></i></button></span></div></div>
+          <div class="tkt"><span class="off">25%</span><div><b>كوبون أدوات المطبخ</b><small>ينتهي 2025/2/29 · <span class="pts">35 نقطة مستوى</span></small></div><div class="end"><small style="text-decoration:line-through">60</small><b>45 ﷼</b><span class="stp"><button onclick="addQ('ikeaKit',1)"><i data-ic="plus" data-s="12"></i></button><span id="q-ikeaKit">0</span><button onclick="addQ('ikeaKit',-1)"><i data-ic="minus" data-s="12"></i></button></span></div></div>
+        </div>
+        <div id="aHow" style="display:none">
+          <div class="note" style="align-items:flex-start"><i data-ic="info" data-s="18"></i><span>1) اشترِ الكوبون وسيصلك كود فوري<br>2) أبرز الكود عند الكاشير أو أدخله أونلاين<br>3) الخصم ينطبق تلقائيًا على فاتورتك</span></div>
+        </div>
+        <div class="foot"><button class="cta" onclick="openCart()"><i data-ic="cart" data-s="17"></i> شيك على السلة — <span class="cartN">0</span> · <span class="cartT">0</span> ﷼</button></div>
+      </section>
+
+      <!-- ======== STACK · Retailer B (ladder) ======== -->
+      <section class="scr stack" id="p-shopB">
+        <button class="back" onclick="root('t-market')"><i data-ic="back" data-s="16"></i></button>
+        <div class="heroimg" style="background:linear-gradient(120deg,#B4560A,#6B4E2E)"><div style="display:flex;align-items:center;gap:9px;width:100%"><span class="logo">نمق</span><div style="flex:1"><b style="font-size:14px">نمق قهوة</b><small style="color:#FFE2B8"><i data-ic="star" data-s="11"></i> 4.9 · +1,909 تقييم<span class="avs"><i style="background:#E8890C">س</i><i style="background:#B4560A">م</i><i style="background:#0E7A43">ر</i></span></small></div><span class="tag"><i data-ic="steps" data-s="11"></i> سلّم</span></div></div>
+        <div class="vipbar"><i data-ic="crown" data-s="18"></i> أكمل السلّم الخماسي واصبح VIP — خصم دائم 15%</div>
+        <div class="tabs"><button class="on">السلّم</button><button onclick="toast('نموذج: طريقة استخدام كوبونات السلّم')">طريقة الاستخدام</button><button onclick="toast('نموذج: الشروط والأحكام')">الشروط</button></div>
+        <div class="lad" id="ladder"></div>
+        <div class="foot"><button class="cta" id="ladCta" onclick="addRung()"></button></div>
+      </section>
+
+      <!-- ======== STACK · Cart ======== -->
+      <section class="scr stack" id="p-cart">
+        <button class="back" onclick="root('t-market')"><i data-ic="back" data-s="16"></i></button>
+        <div class="hi"><b>مراجعة السلة</b><span class="coin"><i data-ic="gift" data-s="14"></i> +<span id="cartXp">0</span> خبرة</span></div>
+        <div id="cartList" style="display:flex;flex-direction:column;gap:9px"></div>
+        <button class="ghost" style="text-align:right;padding:2px" onclick="root('t-market')"><i data-ic="plus" data-s="12"></i> أضف المزيد من الكوبونات الحصرية لسلتك</button>
+        <div id="cartSums"></div>
+        <div class="foot"><button class="cta" id="cartCta" onclick="go('p-pay')">متابعة للدفع</button></div>
+      </section>
+
+      <!-- ======== STACK · Pay ======== -->
+      <section class="scr stack" id="p-pay">
+        <button class="back" onclick="go('p-cart')"><i data-ic="back" data-s="16"></i></button>
+        <div class="hi"><b>الدفع</b><span class="coin"><i data-ic="card" data-s="14"></i> VISA ···8742</span></div>
+        <div class="rung"><span class="n"><i data-ic="card" data-s="16"></i></span><div><b>سلمان الراشد</b><small>فيزا تنتهي بـ 8742</small></div><span class="end"><button class="buy ghosty" onclick="toast('نموذج: تغيير وسيلة الدفع')">تغيير</button></span></div>
+        <div id="paySums"></div>
+        <div class="promo"><input id="promoIn" placeholder="أضف البروموكود…"><button class="buy" onclick="applyPromo()">تطبيق</button></div>
+        <div class="note"><i data-ic="gift" data-s="16"></i> ستحصل على <span id="payXp">0</span> حقيبة خبرة من هذا الطلب</div>
+        <div style="flex:1"></div>
+        <div id="track"><div id="tlabel">اسحب للدفع</div><div id="knob"><i data-ic="back" data-s="18"></i></div></div>
+        <small style="text-align:center;margin-top:6px;flex:none">اسحب الدائرة لليسار حتى النهاية (أو انقر مرتين للتجربة)</small>
+      </section>
+
+      <!-- ======== STACK · Success ======== -->
+      <section class="scr stack" id="p-done" style="text-align:center">
+        <div class="hero54" style="background:linear-gradient(135deg,#F7A928,#E8890C);box-shadow:0 10px 24px rgba(232,137,12,.4)"><i data-ic="check" data-s="26" data-w="3"></i></div>
+        <b style="font-size:19px">تم الشراء بنجاح!</b>
+        <small id="doneSub">مجموع الكوبونات التي اشتريتها: 0</small>
+        <div id="doneCodes" style="display:flex;flex-direction:column;gap:9px"></div>
+        <div class="unlock" id="unlockCard" style="display:none"><i data-ic="unlock" data-s="18"></i> <b>انفتحت المرحلة <span id="unlockN">3</span> الآن!</b><small id="unlockSub"></small></div>
+        <div class="dots" id="doneDots" style="display:none">●●●○○</div>
+        <div class="foot" style="flex-direction:column">
+          <button class="cta" id="doneCta" onclick="go('p-shopB')">اذهب للمرحلة التالية</button>
+          <button class="ghost" onclick="root('t-coupons')"><i data-ic="ticket" data-s="13"></i> عرض كوبوناتي</button>
+          <button class="ghost" onclick="go('p-vip')"><i data-ic="crown" data-s="13"></i> محاكاة حالة الحافة: اكتمال السلّم 5/5</button>
+        </div>
+      </section>
+
+      <!-- ======== STACK · VIP edge ======== -->
+      <section class="scr stack" id="p-vip" style="text-align:center">
+        <button class="back" onclick="root('t-home')"><i data-ic="back" data-s="16"></i></button>
+        <div class="hero54" style="background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFD98A;box-shadow:0 10px 24px rgba(51,38,27,.45)"><i data-ic="crown" data-s="26"></i></div>
+        <b style="font-size:19px">أنت الآن VIP في نمق!</b>
+        <small>أكملت المراحل الخمس — القمة ليست نهاية، بل عضوية دائمة</small>
+        <div class="vipcard"><b>سلمان الراشد</b><small>عضو VIP · نمق قهوة · منذ 2025</small></div>
+        <div class="perk"><i data-ic="gem" data-s="18"></i> خصم دائم 15% على كل الطلبات</div>
+        <div class="perk"><i data-ic="gift" data-s="18"></i> كوبون شهري حصري لأعضاء VIP</div>
+        <div class="perk"><i data-ic="zap" data-s="18"></i> أولوية الوصول للعروض الموسمية</div>
+        <div class="foot"><button class="cta" onclick="root('t-home')">الرجوع للرئيسية</button></div>
+      </section>
+
+      <!-- bottom nav -->
+      <nav id="nav">
+        <button class="on" data-r="t-home"><i data-ic="home" data-s="19"></i>الرئيسية</button>
+        <button data-r="t-market"><i data-ic="grid" data-s="19"></i>تسوق</button>
+        <button data-r="t-rank"><i data-ic="trophy" data-s="19"></i>مستواك</button>
+        <button data-r="t-coupons"><i data-ic="ticket" data-s="19"></i>كوبوناتي</button>
+      </nav>
+
+      <button id="fab" onclick="openCart()"><i data-ic="cart" data-s="15"></i> السلة · <span class="cartN">0</span> · <span class="cartT">0</span> ﷼</button>
+
+      <div id="shade" onclick="sheet(false)"></div>
+      <div id="sheet">
+        <div style="color:#E8890C"><i data-ic="lock" data-s="36" data-w="1.8"></i></div>
+        <b style="font-size:17px">المرحلة <span id="shN">3</span> ما زالت مقفلة</b>
+        <small id="shSub">اشترِ المرحلة 2 وتنفتح لك فورًا</small>
+        <div class="dots" id="shDots">●●○○○</div>
+        <button class="cta" id="shCta" onclick="sheet(false);addRung()"></button>
+        <button class="ghost" onclick="sheet(false)">ذكّرني لاحقًا</button>
+      </div>
+
+      <div id="toast"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+/* ---------- icon kit ---------- */
+const IC={
+search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+cart:'<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>',
+home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>',
+trophy:'<path d="M8 21h8M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/>',
+ticket:'<path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4z"/><path d="M13 8v1.5m0 2.5v1.5"/>',
+lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+unlock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.7-1.5"/>',
+check:'<path d="M20 6L9 17l-5-5"/>',
+crown:'<path d="M3 17l-1-10 6 4 4-7 4 7 6-4-1 10z"/><path d="M4 21h16"/>',
+star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+coin:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/>',
+gift:'<path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+flame:'<path d="M12 2s6 5.3 6 11a6 6 0 0 1-12 0C6 7.3 12 2 12 2z"/><path d="M12 12s2 1.6 2 3.5a2 2 0 0 1-4 0c0-1.9 2-3.5 2-3.5z"/>',
+steps:'<path d="M3 20h5v-4h5v-4h5V8h3"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+minus:'<path d="M5 12h14"/>',
+card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+medal:'<circle cx="12" cy="9" r="6"/><path d="M9 14.5L7 22l5-3 5 3-2-7.5"/>',
+pin:'<path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+back:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+zap:'<path d="M13 2L3 14h9l-1 8 10-12h-9z"/>',
+spark:'<path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/><path d="M19 15l.8 2.4L22 18l-2.2.6L19 21l-.8-2.4L16 18l2.2-.6z"/>',
+info:'<circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/>',
+food:'<path d="M4 3v7a2 2 0 0 0 2 2v9M8 3v7a2 2 0 0 1-2 2M12 3v18"/><path d="M17 3c2 0 3 2.5 3 5s-1 5-3 5v8"/>',
+shirt:'<path d="M16 3l5 3-2 4-2-1v12H7V9L5 10 3 6l5-3a4 4 0 0 0 8 0z"/>',
+play:'<path d="M6 4l14 8-14 8z"/>',
+gem:'<path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21L8 9l4-6 4 6-4 12"/>'
+};
+const ic=(n,s,sw)=>'<svg class="ic" width="'+(s||16)+'" height="'+(s||16)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||2)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[n]||'')+'</svg>';
+document.querySelectorAll('[data-ic]').forEach(e=>{e.outerHTML=ic(e.dataset.ic,e.dataset.s,e.dataset.w);});
+
+/* ---------- fit phone to viewport ---------- */
+const fit=()=>{document.getElementById('stage').style.setProperty('--z',
+  Math.min(1,(innerHeight-100)/884,(innerWidth-40)/410));};
+addEventListener('resize',fit); fit();
+
+const $=id=>document.getElementById(id);
+const qsa=s=>[...document.querySelectorAll(s)];
+
+/* ---------- app state ---------- */
+const CATALOG={
+  rung:   {m:'نمق قهوة',   logo:'نمق', t:'',                          price:0,  xp:0,  ladder:true},
+  ikeaBed:{m:'ايكيا',      logo:'إك',  t:'كوبون أثاث غرفة النوم',      price:25, was:37, xp:95},
+  ikeaKit:{m:'ايكيا',      logo:'إك',  t:'كوبون أدوات المطبخ',         price:45, was:60, xp:120}
+};
+const LAD=[
+  {t:'قهوة اليوم',      off:'خصم 15%', price:15, xp:80},
+  {t:'قهوة + حلى',      off:'خصم 25%', price:19, xp:120},
+  {t:'مشروب توقيعي',    off:'خصم 35%', price:24, xp:160},
+  {t:'صندوق القهوة',    off:'خصم 45%', price:39, xp:220},
+  {t:'قمة السلّم — VIP', off:'خصم دائم 15% + كوبون شهري', crown:true}
+];
+const CODES=['A12-FH7-J1K','B44-KL2-M8Q','C71-PQ9-D2X','D58-XW3-T6M'];
+let cart={};          // id -> qty
+let owned=[];         // {logo,m,t,code}
+let xp=2340;          // XP bags (Figma: 2,340 / next level at 3,000)
+let ladStage=2;       // current purchasable rung (1-based); rungs < ladStage are done
+let promo=false;
+
+/* ---------- navigation ---------- */
+const ROOTS=['t-home','t-market','t-rank','t-coupons'];
+window.root=id=>{
+  qsa('.scr').forEach(s=>s.classList.toggle('on',s.id===id));
+  $('nav').classList.remove('hide');
+  qsa('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.r===id));
+  updateFab();
+};
+window.go=id=>{
+  qsa('.scr').forEach(s=>s.classList.toggle('on',s.id===id));
+  $('nav').classList.add('hide');
+  if(id==='p-pay') resetSlider();
+  if(id==='p-shopB') renderLadder();
+  updateFab();
+};
+qsa('#nav button').forEach(b=>b.addEventListener('click',()=>root(b.dataset.r)));
+window.openCart=()=>{ renderCart(); go('p-cart'); };
+
+/* ---------- toast / sheet ---------- */
+let toastTimer=null;
+window.toast=msg=>{
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1900);
+};
+window.sheet=on=>{ $('shade').classList.toggle('show',on); $('sheet').classList.toggle('show',on); };
+
+/* ---------- market filter ---------- */
+qsa('#mFilters .chip').forEach(ch=>ch.addEventListener('click',()=>{
+  qsa('#mFilters .chip').forEach(c=>c.classList.toggle('on',c===ch));
+  const f=ch.dataset.f;
+  qsa('#t-market .row[data-t]').forEach(r=>{r.style.display=(f==='all'||r.dataset.t===f)?'flex':'none';});
+}));
+
+/* ---------- retailer A tabs ---------- */
+qsa('#aTabs button[data-p]').forEach(b=>b.addEventListener('click',()=>{
+  qsa('#aTabs button').forEach(x=>x.classList.toggle('on',x===b));
+  $('aCoupons').style.display=b.dataset.p==='aCoupons'?'flex':'none';
+  $('aHow').style.display=b.dataset.p==='aHow'?'block':'none';
+}));
+
+/* ---------- cart & totals ---------- */
+const count=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const subtotal=()=>Object.entries(cart).reduce((a,[id,q])=>a+(id==='rung'?LAD[ladStage-1].price:CATALOG[id].price)*q,0);
+const cartXpTotal=()=>Object.entries(cart).reduce((a,[id,q])=>a+(id==='rung'?LAD[ladStage-1].xp:CATALOG[id].xp)*q,0);
+function totals(){
+  const sub=subtotal(), fee=count()?1.5:0, vat=+(sub*0.05).toFixed(2);
+  const disc=promo?+(sub*0.10).toFixed(2):0;
+  return {sub,fee,vat,disc,grand:+(sub+fee+vat-disc).toFixed(2)};
+}
+window.addQ=(id,d)=>{
+  cart[id]=Math.max(0,(cart[id]||0)+d);
+  if(!cart[id]) delete cart[id];
+  const q=$('q-'+id); if(q) q.textContent=cart[id]||0;
+  if(d>0) toast('أُضيف إلى السلة');
+  sync();
+};
+window.addRung=()=>{
+  if(ladStage>4){ go('p-vip'); return; }
+  cart.rung=1;
+  toast('أُضيفت المرحلة '+ladStage+' إلى السلة');
+  sync(); openCart();
+};
+function renderCart(){
+  const list=$('cartList');
+  const rows=[];
+  if(cart.rung){
+    const r=LAD[ladStage-1];
+    rows.push('<div class="rung now"><span class="logo" style="width:32px;height:32px;font-size:9px">نمق</span><div><b>'+r.t+' — المرحلة '+ladStage+'/5</b><small>'+ic('zap',11)+' يفتح المرحلة '+(ladStage+1)+' فورًا · +'+r.xp+' خبرة</small></div><div class="end"><b>'+r.price+' ﷼</b><button class="buy ghosty" onclick="addQ(\'rung\',-1)">حذف</button></div></div>');
+  }
+  ['ikeaBed','ikeaKit'].forEach(id=>{
+    if(!cart[id]) return;
+    const it=CATALOG[id];
+    rows.push('<div class="tkt"><span class="logo" style="width:32px;height:32px;font-size:9px">'+it.logo+'</span><div><b>'+it.m+' — '+it.t+'</b><small>ينتهي 2025/2/29 · +'+it.xp+' خبرة/كوبون</small></div><div class="end"><span class="stp"><button onclick="addQ(\''+id+'\',1)">'+ic('plus',12)+'</button><span>'+cart[id]+'</span><button onclick="addQ(\''+id+'\',-1)">'+ic('minus',12)+'</button></span><b>'+(it.price*cart[id])+' ﷼</b></div></div>');
+  });
+  list.innerHTML=rows.length?rows.join(''):'<div class="note">'+ic('cart',16)+' سلتك فاضية — أضف كوبونات من السوق</div>';
+  const t=totals();
+  $('cartSums').innerHTML=count()
+    ? '<div class="sum"><span>المجموع</span><b>'+t.sub.toFixed(2)+' ﷼</b></div>'
+     +'<div class="sum"><span>رسوم الخدمة</span><b>'+t.fee.toFixed(2)+' ﷼</b></div>'
+     +'<div class="sum"><span>الضريبة المقدرة</span><b>'+t.vat.toFixed(2)+' ﷼</b></div>'
+     +'<div class="sum t"><span>الإجمالي</span><b>'+t.grand.toFixed(2)+' ﷼</b></div>'
+    : '';
+  $('cartXp').textContent=cartXpTotal();
+  $('cartCta').style.opacity=count()?1:.45;
+  $('cartCta').style.pointerEvents=count()?'auto':'none';
+}
+function renderPay(){
+  const t=totals();
+  $('paySums').innerHTML=
+    '<div class="sum"><span>المجموع</span><b>'+t.sub.toFixed(2)+' ﷼</b></div>'
+   +'<div class="sum"><span>الرسوم + الضريبة</span><b>'+(t.fee+t.vat).toFixed(2)+' ﷼</b></div>'
+   +(promo?'<div class="sum g"><span>خصم (بروموكود 10%)</span><b>− '+t.disc.toFixed(2)+' ﷼</b></div>':'')
+   +'<div class="sum t"><span>الإجمالي</span><b>'+t.grand.toFixed(2)+' ﷼</b></div>';
+  $('payXp').textContent=cartXpTotal();
+  $('tlabel').textContent='اسحب للدفع — '+t.grand.toFixed(2)+' ﷼';
+}
+window.applyPromo=()=>{
+  const v=($('promoIn').value||'').trim();
+  if(!v){ toast('اكتب البروموكود أولًا'); return; }
+  promo=true; renderPay(); toast('تم تطبيق «'+v.toUpperCase()+'» — خصم 10%');
+};
+function updateFab(){
+  const on=count()>0 && ['t-home','t-market','p-shopA','p-shopB'].some(id=>$(id).classList.contains('on'));
+  $('fab').classList.toggle('show',on);
+}
+function sync(){
+  const n=count(), t=totals();
+  qsa('.cartN').forEach(e=>e.textContent=n);
+  qsa('.cartT').forEach(e=>e.textContent=t.grand.toFixed(0));
+  [['bdg1'],['bdg2']].forEach(([id])=>{const b=$(id); b.textContent=n; b.style.display=n?'flex':'none';});
+  renderCart(); renderPay(); updateFab();
+}
+
+/* ---------- ladder ---------- */
+function renderLadder(){
+  const rows=LAD.map((r,i)=>{
+    const n=i+1;
+    if(r.crown){
+      const cls=ladStage>4?'now':'lock';
+      return '<div class="rung '+cls+'"><span class="n">'+ic('crown',15)+'</span><div><b>'+r.t+'</b><small>'+r.off+'</small></div>'+(ladStage>4?'<div class="end"><button class="buy" onclick="go(\'p-vip\')">استلم</button></div>':'')+'</div>';
+    }
+    if(n<ladStage) return '<div class="rung done"><span class="n">'+ic('check',15)+'</span><div><b>'+r.t+'</b><small>'+r.off+' · مكتملة</small></div></div>';
+    if(n===ladStage) return '<div class="rung now"><span class="n">'+n+'</span><div><b>'+r.t+'</b><small>'+r.off+' · <span class="pts">+'+r.xp+' خبرة</span></small></div><div class="end"><b>'+r.price+' ﷼</b><button class="buy" onclick="addRung()">أضف</button></div></div>';
+    return '<button class="rung lock" onclick="lockSheet('+n+')"><span class="n">'+ic('lock',14)+'</span><div><b>'+r.t+'</b><small>'+r.off+' · تُفتح بعد المرحلة '+(n-1)+'</small></div></button>';
+  });
+  $('ladder').innerHTML=rows.join('');
+  $('ladCta').innerHTML=ladStage>4?ic('crown',17)+' استلم عضوية VIP':'أضف المرحلة '+ladStage+' — '+LAD[ladStage-1].price+' ﷼';
+}
+window.lockSheet=n=>{
+  $('shN').textContent=n;
+  $('shSub').textContent='اشترِ المرحلة '+ladStage+' وتنفتح لك المراحل التالية بالتتابع — '+LAD[n-1].off+' ينتظرك';
+  $('shDots').textContent='●'.repeat(ladStage-1)+'○'.repeat(6-ladStage);
+  $('shCta').textContent='شراء المرحلة '+ladStage+' — '+LAD[ladStage-1].price+' ﷼';
+  sheet(true);
+};
+
+/* ---------- XP / ranks ---------- */
+function renderXP(){
+  qsa('.xpTxt').forEach(e=>e.textContent=xp.toLocaleString('en-US'));
+  qsa('.xpLeft').forEach(e=>e.textContent=Math.max(0,3000-xp).toLocaleString('en-US'));
+  qsa('.xpBar').forEach(e=>e.style.width=Math.min(100,xp/3000*100)+'%');
+  const p=Math.min(100,(ladStage-1)/5*100+20);
+  [['homeRing','homeRingTxt'],['mktRing','mktRingTxt'],['rankRing','rankRingTxt']].forEach(([r,t])=>{
+    const R=$(r),T=$(t); if(!R) return;
+    R.style.setProperty('--p',p+'%'); T.textContent=Math.min(ladStage,5)+'/5';
+  });
+  const hint=$('homeRingHint');
+  if(hint) hint.textContent=ladStage>4?'السلّم مكتمل — استلم عضوية VIP':'المرحلة '+ladStage+' بانتظارك — '+LAD[ladStage-1].off;
+}
+
+/* ---------- coupons wallet ---------- */
+function renderCoupons(){
+  $('cpCount').textContent=owned.length+' نشطة';
+  $('cpList').innerHTML=owned.length
+    ? owned.map(o=>'<div class="tkt"><span class="logo" style="width:32px;height:32px;font-size:9px">'+o.logo+'</span><div><b>'+o.t+'</b><small>ينتهي 2025/2/29 · <code style="color:#8A5A00;font-weight:800">'+o.code+'</code></small></div><span class="usebtn">استخدمه</span></div>').join('')
+    : '<div class="note">'+ic('ticket',16)+' لا كوبونات نشطة بعد — أول عملية شراء تظهر هنا</div>';
+}
+
+/* ---------- success ---------- */
+function completePurchase(){
+  const hadRung=!!cart.rung;
+  const rungStage=ladStage;
+  let bought=0, codeI=0;
+  const codes=[];
+  if(cart.rung){
+    const r=LAD[ladStage-1];
+    codes.push({logo:'نمق',m:'نمق قهوة',t:r.t+' — المرحلة '+ladStage,code:CODES[codeI++]});
+    bought+=1; xp+=r.xp;
+  }
+  ['ikeaBed','ikeaKit'].forEach(id=>{
+    if(!cart[id]) return;
+    const it=CATALOG[id];
+    for(let k=0;k<cart[id];k++){ codes.push({logo:it.logo,m:it.m,t:it.t,code:CODES[codeI%CODES.length]+(cart[id]>1?'-'+(k+1):'')}); codeI++; }
+    bought+=cart[id]; xp+=it.xp*cart[id];
+  });
+  owned=owned.concat(codes);
+  const xpEarned=cartXpTotal();
+  cart={}; promo=false; $('promoIn').value='';
+  qsa('[id^="q-"]').forEach(e=>e.textContent=0);
+
+  $('doneSub').textContent='مجموع الكوبونات التي اشتريتها: '+bought+' · +'+xpEarned+' حقيبة خبرة';
+  $('doneCodes').innerHTML=codes.map(c=>'<div class="codebx"><span class="logo" style="width:26px;height:26px;font-size:8px">'+c.logo+'</span><code style="flex:1;text-align:center">'+c.code+'</code><span class="usebtn">كيف استخدمه</span></div>').join('');
+  if(hadRung){
+    ladStage=Math.min(5,rungStage+1);
+    $('unlockN').textContent=ladStage;
+    $('unlockSub').textContent=ladStage>4?'وصلت قمة السلّم — عضوية VIP بانتظارك':LAD[ladStage-1].t+' بـ'+LAD[ladStage-1].off+' — صار متاحًا للشراء';
+    $('unlockCard').style.display='block';
+    $('doneDots').style.display='block';
+    $('doneDots').textContent='●'.repeat(ladStage-1)+'○'.repeat(6-ladStage);
+    $('doneCta').style.display='flex';
+    const u=$('unlockCard'); u.classList.remove('pop'); void u.offsetWidth; u.classList.add('pop');
+  }else{
+    $('unlockCard').style.display='none';
+    $('doneDots').style.display='none';
+    $('doneCta').style.display='none';
+  }
+  sync(); renderXP(); renderCoupons(); renderLadder();
+  go('p-done'); confetti();
+}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  const scrn=$('scrn'), shapes=['star','coin','gift','spark','flame'];
+  for(let i=0;i<16;i++){
+    const s=document.createElement('span');
+    s.className='cf'; s.innerHTML=ic(shapes[i%shapes.length],14+((i*5)%10));
+    s.style.left=(6+((i*613)%88))+'%';
+    s.style.animationDelay=((i%6)*.09)+'s';
+    scrn.appendChild(s); setTimeout(()=>s.remove(),2400);
+  }
+}
+
+/* ---------- swipe-to-pay ---------- */
+const track=$('track'), knob=$('knob'), tlabel=$('tlabel');
+let dragging=false,startX=0,max=0,cur=0,paid=false;
+function resetSlider(){
+  paid=false;cur=0;knob.style.transform='';track.className='';
+  knob.innerHTML=ic('back',18);
+  renderPay();
+}
+function setProgress(p){
+  cur=p;knob.style.transform='translateX('+(-p*max)+'px)';
+  if(p>=1){finish();return;}
+  if(p>.55){track.className='mid';tlabel.textContent='أكمل… شوي باقي';}
+  else{track.className='';renderPay();}
+}
+function finish(){
+  if(paid)return;paid=true;
+  track.className='ok';tlabel.textContent='رااااائع، أحسنت';knob.innerHTML=ic('check',20,3);
+  setTimeout(completePurchase,650);
+}
+knob.addEventListener('pointerdown',e=>{
+  if(paid||!count())return;
+  dragging=true;startX=e.clientX;max=track.clientWidth-knob.clientWidth-10;
+  knob.setPointerCapture(e.pointerId);
+});
+knob.addEventListener('pointermove',e=>{
+  if(!dragging||paid)return;
+  setProgress(Math.max(0,Math.min(1,(startX-e.clientX)/max)));
+});
+knob.addEventListener('pointerup',()=>{
+  dragging=false;
+  if(!paid&&cur<1){cur>.85?setProgress(1):setProgress(0);}
+});
+track.addEventListener('dblclick',()=>{
+  if(!count()){toast('سلتك فاضية');return;}
+  max=track.clientWidth-knob.clientWidth-10;setProgress(1);
+});
+
+/* ---------- boot ---------- */
+renderLadder(); renderXP(); renderCoupons(); sync();
+})();
+</script>
+</body>
+</html>

@@ -291,6 +291,111 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 .u-txn{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;padding:7px 0;border-bottom:1px solid #1b2740;color:#c9d6ea}
 .u-txn .g{color:var(--green);font-weight:700}
 
+/* ---------- EXP-05 · warm RTL ladder screens (w-kit) ---------- */
+.wscr{flex:1;direction:rtl;text-align:right;display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px;background:linear-gradient(180deg,#FFF9F0,#FBEFDD);color:#3B2E24;font-family:'Segoe UI',Tahoma,Arial,sans-serif}
+.wscr b{font-size:11px}
+.wscr small{font-size:8.5px;color:#9C8570;display:block;line-height:1.5}
+.w-hi{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.w-hi b{font-size:12.5px}
+.w-coin{background:#FFE9C2;border:1px solid #F2C879;color:#8A5A00;font-weight:800;font-size:9px;padding:4px 8px;border-radius:999px;white-space:nowrap}
+.w-search{background:#fff;border:1px solid #F0DFC8;border-radius:11px;color:#B49E86;font-size:9.5px;padding:7px 10px}
+.w-sec{display:flex;justify-content:space-between;align-items:baseline;font-size:10.5px;font-weight:800}
+.w-sec i{font-style:normal;color:#E8890C;font-size:8px;font-weight:700}
+.w-row{display:flex;gap:7px}
+.w-lcard,.w-dcard{flex:1;border-radius:13px;padding:8px;position:relative;min-height:74px}
+.w-lcard{background:#fff;border:1.5px solid #F5C97B;box-shadow:0 4px 12px rgba(232,137,12,.12)}
+.w-dcard{background:#fff;border:1px solid #F0DFC8}
+.w-lcard .lg,.w-dcard .lg{font-size:17px;line-height:1.2}
+.w-ring{width:25px;height:25px;border-radius:50%;background:conic-gradient(#E8890C var(--p,40%),#F3E3CD 0);position:absolute;top:7px;left:7px;display:flex;align-items:center;justify-content:center}
+.w-ring b{background:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6.5px;color:#8A5A00}
+.w-tag{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.w-tagf{position:absolute;top:7px;left:7px}
+.w-tag2{position:absolute;top:7px;left:7px;background:#F4EADB;color:#8A6D4F;font-size:8px;font-weight:800;padding:2px 8px;border-radius:999px}
+.w-vipbar{background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFE9C2;border-radius:12px;padding:8px 10px;font-size:9.5px;font-weight:700}
+.w-lad{display:flex;flex-direction:column;gap:6px}
+.w-rung{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #F0DFC8;border-radius:12px;padding:7px 9px}
+.w-rung .n{width:24px;height:24px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10.5px;background:#F4EADB;color:#8A6D4F}
+.w-rung.done{opacity:.72}
+.w-rung.done .n{background:#DCF5E4;color:#0E7A43}
+.w-rung.now{border:1.5px solid #E8890C;box-shadow:0 5px 14px rgba(232,137,12,.2)}
+.w-rung.now .n{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff}
+.w-rung.lock{background:#FBF4E9;border-style:dashed}
+.w-end{margin-inline-start:auto;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.w-buy{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-weight:800;font-size:9px;padding:5px 11px;border-radius:999px}
+.w-note{background:#FFF1D6;border:1px solid #F2C879;color:#8A5A00;border-radius:11px;padding:7px 9px;font-size:8.5px;font-weight:700;line-height:1.6}
+.w-sum{display:flex;justify-content:space-between;font-size:9.5px;color:#6B584A;padding:2px 0}
+.w-sum.t{border-top:1px dashed #E3D2BA;margin-top:4px;padding-top:6px;font-weight:800;color:#3B2E24;font-size:11px}
+.w-slide{border-radius:999px;padding:5px;display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;font-size:10.5px;background:linear-gradient(90deg,#E8890C,#F7A928);box-shadow:0 8px 18px rgba(232,137,12,.35)}
+.w-slide .knob{width:30px;height:30px;border-radius:50%;background:#fff;color:#E8890C;display:flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+.w-code{border:1.5px dashed #E8890C;background:#FFF3DC;border-radius:11px;padding:8px;text-align:center;font-weight:800;letter-spacing:.14em;color:#8A5A00;font-family:'IBM Plex Mono',monospace;font-size:11px}
+.w-hero{font-size:34px;text-align:center;line-height:1.2}
+.w-unlock{background:linear-gradient(135deg,#FFF3DC,#FFE9C2);border:1.5px solid #F2C879;border-radius:13px;padding:9px;text-align:center}
+.w-unlock b{color:#8A5A00;font-size:11.5px}
+.w-vipcard{background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFE9C2;border-radius:14px;padding:12px;text-align:right;box-shadow:0 10px 24px rgba(51,38,27,.4)}
+.w-vipcard b{font-size:12px}
+.w-vipcard small{color:#D9BC8F}
+.w-perk{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #F0DFC8;border-radius:11px;padding:7px 9px;font-size:9.5px;font-weight:700}
+.w-dots{text-align:center;letter-spacing:.3em;color:#E8890C;font-size:12px}
+.w-sheet{background:#fff;border-radius:16px 16px 0 0;padding:12px;margin:0 -12px -12px;box-shadow:0 -10px 30px rgba(59,46,36,.25);display:flex;flex-direction:column;gap:7px}
+.w-ghost{text-align:center;color:#9C8570;font-size:9.5px;font-weight:700;padding:6px}
+.w-foot{display:flex;gap:6px;margin-top:auto}
+.w-cta{flex:1;text-align:center;background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;font-weight:800;font-size:11px;padding:10px;border-radius:13px;box-shadow:0 8px 18px rgba(232,137,12,.35)}
+.w-ic{display:inline-block;vertical-align:-2px;flex:none}
+.w-hero2{border-radius:14px;padding:11px 12px;background:linear-gradient(120deg,#FF8A5B,#F7A928);color:#fff;position:relative;overflow:hidden;box-shadow:0 8px 18px rgba(247,138,40,.3)}
+.w-hero2::after{content:'';position:absolute;left:-24px;top:-24px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.16)}
+.w-hero2 b{font-size:12px;display:block}
+.w-hero2 small{color:rgba(255,255,255,.85)}
+.w-hero2 .hcta{display:inline-block;margin-top:5px;background:#fff;color:#B4560A;font-size:8.5px;font-weight:800;border-radius:999px;padding:3px 10px}
+.w-cats{display:flex;gap:6px}
+.w-cat{flex:1;background:#fff;border:1px solid #F0DFC8;border-radius:11px;padding:6px 3px;text-align:center;font-size:8px;font-weight:800;color:#6B584A}
+.w-cat .w-ic{display:block;margin:0 auto 3px;color:#E8890C}
+.w-lvl{background:linear-gradient(135deg,#33261B,#5C4326);color:#FFE9C2;border-radius:14px;padding:10px 12px}
+.w-lvl b{font-size:11px}
+.w-lvl small{color:#D9BC8F}
+.w-lvl .bar{height:5px;background:rgba(255,233,194,.22);border-radius:99px;margin:7px 0 5px;overflow:hidden}
+.w-lvl .bar i{display:block;height:100%;width:78%;background:linear-gradient(90deg,#F7A928,#FFD98A);border-radius:99px}
+.w-nav{display:flex;gap:3px;background:#fff;border:1px solid #F0DFC8;border-radius:15px;padding:5px;margin-top:auto;box-shadow:0 -4px 14px rgba(59,46,36,.06)}
+.w-nav div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:7px;font-weight:800;color:#B49E86;padding:5px 2px;border-radius:11px}
+.w-nav .on{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff}
+.w-avs{display:inline-flex;vertical-align:middle}
+.w-avs i{width:15px;height:15px;border-radius:50%;border:1.5px solid #fff;margin-inline-start:-5px;font-style:normal;font-size:6.5px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+.w-avs i:first-child{margin-inline-start:0}
+.w-heroimg{height:64px;border-radius:13px;background:linear-gradient(120deg,#6B4E2E,#33261B);position:relative;display:flex;align-items:flex-end;padding:8px;color:#FFE9C2}
+.w-logo{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid #F5C97B;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:9px;color:#8A5A00;flex:none}
+.w-tabs2{display:flex;gap:2px;border-bottom:1.5px solid #F0DFC8;font-size:8px;font-weight:800;color:#9C8570}
+.w-tabs2 span{padding:5px 6px}
+.w-tabs2 .on{color:#E8890C;box-shadow:inset 0 -2px 0 #E8890C}
+.w-tkt{position:relative;background:#fff;border:1px solid #F0DFC8;border-radius:12px;padding:7px 9px;display:flex;gap:7px;align-items:center}
+.w-tkt::before,.w-tkt::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:#FBEFDD;border:1px solid #F0DFC8;top:50%;transform:translateY(-50%)}
+.w-tkt::before{right:-6.5px}
+.w-tkt::after{left:-6.5px}
+.w-off{background:#FFF1D6;color:#8A5A00;font-weight:900;font-size:8.5px;border-radius:7px;padding:2px 6px;white-space:nowrap}
+.w-pts{font-size:7.5px;color:#0E7A43;background:#DCF5E4;border-radius:99px;padding:2px 6px;font-weight:800;white-space:nowrap}
+.w-stp{display:flex;align-items:center;gap:5px;background:#FBF4E9;border-radius:99px;padding:2px 4px;font-weight:800;font-size:9px}
+.w-stp span{width:15px;height:15px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:#E8890C;border:1px solid #F0DFC8}
+.w-chips{display:flex;gap:5px}
+.w-chip{background:#fff;border:1px solid #F0DFC8;color:#8A6D4F;border-radius:999px;padding:4px 9px;font-size:8px;font-weight:800;display:flex;align-items:center;gap:3px}
+.w-chip.on{background:linear-gradient(135deg,#F7A928,#E8890C);border-color:#E8890C;color:#fff}
+.w-ranks{display:flex;align-items:flex-start;gap:2px;padding:2px 0}
+.w-rank{flex:1;text-align:center}
+.w-rank .d{width:25px;height:25px;margin:0 auto 3px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#F4EADB;color:#8A6D4F}
+.w-rank.done .d{background:#DCF5E4;color:#0E7A43}
+.w-rank.cur .d{background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;box-shadow:0 4px 10px rgba(232,137,12,.4)}
+.w-rank b{font-size:7px;display:block}
+.w-rank small{font-size:6.5px}
+.w-tile{flex:1;background:#fff;border:1px solid #F0DFC8;border-radius:12px;padding:7px 5px;text-align:center}
+.w-tile .w-ic{display:block;margin:0 auto 3px;color:#E8890C}
+.w-tile b{font-size:8px;display:block}
+.w-tile small{font-size:6.8px}
+.w-refer{display:flex;align-items:center;gap:8px;background:linear-gradient(120deg,#FFEFD2,#FFE2B8);border:1px solid #F2C879;border-radius:13px;padding:8px 10px}
+.w-refer .w-ic{color:#B4560A}
+.w-codebx{display:flex;align-items:center;justify-content:space-between;gap:6px;border:1.5px dashed #E8890C;background:#FFF3DC;border-radius:11px;padding:7px 9px}
+.w-codebx code{font-family:'IBM Plex Mono',monospace;font-weight:800;letter-spacing:.1em;color:#8A5A00;font-size:9.5px}
+.w-usebtn{background:#0E7A43;color:#fff;font-size:8px;font-weight:800;border-radius:999px;padding:4px 9px;white-space:nowrap}
+/* canvas-level CTA (opens interactive prototype) */
+.w-open{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#F7A928,#E8890C);color:#241505;font-weight:800;font-size:14.5px;padding:13px;border-radius:13px;text-decoration:none;box-shadow:0 10px 26px rgba(232,137,12,.35)}
+.w-open:hover{filter:brightness(1.07)}
+
 /* ============ live presence cursors ============ */
 .rcursor{
   position:absolute;left:0;top:0;z-index:100000;
@@ -410,7 +515,7 @@ body.connecting .item:hover{outline:2px dashed rgba(183,164,255,.8);outline-offs
 const LS_KEY = 'copoLab.board.v4';
 // Bump this to publish the current seed() as everyone's board on their next load
 // (a deliberate "reset everyone to a new base" — it replaces live boards).
-const SEED_VERSION = 1;
+const SEED_VERSION = 3;   // v3: EXP-05 V1 rebuilt as full E2E app flow (12 screens, ranks, no-emoji icons)
 const GREEN='#b7f36b', CYAN='#7fe8f2', AMBER='#ffd166', PINK='#ff9ec4', VIOLET='#c9b8ff', WHITE='#edf2f7';
 const PALETTE=[GREEN,CYAN,AMBER,PINK,VIOLET,WHITE];
 
@@ -440,6 +545,45 @@ let undoStack=[], redoStack=[], committedSnap=null;  // whole-board snapshots
 let clipboard=null;        // copied item group {items,wires,anchor}
 const elById={};
 const byId=id=>state.items.find(i=>i.id===id);
+
+/* ============ inline SVG icon kit (EXP-05 warm screens — no emoji) ============ */
+const IC={
+search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+cart:'<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>',
+home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>',
+trophy:'<path d="M8 21h8M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/>',
+ticket:'<path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1a2 2 0 0 0 0 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1a2 2 0 0 0 0-4z"/><path d="M13 8v1.5m0 2.5v1.5"/>',
+lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+unlock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.7-1.5"/>',
+check:'<path d="M20 6L9 17l-5-5"/>',
+crown:'<path d="M3 17l-1-10 6 4 4-7 4 7 6-4-1 10z"/><path d="M4 21h16"/>',
+star:'<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+coin:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/>',
+gift:'<path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+flame:'<path d="M12 2s6 5.3 6 11a6 6 0 0 1-12 0C6 7.3 12 2 12 2z"/><path d="M12 12s2 1.6 2 3.5a2 2 0 0 1-4 0c0-1.9 2-3.5 2-3.5z"/>',
+steps:'<path d="M3 20h5v-4h5v-4h5V8h3"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+minus:'<path d="M5 12h14"/>',
+card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+medal:'<circle cx="12" cy="9" r="6"/><path d="M9 14.5L7 22l5-3 5 3-2-7.5"/>',
+pin:'<path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
+back:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+zap:'<path d="M13 2L3 14h9l-1 8 10-12h-9z"/>',
+spark:'<path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/><path d="M19 15l.8 2.4L22 18l-2.2.6L19 21l-.8-2.4L16 18l2.2-.6z"/>',
+info:'<circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/>',
+wallet:'<rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M16 15h2"/>',
+food:'<path d="M4 3v7a2 2 0 0 0 2 2v9M8 3v7a2 2 0 0 1-2 2M12 3v18"/><path d="M17 3c2 0 3 2.5 3 5s-1 5-3 5v8"/>',
+shirt:'<path d="M16 3l5 3-2 4-2-1v12H7V9L5 10 3 6l5-3a4 4 0 0 0 8 0z"/>',
+play:'<path d="M6 4l14 8-14 8z"/>',
+gem:'<path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21L8 9l4-6 4 6-4 12"/>'
+};
+function ic(n,s,sw){s=s||12;sw=sw||2;return '<svg class="w-ic" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[n]||'')+'</svg>';}
 
 /* ============ seed board: EXP-01 market research ============ */
 function seed(){
@@ -696,6 +840,173 @@ function seed(){
   W(wf2,wf3,'buy');
   W(wf3,wf4,'pay');
   W(wf4,wf5,'view wallet');
+
+  /* ================== EXP-05 · LADDER COMMERCE · V1 ================== */
+  F(6360,160,2560,2620,'🧪 EXPERIMENT 05 — LADDER COMMERCE · V1 «السلّم الدائم» · FULL E2E');
+  L(6420,205,'V1 · FULL APP FLOW · HOME → MARKET → BOTH RETAILER TYPES → PURCHASE → RANKS · RTL',{dim:true});
+
+  const chip=t=>'<span style="display:inline-block;background:rgba(232,137,12,.14);border:1px solid rgba(232,137,12,.55);color:#F7A928;border-radius:999px;padding:3px 10px;font-size:10px;font-weight:700;margin:0 4px 4px 0">'+t+'</span>';
+  const NV=a=>'<div class="w-nav">'+[['الرئيسية','home'],['تسوق','grid'],['مستواك','trophy'],['كوبوناتي','ticket']].map((p,i)=>'<div class="'+(i===a?'on':'')+'">'+ic(p[1],13)+p[0]+'</div>').join('')+'</div>';
+  const AVS='<span class="w-avs"><i style="background:#E8890C">س</i><i style="background:#B4560A">م</i><i style="background:#0E7A43">ر</i></span>';
+
+  C(8200,250,700,'V1 — The Committed Path («السلّم الدائم»)',
+    '<div><div style="margin-bottom:7px">'+chip('T1 · Purchase unlocks next rung')+chip('T2 · Progress never expires')+chip('T3 · Summit = VIP membership')+'</div>'
+    +'<div style="line-height:1.8">Type-B retailers become a <b style="color:#F7A928">5-rung coupon ladder</b>: one rung purchasable, the rest visibly locked and unlocked sequentially by purchase. The summit lands on a permanent per-merchant VIP membership. Built as a complete app: full home, marketplace, both retailer types, multi-merchant cart, swipe-to-pay, ranks (as in the Figma prototype) and a coupons wallet.</div>'
+    +'<div style="margin-top:8px;font-weight:700;color:#00e5a0">Business impact:</div>'
+    +'<div style="line-height:1.9;color:#c9d6ea">• Fastest revenue capture — no redemption wait<br>• Lowest ops complexity — no in-store usage tracking<br>• "Ladder completion rate" becomes the core habit KPI<br>• VIP landing prevents churn at the summit<br>• Ranks (XP bags) accelerate via ladder purchases → habit loop</div></div>',{html:true});
+  C(7480,250,660,'Interactive Prototype — iPhone 17',
+    '<div><a class="w-open" href="/prototypes/v1.html" target="_blank">'+ic('play',16,2.5)+'&nbsp; Open the interactive prototype</a>'
+    +'<div style="margin-top:8px;color:#8ea3c0;line-height:1.8;font-size:11.5px">Clickable end-to-end build in an iPhone-17 mockup — both retailer types, working bottom tabs, market filters, quantity steppers, promo code, 3-state swipe-to-pay, unlock celebration, full ranks screen, coupons wallet and the VIP edge state. Arabic · RTL · light mode.</div></div>',{html:true});
+  C(6420,250,1000,'Edge Cases & Coverage',
+    '<div style="line-height:2">'
+    +'• <b>Type distinction at a glance</b> — screens 01–03: gold ladder badge + progress ring (B) vs plain % badge (A)<br>'
+    +'• <b>Locked rung tapped</b> — screen 06: bottom-sheet explains why + redirects to the available rung<br>'
+    +'• <b>Instant unlock on success</b> — screen 09: celebration + next-rung announcement in-place<br>'
+    +'• <b>Ladder completion (5/5)</b> — screen 12: summit lands on permanent VIP, no dead end<br>'
+    +'• <b>Normal Type-A flow fully covered</b> — 04 → 07 → 08 → 09 with per-merchant codes<br>'
+    +'• <b>Full navigation</b> — Home · Market · Rank (Figma-faithful) · My Coupons</div>',{html:true});
+
+  const v1s1=SC(8560,700,'V1·01 الرئيسية أ — بانر وفئات ورحلات',
+    '<div class="wscr"><div class="w-hi"><div><b>هلا فيك، سلمان</b><small>وش نوفّر لك اليوم؟</small></div><span style="display:flex;gap:5px;align-items:center"><span class="w-coin">'+ic('coin',10)+' 2,000</span><span style="color:#8A6D4F">'+ic('bell',13)+'</span><span style="color:#8A6D4F">'+ic('cart',13)+'</span></span></div>'
+    +'<div class="w-search">'+ic('search',11)+' ابحث عن متجر أو كوبون…</div>'
+    +'<div class="w-hero2"><b>عروض صيف ماكس</b><small>وفّر حتى 60% وبرّد جيبك من حرّ الأسعار</small><span class="hcta">تسوق الآن</span></div>'
+    +'<div class="w-cats"><div class="w-cat">'+ic('food',13)+'طعام</div><div class="w-cat">'+ic('shirt',13)+'موضة</div><div class="w-cat">'+ic('play',13)+'تسلية</div><div class="w-cat">'+ic('pin',13)+'قريب</div></div>'
+    +'<div class="w-sec">'+ic('flame',11)+' رحلاتك النشطة<i>واصل تقدّمك</i></div>'
+    +'<div class="w-row">'
+    +'<div class="w-lcard"><div class="w-ring" style="--p:40%"><b>2/5</b></div><span class="w-logo">نمق</span><b>نمق قهوة</b><small>المرحلة 3 بانتظارك — خصم 35%</small></div>'
+    +'<div class="w-lcard"><div class="w-ring" style="--p:20%"><b>1/5</b></div><span class="w-logo">دو</span><b>دومينوز</b><small>ابدأ مرحلتك الثانية</small></div></div>'
+    +NV(0)+'</div>');
+  const v1s2=SC(8204,700,'V1·02 الرئيسية ب — مستواك وعروض وإحالة',
+    '<div class="wscr"><div class="w-lvl"><div style="display:flex;justify-content:space-between;align-items:center"><div><b>مستواك: مكتشف</b><small>حقائب الخبرة: 2,340 حقيبة</small></div>'+ic('medal',20)+'</div><div class="bar"><i></i></div><small>660 حقيبة إضافية للوصول إلى مستوى خبير</small></div>'
+    +'<div class="w-sec">'+ic('steps',11)+' متاجر السلالم<i>النوع B</i></div>'
+    +'<div class="w-row">'
+    +'<div class="w-lcard"><span class="w-tag w-tagf">'+ic('steps',9)+' سلّم</span><span class="w-logo">هم</span><b>هاف مليون</b><small>5 مراحل تنتهي بـ VIP</small></div>'
+    +'<div class="w-lcard"><div class="w-ring" style="--p:40%"><b>2/5</b></div><span class="w-logo">نمق</span><b>نمق قهوة</b><small>خصم يتصاعد كل مرحلة</small></div></div>'
+    +'<div class="w-sec">'+ic('ticket',11)+' عروض مفتوحة<i>النوع A</i></div>'
+    +'<div class="w-row">'
+    +'<div class="w-dcard"><span class="w-tag2">حتى 40%</span><span class="w-logo">إك</span><b>ايكيا</b><small>كوبونات مفتوحة — اشترِ مباشرة</small></div>'
+    +'<div class="w-dcard"><span class="w-tag2">حتى 50%</span><span class="w-logo">قس</span><b>قولدن سنت</b><small>خصومات رهيبة على كل شي</small></div></div>'
+    +'<div class="w-refer">'+ic('gift',16)+'<div><b>ادعُ أصدقاءك واربح كاش باك</b><small>كل صديق يشتري كوبون يرجعلك كاش باك</small></div></div>'
+    +NV(0)+'</div>');
+  const v1s3=SC(7848,700,'V1·03 تسوق — السوق وفلاتر النوعين',
+    '<div class="wscr"><div class="w-hi"><b>تسوق</b><span style="color:#8A6D4F">'+ic('cart',13)+'</span></div>'
+    +'<div class="w-search">'+ic('search',11)+' ابحث في السوق…</div>'
+    +'<div class="w-chips"><span class="w-chip on">الكل</span><span class="w-chip">'+ic('steps',9)+' سلالم</span><span class="w-chip">'+ic('ticket',9)+' كوبونات مفتوحة</span></div>'
+    +'<div class="w-cats"><div class="w-cat">'+ic('food',13)+'طعام</div><div class="w-cat">'+ic('shirt',13)+'موضة</div><div class="w-cat">'+ic('play',13)+'تسلية</div><div class="w-cat">'+ic('pin',13)+'قريب</div></div>'
+    +'<div class="w-row">'
+    +'<div class="w-lcard"><div class="w-ring" style="--p:40%"><b>2/5</b></div><span class="w-logo">نمق</span><b>نمق قهوة</b><small>'+ic('steps',8)+' سلّم · المرحلة 3 جاهزة</small></div>'
+    +'<div class="w-lcard"><div class="w-ring" style="--p:20%"><b>1/5</b></div><span class="w-logo">دو</span><b>دومينوز</b><small>'+ic('steps',8)+' سلّم · خصم يتصاعد</small></div></div>'
+    +'<div class="w-row">'
+    +'<div class="w-dcard"><span class="w-tag2">حتى 40%</span><span class="w-logo">إك</span><b>ايكيا</b><small>كوبونات مفتوحة · يبدأ من 25 ﷼</small></div>'
+    +'<div class="w-dcard"><span class="w-tag2">حتى 50%</span><span class="w-logo">قس</span><b>قولدن سنت</b><small>كوبونات مفتوحة · يبدأ من 30 ﷼</small></div></div>'
+    +NV(1)+'</div>');
+  const v1s4=SC(7492,700,'V1·04 متجر مفتوح (النوع A) — ايكيا',
+    '<div class="wscr"><div class="w-heroimg"><div style="display:flex;align-items:center;gap:7px"><span class="w-logo">إك</span><div><b style="font-size:11px">ايكيا</b><small style="color:#D9BC8F">'+ic('star',9)+' 4.8 · +1,342 تقييم '+AVS+'</small></div></div></div>'
+    +'<div class="w-chips"><span class="w-chip on">حتى 40%</span><span class="w-chip">'+ic('pin',9)+' فروع</span><span class="w-chip">'+ic('zap',9)+' أونلاين</span></div>'
+    +'<div class="w-note">'+ic('spark',10)+' خصم إضافي 15% لفترة محدودة — الحد الأدنى للطلب 120 ﷼ <span class="w-buy" style="float:left">أضف</span></div>'
+    +'<div class="w-tabs2"><span class="on">الكوبونات</span><span>طريقة الاستخدام</span><span>الفروع</span><span>الشروط والأحكام</span></div>'
+    +'<div class="w-tkt"><span class="w-off">34%</span><div><b>كوبون أثاث غرفة النوم</b><small>ينتهي 2025/2/29 · <span class="w-pts">30 نقطة مستوى</span></small></div><div class="w-end"><small style="text-decoration:line-through">37</small><b>25 ﷼</b><span class="w-stp"><span>'+ic('plus',9)+'</span>1<span>'+ic('minus',9)+'</span></span></div></div>'
+    +'<div class="w-tkt"><span class="w-off">25%</span><div><b>كوبون أدوات المطبخ</b><small>ينتهي 2025/2/29 · <span class="w-pts">35 نقطة مستوى</span></small></div><div class="w-end"><small style="text-decoration:line-through">60</small><b>45 ﷼</b><span class="w-buy">'+ic('plus',9)+' أضف</span></div></div>'
+    +'<div class="w-foot"><div class="w-cta">'+ic('cart',12)+' شيك على السلة — قطعتان · 95 ﷼</div></div></div>');
+  const v1s5=SC(7136,700,'V1·05 متجر سلّم (النوع B) — نمق',
+    '<div class="wscr"><div class="w-heroimg" style="background:linear-gradient(120deg,#B4560A,#6B4E2E)"><div style="display:flex;align-items:center;gap:7px;width:100%"><span class="w-logo">نمق</span><div style="flex:1"><b style="font-size:11px">نمق قهوة</b><small style="color:#FFE2B8">'+ic('star',9)+' 4.9 · +1,909 تقييم '+AVS+'</small></div><span class="w-tag">'+ic('steps',9)+' سلّم</span></div></div>'
+    +'<div class="w-vipbar">'+ic('crown',13)+' أكمل السلّم الخماسي واصبح VIP — خصم دائم 15%</div>'
+    +'<div class="w-tabs2"><span class="on">السلّم</span><span>طريقة الاستخدام</span><span>الشروط والأحكام</span></div>'
+    +'<div class="w-lad">'
+    +'<div class="w-rung done"><span class="n">'+ic('check',12)+'</span><div><b>قهوة اليوم</b><small>خصم 15% · مكتملة</small></div></div>'
+    +'<div class="w-rung now"><span class="n">2</span><div><b>قهوة + حلى</b><small>خصم 25% · <span class="w-pts">+120 خبرة</span></small></div><div class="w-end"><b>19 ﷼</b><span class="w-buy">أضف</span></div></div>'
+    +'<div class="w-rung lock"><span class="n">'+ic('lock',11)+'</span><div><b>مشروب توقيعي</b><small>خصم 35% · تُفتح بعد المرحلة 2</small></div></div>'
+    +'<div class="w-rung lock"><span class="n">'+ic('lock',11)+'</span><div><b>صندوق القهوة</b><small>خصم 45%</small></div></div>'
+    +'<div class="w-rung lock"><span class="n">'+ic('crown',11)+'</span><div><b>قمة السلّم — VIP</b><small>خصم دائم 15% + كوبون شهري حصري</small></div></div></div>'
+    +'<div class="w-foot"><div class="w-cta">أضف المرحلة 2 — 19 ﷼</div></div></div>');
+  const v1s6=SC(6780,700,'V1·06 حافة — لمس مرحلة مقفلة',
+    '<div class="wscr"><div style="opacity:.35">'
+    +'<div class="w-rung now"><span class="n">2</span><div><b>قهوة + حلى</b><small>خصم 25% · متاحة الآن</small></div></div>'
+    +'<div style="height:6px"></div>'
+    +'<div class="w-rung lock"><span class="n">'+ic('lock',11)+'</span><div><b>مشروب توقيعي</b><small>خصم 35%</small></div></div></div>'
+    +'<div style="flex:1"></div>'
+    +'<div class="w-sheet"><div style="text-align:center;color:#E8890C">'+ic('lock',26,1.8)+'</div>'
+    +'<b style="text-align:center;font-size:12.5px">المرحلة 3 ما زالت مقفلة</b>'
+    +'<small style="text-align:center">اشترِ المرحلة 2 وتنفتح لك فورًا — خصم 35% ينتظرك</small>'
+    +'<div class="w-dots">●●○○○</div>'
+    +'<div class="w-cta">شراء المرحلة 2 — 19 ﷼</div>'
+    +'<div class="w-ghost">ذكّرني لاحقًا</div></div></div>');
+  const v1s7=SC(8560,1620,'V1·07 السلة — تاجران معًا',
+    '<div class="wscr"><div class="w-hi"><b>مراجعة السلة</b><span class="w-coin">'+ic('gift',10)+' +310 خبرة</span></div>'
+    +'<div class="w-rung now"><span class="w-logo" style="width:26px;height:26px;font-size:8px">نمق</span><div><b>قهوة + حلى — المرحلة 2/5</b><small>'+ic('zap',8)+' يفتح المرحلة 3 فورًا</small></div><div class="w-end"><span class="w-stp"><span>'+ic('plus',9)+'</span>1<span>'+ic('minus',9)+'</span></span><b>19 ﷼</b></div></div>'
+    +'<div class="w-tkt"><span class="w-logo" style="width:26px;height:26px;font-size:8px">إك</span><div><b>ايكيا — كوبون أثاث غرفة النوم</b><small>ينتهي 2025/2/29</small></div><div class="w-end"><span class="w-stp"><span>'+ic('plus',9)+'</span>2<span>'+ic('minus',9)+'</span></span><b>50 ﷼</b></div></div>'
+    +'<div class="w-ghost" style="text-align:right;padding:2px">'+ic('plus',9)+' أضف المزيد من الكوبونات الحصرية لسلتك</div>'
+    +'<div class="w-sum"><span>المجموع</span><b>69.00 ﷼</b></div>'
+    +'<div class="w-sum"><span>رسوم الخدمة</span><b>1.50 ﷼</b></div>'
+    +'<div class="w-sum"><span>الضريبة المقدرة</span><b>2.50 ﷼</b></div>'
+    +'<div class="w-sum t"><span>الإجمالي</span><b>73.00 ﷼</b></div>'
+    +'<div class="w-foot"><div class="w-cta">متابعة للدفع</div></div></div>');
+  const v1s8=SC(8204,1620,'V1·08 الدفع — بروموكود وسحب',
+    '<div class="wscr"><div class="w-hi"><b>الدفع</b><span class="w-coin">'+ic('card',10)+' VISA ···8742</span></div>'
+    +'<div class="w-rung"><span class="n">'+ic('card',12)+'</span><div><b>سلمان الراشد</b><small>فيزا تنتهي بـ 8742</small></div><div class="w-end"><span class="w-buy" style="background:#fff;color:#E8890C;border:1px solid #F2C879">تغيير</span></div></div>'
+    +'<div class="w-sum"><span>المجموع</span><b>69.00 ﷼</b></div>'
+    +'<div class="w-sum"><span>الرسوم + الضريبة</span><b>4.00 ﷼</b></div>'
+    +'<div class="w-sum" style="color:#0E7A43"><span>خصم (بروموكود 10%)</span><b>− 6.90 ﷼</b></div>'
+    +'<div class="w-sum t"><span>الإجمالي</span><b>66.10 ﷼</b></div>'
+    +'<div class="w-codebx"><code>COPO10</code><span class="w-usebtn">تم التطبيق '+ic('check',8)+'</span></div>'
+    +'<div class="w-note">'+ic('gift',10)+' ستحصل على 310 حقيبة خبرة من هذا الطلب</div>'
+    +'<div style="flex:1"></div>'
+    +'<div class="w-slide"><span class="knob">←</span> اسحب للدفع — 66.10 ﷼</div></div>');
+  const v1s9=SC(7848,1620,'V1·09 نجاح — أكواد وفتح المرحلة',
+    '<div class="wscr" style="text-align:center"><div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#F7A928,#E8890C);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 8px 20px rgba(232,137,12,.4)">'+ic('check',22,3)+'</div>'
+    +'<b style="font-size:13px">تم الشراء بنجاح!</b>'
+    +'<small>مجموع الكوبونات التي اشتريتها: 3 · +310 حقيبة خبرة</small>'
+    +'<div class="w-codebx"><span class="w-logo" style="width:22px;height:22px;font-size:7px">نمق</span><code>A12-FH7-J1K</code><span class="w-usebtn">كيف استخدمه</span></div>'
+    +'<div class="w-codebx"><span class="w-logo" style="width:22px;height:22px;font-size:7px">إك</span><code>B44-KL2-M8Q ×2</code><span class="w-usebtn">كيف استخدمه</span></div>'
+    +'<div class="w-unlock">'+ic('unlock',14)+' <b>انفتحت المرحلة 3 الآن!</b><small>مشروب توقيعي بخصم 35% — صار متاحًا للشراء</small></div>'
+    +'<div class="w-dots">●●●○○</div>'
+    +'<div class="w-foot"><div class="w-cta">اذهب للمرحلة 3</div><div class="w-ghost">شراء كوبونات ثانية</div></div></div>');
+  const v1s10=SC(7492,1620,'V1·10 مستواك — الرتب كما في فيقما',
+    '<div class="wscr"><div class="w-hi"><b>مستواك الحالي</b><span class="w-coin">'+ic('coin',10)+' 2,340 حقيبة</span></div>'
+    +'<div class="w-lvl"><div style="display:flex;justify-content:space-between;align-items:center"><div><b>مستواك: مكتشف</b><small>حقائب الخبرة: 2,340 حقيبة</small></div>'+ic('medal',20)+'</div><div class="bar"><i></i></div><small>660 حقيبة إضافية للوصول إلى مستوى خبير</small></div>'
+    +'<div class="w-ranks">'
+    +'<div class="w-rank done"><span class="d">'+ic('check',11)+'</span><b>مبتدئ</b></div>'
+    +'<div class="w-rank cur"><span class="d">'+ic('medal',11)+'</span><b>مكتشف</b><small>أنت هنا</small></div>'
+    +'<div class="w-rank"><span class="d">'+ic('lock',11)+'</span><b>خبير</b></div>'
+    +'<div class="w-rank"><span class="d">'+ic('lock',11)+'</span><b>أسطورة</b></div></div>'
+    +'<div class="w-note">'+ic('gift',10)+' استمتع بكوبونات مخصصة، والعديد من المزايا الأخرى</div>'
+    +'<div class="w-sec">مزايا المستوى الحالي</div>'
+    +'<div class="w-row"><div class="w-tile">'+ic('ticket',13)+'<b>كوبونات مخصصة</b><small>احصل على كوبونات خاصة</small></div><div class="w-tile">'+ic('gem',13)+'<b>خصومات حصرية</b><small>خصومات حصرية للمستوى</small></div><div class="w-tile">'+ic('zap',13)+'<b>الوصول المبكر</b><small>كن أول من يجرب متاجر جديدة</small></div></div>'
+    +'<div class="w-sec">الإنجازات<i>عرض الكل</i></div>'
+    +'<div class="w-row"><div class="w-tile">'+ic('trophy',13)+'<b>الشراء الأول</b><small>تبدأ رحلتك في التوفير</small></div><div class="w-tile">'+ic('medal',13)+'<b>صائد الحصريات</b><small>شراء 5 كوبونات حصرية</small></div><div class="w-tile">'+ic('crown',13)+'<b>ملك التوفير</b><small>شراء 10 كوبونات في شهر</small></div></div>'
+    +'<div class="w-note">'+ic('steps',10)+' جديد: إنجاز «سفير السلالم» — أكمل سلّم متجر كاملًا</div>'
+    +NV(2)+'</div>');
+  const v1s11=SC(7136,1620,'V1·11 كوبوناتي — المحفظة',
+    '<div class="wscr"><div class="w-hi"><b>كوبوناتي</b><span class="w-coin">3 نشطة</span></div>'
+    +'<div class="w-tabs2"><span class="on">النشطة</span><span>المستخدمة</span><span>المنتهية</span></div>'
+    +'<div class="w-tkt"><span class="w-logo" style="width:26px;height:26px;font-size:8px">نمق</span><div><b>قهوة + حلى — المرحلة 2</b><small>ينتهي 2025/2/29 · <code style="color:#8A5A00;font-weight:800">A12-FH7-J1K</code></small></div><span class="w-usebtn">استخدمه</span></div>'
+    +'<div class="w-tkt"><span class="w-logo" style="width:26px;height:26px;font-size:8px">إك</span><div><b>كوبون أثاث غرفة النوم</b><small>ينتهي 2025/2/29 · <code style="color:#8A5A00;font-weight:800">B44-KL2-M8Q</code></small></div><span class="w-usebtn">استخدمه</span></div>'
+    +'<div class="w-tkt"><span class="w-logo" style="width:26px;height:26px;font-size:8px">إك</span><div><b>كوبون أثاث غرفة النوم</b><small>ينتهي 2025/2/29 · <code style="color:#8A5A00;font-weight:800">B44-KL2-M8R</code></small></div><span class="w-usebtn">استخدمه</span></div>'
+    +'<div class="w-tkt" style="opacity:.45"><span class="w-logo" style="width:26px;height:26px;font-size:8px">نمق</span><div><b>قهوة اليوم — المرحلة 1</b><small>مستخدم · 2025/1/12</small></div><span class="w-usebtn" style="background:#B49E86">مستخدم</span></div>'
+    +NV(3)+'</div>');
+  const v1s12=SC(6780,1620,'V1·12 حافة — اكتمال السلّم (VIP)',
+    '<div class="wscr" style="text-align:center"><div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#33261B,#6B4E2E);color:#FFD98A;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 8px 20px rgba(51,38,27,.45)">'+ic('crown',22)+'</div>'
+    +'<b style="font-size:13px">أنت الآن VIP في نمق!</b>'
+    +'<small>حالة حافة: أكمل المستخدم المراحل الخمس كلها</small>'
+    +'<div class="w-vipcard"><b>سلمان الراشد</b><small>عضو VIP · نمق قهوة · منذ 2025</small></div>'
+    +'<div class="w-perk">'+ic('gem',13)+' خصم دائم 15% على كل الطلبات</div>'
+    +'<div class="w-perk">'+ic('gift',13)+' كوبون شهري حصري لأعضاء VIP</div>'
+    +'<div class="w-perk">'+ic('zap',13)+' أولوية الوصول للعروض الموسمية</div>'
+    +'<div class="w-foot"><div class="w-cta">استكشف امتيازاتك</div></div></div>');
+
+  /* V1 navigation flow */
+  W(v1s1,v1s2,'يمرر للأسفل');
+  W(v1s2,v1s3,'تبويب تسوق');
+  W(v1s3,v1s4,'يفتح متجرًا مفتوحًا (A)');
+  W(v1s3,v1s5,'يفتح متجر سلّم (B)');
+  W(v1s4,v1s7,'أضف للسلة');
+  W(v1s5,v1s6,'يلمس مرحلة مقفلة');
+  W(v1s6,v1s7,'يشتري المتاحة');
+  W(v1s7,v1s8,'متابعة للدفع');
+  W(v1s8,v1s9,'اسحب للدفع');
+  W(v1s9,v1s10,'يشاهد رتبته');
+  W(v1s9,v1s11,'كوبوناته');
+  W(v1s9,v1s12,'بعد إكمال 5/5');
 
   return {items,wires};
 }
